@@ -1,0 +1,17 @@
+{% if advents | length %}
+    <div class="info-block-yandex">
+        {% for adv in advents %}
+		{% if adv.visible %}
+            <a class="adv-item" href="{{ adv.link }}" {% if adv.blank %}target="_blank"{% endif %}>
+                {% if adv.image %}
+                    <img src="/upload/orig/{{ adv.image }}" alt="{{ adv.name | e }}" title="{{ adv.name | e }}" class="adv-img">
+                {% elseif adv.html %}
+                        {{ adv.html | raw }}
+                {% else %}
+                    <img src="/img/noimg.jpg" alt="" class="adv-img">
+                {% endif %}
+            </a>
+{% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

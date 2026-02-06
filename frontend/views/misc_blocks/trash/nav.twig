@@ -1,0 +1,37 @@
+<nav class="menu">
+
+    <div class="container">
+
+        <ul class="burger">
+
+            <li class="burger__line burger__line_1"></li>
+
+            <li class="burger__line burger__line_2"></li>
+
+            <li class="burger__line burger__line_3"></li>
+
+        </ul>
+        <!-- /.burger -->
+
+        <ul class="menu__list">
+            {% for thread in threads %}
+            <li class="menu__item">
+
+                <a href="{{ thread.url }}" class="menu__link">
+                    {{ thread.name }}
+                </a>
+
+            </li>
+            {% endfor %}
+            <!-- /.menu__item -->
+
+
+
+        </ul>
+        <!-- /.menu__list -->
+
+    </div>
+    <!-- /.container -->
+
+</nav>
+<!-- /.menu -->

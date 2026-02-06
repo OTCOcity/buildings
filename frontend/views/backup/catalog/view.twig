@@ -1,0 +1,185 @@
+<!-- Header image -->
+{{ MiscBlocks.headerImage(object.name, object.image ? '/upload/orig/' ~ object.image : '') | raw }}
+
+<!-- Header search -->
+{{ MiscBlocks.headerSearch() | raw }}
+
+<!-- Intro -->
+<div class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="intro_content d-flex flex-lg-row flex-column align-items-start justify-content-start">
+                    <div class="intro_title_container">
+                        <h1 class="intro_title">{{ object.name }}</h1>
+                        <div class="intro_tags">
+                            <ul>
+                                {% if object.is_super %}
+                                    <li><a href="#">Супер предложение</a></li>{% endif %}
+                                {% if object.is_hot %}
+                                    <li><a href="#">Горячее предложение</a></li>{% endif %}
+                                {% if object.is_hot %}
+                                    <li><a href="#">{{ object.about | capitalize }}</a></li>{% endif %}
+                                {% if object.obj_type_id %}
+                                    <li><a href="#">{{ object.type.name }}</a></li>{% endif %}
+                                {% if object.obj_rent_type_id %}
+                                    <li><a href="#">{{ object.rentType.name }}</a></li>{% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="intro_price_container ml-lg-auto d-flex flex-column align-items-start justify-content-center">
+                        <div>{{ object.rentType.name }}</div>
+                        <div class="intro_price">{{ object.priceFormat }} TL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Property -->
+
+<div class="container">
+    <div class="row">
+
+        <!-- Sidebar -->
+        {% set images = object.images %}
+        {% set mainImage = object.image ? object.image : images[0] %}
+        <div class="col-lg-4">
+            {% if mainImage %}
+                <div class="property__images">
+                    <a data-fancybox="gallery" href="/upload/big/{{ mainImage }}">
+                        <img class="property__main-image" src="/upload/medium/{{ mainImage }}" alt="">
+                    </a>
+                    {% if images | length %}
+                        {% for image in object.images %}
+                            <a data-fancybox="gallery" href="/upload/big/{{ image.file }}">
+                                <img class="property__image" src="/upload/small/{{ image.file }}" alt="">
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="property__realtor">
+                <h3>Ваш менеджер</h3>
+                <div class="realtor__item realtor__item--full-width d-flex flex-row flex-wrap align-items-start">
+                    <div class="realtor__item-image-round-cont">
+                        <img class="realtor__item-image-round" src="/upload/medium/15541309665ca22816844cc5.50698418.jpg"
+                             alt="">
+                    </div>
+                    <div class="realtor__item-info">
+                        <div class="realtor__item-name">Марат Решит</div>
+                        <div class="realtor__item-post">Консультант</div>
+                        <div class="realtor__item-phone"><span><i class="fa fa-phone"></i>&nbsp;&nbsp;</span>+ 90 553
+                            832 77 82
+                        </div>
+                        <div class="realtor__item-phone"><span><i class="fa fa-whatsapp"></i>&nbsp;&nbsp;</span>+ 90 553
+                            832 77 82
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Content -->
+        <div class="col-lg-7 offset-lg-1">
+            <div class="property_content">
+                <div class="property_icons">
+                    <div class="property_title">Характеристики</div>
+                    <div class="property_rooms d-flex flex-sm-row flex-column align-items-start justify-content-start">
+
+                        {% if object.badrooms %}
+                            <div class="property_room">
+                                <div class="property_room_title">{{ MiscFunc.t('app', 'Спальни') }}</div>
+                                <div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+                                    <div class="room_icon"><img src="/images/room_1.png" alt=""></div>
+                                    <div class="room_num">{{ object.badrooms }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if object.baths %}
+                            <div class="property_room">
+                                <div class="property_room_title">{{ MiscFunc.t('app', 'Ванных') }}</div>
+                                <div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+                                    <div class="room_icon"><img src="/images/room_2.png" alt=""></div>
+                                    <div class="room_num">{{ object.baths }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if object.sq %}
+                            <div class="property_room">
+                                <div class="property_room_title">{{ MiscFunc.t('app', 'Площадь') }}</div>
+                                <div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+                                    <div class="room_icon"><img src="/images/room_3.png" alt=""></div>
+                                    <div class="room_num">{{ object.sq }} m<sup>3</sup></div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {#
+                        <!-- Property Room Item -->
+                          <div class="property_room">
+                              <div class="property_room_title">Patio</div>
+                              <div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+                                  <div class="room_icon"><img src="/images/room_4.png" alt=""></div>
+                                  <div class="room_num">1</div>
+                              </div>
+                          </div>
+
+                          <!-- Property Room Item -->
+                          <div class="property_room">
+                              <div class="property_room_title">Garage</div>
+                              <div class="property_room_content d-flex flex-row align-items-center justify-content-start">
+                                  <div class="room_icon"><img src="/images/room_5.png" alt=""></div>
+                                  <div class="room_num">2</div>
+                              </div>
+                          </div>
+                          #}
+
+                    </div>
+                </div>
+
+                <!-- Description -->
+
+                <div class="property_description">
+                    {{ object.text | raw }}
+                </div>
+
+                <!-- Additional Details -->
+                {% set props = object.props %}
+                {% if props | length > 0 %}
+                    <div class="additional_details">
+                        <div class="property_title">Детали</div>
+                        <div class="details_container">
+                            {% for prop in props %}
+                                <p><b>{{ prop.name | capitalize }}:</b> {{ prop.value }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {#
+                <!-- Property On Map -->
+
+                <div class="property_map">
+                <div class="property_title">Property on map</div>
+                <div class="property_map_container">
+
+                  <!-- Google Map -->
+                  <div id="google_map" class="google_map">
+                      <div class="map_container">
+                          <div id="map"></div>
+                      </div>
+                  </div>
+
+                </div>
+                </div>
+                #}
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,149 @@
+<section class="welcome">
+    {% if page.image %}
+        <picture class="hero__bg">
+            <img src="/images/hero_bg.png" alt=""/>
+        </picture>
+    {% endif %}
+    <div class="welcome__wrapper">
+        <div class="welcome__header">
+            <div class="welcome__title">
+                {{ page.title | raw }}
+            </div>
+            <div class="welcome__subtitle">
+                {{ page.text | raw }}
+            </div>
+        </div>
+        {#<div class="welcome__title welcome__title--medium">{{ page.partners_title | nl2br }}</div>#}
+        {#<div class="welcome__cards">#}
+            {#<div class="welcome__card">#}
+                {#<div style="background-image: url('/images/icons/ok.png')" class="welcome__logo"></div>#}
+            {#</div>#}
+            {#<div class="welcome__card">#}
+                {#<div style="background-image: url('/images/icons/trickit.png')" class="welcome__logo"></div>#}
+            {#</div>#}
+            {#<div class="welcome__card">#}
+                {#<div style="background-image: url('/images/icons/lexus.png')" class="welcome__logo"></div>#}
+            {#</div>#}
+            {#<div class="welcome__card">#}
+                {#<div style="background-image: url('/images/icons/casio.png')" class="welcome__logo"></div>#}
+            {#</div>#}
+            {#<div class="welcome__card">#}
+                {#<div style="background-image: url('/images/icons/henkel.png')" class="welcome__logo"></div>#}
+            {#</div>#}
+        {#</div>#}
+    </div>
+    <div class="hero-gradient"></div>
+</section>
+<section class="details">
+    <div class="details__wrapper">
+        <div class="details__title">{{ page.feat_title }}</div>
+        <div class="details__cards details__cards--padding-small">
+            <div class="details__card">
+                <div class="details__number">01</div>
+                <div class="details__text">{{ page.feat_text_1 }}</div>
+                <span class="details__decor"></span>
+            </div>
+            <div class="details__card">
+                <div class="details__number">02</div>
+                <div class="details__text">{{ page.feat_text_2 }}</div>
+                <span class="details__decor"></span>
+            </div>
+            <div class="details__card">
+                <div class="details__number">03</div>
+                <div class="details__text">{{ page.feat_text_3 }}</div>
+                <span class="details__decor"></span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="details">
+    <div class="details__wrapper">
+        <div class="details__title">{{ page.details_title }}</div>
+        <div class="details__cards details__cards--separate details__cards--padding-small">
+            <div class="details__card details__card--bordered ">
+                <div style="background-image: url('/images/icons/1.png')" class="details__icons"></div>
+                <div class="details__text">{{ page.details_text_1 }}</div>
+            </div>
+            <div class="details__card details__card--bordered ">
+                <div style="background-image: url('/images/icons/2.png')" class="details__icons"></div>
+                <div class="details__text">{{ page.details_text_2 }}</div>
+            </div>
+            <div class="details__card details__card--bordered ">
+                <div style="background-image: url('/images/icons/3.png')" class="details__icons"></div>
+                <div class="details__text">{{ page.details_text_3 }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="founders">
+    <div class="founders__wrapper">
+        <div class="founders__title">Основатели</div>
+        <div class="founders__cards">
+            <div class="founders__card">
+                {% if page.head1_img %}<img src="/upload/big/{{ page.head1_img }}" class="founders__card-img"/>{% endif %}
+                <div class="founders__card-wrapper">
+                    <div class="founders__card-title">{{ page.head1_name }}</div>
+                    <div class="founders__card-subtitle">{{ page.head1_post }}</div>
+                </div>
+            </div>
+            <div class="founders__card">
+                {% if page.head2_img %}<img src="/upload/big/{{ page.head2_img }}" class="founders__card-img"/>{% endif %}
+                <div class="founders__card-wrapper">
+                    <div class="founders__card-title">{{ page.head2_name }}</div>
+                    <div class="founders__card-subtitle">{{ page.head2_post }}</div>
+                </div>
+            </div>
+            <div class="founders__card">
+                {% if page.head3_img %}<img src="/upload/big/{{ page.head3_img }}" class="founders__card-img"/>{% endif %}
+                <div class="founders__card-wrapper">
+                    <div class="founders__card-title">{{ page.head3_name }}</div>
+                    <div class="founders__card-subtitle">{{ page.head3_post }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="details">
+    <div class="details__wrapper">
+        <div class="details__title">{{ page.feat_title_2 }}</div>
+        <div class="details__cards details__cards--padding-small">
+            <div class="details__card">
+                <div class="details__number">01</div>
+                <div class="details__text">{{ page.feat_text_2_1 }}</div>
+                <span class="details__decor"></span>
+            </div>
+            <div class="details__card">
+                <div class="details__number">02</div>
+                <div class="details__text">{{ page.feat_text_2_2 }}</div>
+                <span class="details__decor"></span>
+            </div>
+            <div class="details__card">
+                <div class="details__number">03</div>
+                <div class="details__text">{{ page.feat_text_2_3 }}</div>
+                <span class="details__decor"></span>
+            </div>
+        </div>
+        {% set images = page.images %}
+        {% if images | length > 0 %}
+            <div class="details__images">
+                {% if images[0] %}
+                    <div style="background-image: url('/upload/big/{{ images[0].file }}')" class="details__image"></div>
+                {% endif %}
+                <div class="details__image-aside">
+                    {% if images[1] %}
+                        <div style="background-image: url('/upload/big/{{ images[1].file }}')" class="details__image"></div>
+                    {% endif %}
+                    {% if images[2] %}
+                        <div style="background-image: url('/upload/big/{{ images[2].file }}')" class="details__image"></div>
+                    {% endif %}
+                </div>
+                {% if images[3] %}
+                    <div style="background-image: url('/upload/big/{{ images[3].file }}')" class="details__image"></div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{{ MiscBlocks.fbBlock() | raw }}
+{{ MiscBlocks.contacts() | raw }}

@@ -1,0 +1,104 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div class="container-wrap">
+    <div id="fh5co-about">
+
+        <h1 class="inner-page__title">Личный кабинет</h1>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#login">Вход</a></li>
+            <li><a data-toggle="tab" href="#registration">Регистрация</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="login" class="tab-pane fade in active">
+
+                <br>
+
+                {% set form = ActiveForm_begin({'action': '/lk/login'}) %}
+
+                {{ form.field(loginForm, 'login').textInput({'placeholder': loginForm.getAttributeLabel('login'), 'autofocus': true}) | raw }}
+                {{ form.field(loginForm, 'password').passwordInput({'placeholder': loginForm.getAttributeLabel('password')}) | raw }}
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-modify" type="submit">
+                        Войти
+                    </button>
+                </div>
+                {{ ActiveForm__end() }}
+
+
+            </div>
+            <div id="registration" class="tab-pane fade">
+
+                <br>
+
+                {% set form = ActiveForm_begin({'action': '/lk/login#registration'}) %}
+
+                {{ form.field(regForm, 'name').textInput({'placeholder': regForm.getAttributeLabel('name')}) | raw }}
+                {{ form.field(regForm, 'phone').textInput({'placeholder': regForm.getAttributeLabel('phone') }) | raw }}
+                <div class="row registration__row">
+                    <div class="col-md-4 {% if regForm.errors.city_id[0] %}has-error{% endif %}">
+                        <div><b>Город</b></div>
+                        <select name="RegForm[city_id]" class="select--fw select" id="object-filter-city">
+                            {% set city = regForm.city %}
+                            {% if city %}
+                                <option value="{{ city.id }}">{{ city.name }}</option>
+                            {% endif %}
+                        </select>
+                        {% if regForm.errors.city_id[0] %}
+                            <div class="help-block">{{ regForm.errors.city_id[0] }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4 {% if regForm.errors.rent_type[0] %}has-error{% endif %}">
+                        <div><b>Тип аренды</b></div>
+                        <select name="RegForm[rent_type]" class="select--fw select" id="object-filter-rent-type">
+                            {% for key, rentType in objectRentTypes %}
+                                <option value="{{ key }}" {% if regForm.rent_type == key %}selected{% endif %}>
+                                    {{ rentType }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% if regForm.errors.rent_type[0] %}
+                            <div class="help-block">{{ regForm.errors.rent_type[0] }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4 {% if regForm.errors.room_type[0] %}has-error{% endif %}">
+                        <div><b>Тип квартиры</b></div>
+                        <select name="RegForm[room_type][]" multiple class="select--fw select"
+                                id="object-filter-room-type">
+                            {% for key, roomType in objectRoomTypes %}
+                                <option value="{{ key }}" {% if ''~key in regForm.room_type %}selected{% endif %}>
+                                    {{ roomType }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% if regForm.errors.room_type[0] %}
+                            <div class="help-block">{{ regForm.errors.room_type[0] }}</div>{% endif %}
+                    </div>
+                </div>
+
+
+                <div class="form-groupm mt-15">
+                    <div class="checkbox">
+                        {{ form.field(regForm, 'agree_ps').checkbox({'label':'Согласен с <a class="link-dotted" target="_blank" href="/polzovatelskoe-soglashenie">пользовательским соглашением</a>'}) | raw }}
+                        {{ form.field(regForm, 'agree_ki').checkbox({'label':'Ознакомлен с <a class="link-dotted" target="_blank" href="/politika-konfidencialnosti">политикой конфиденциальности</a>'}) | raw }}
+
+                        {#<label><input type="checkbox">Согласен с <a class="link-dotted" target="_blank" href="/polzovatelskoe-soglashenie">пользовательским соглашением</a></label>#}
+                        {#<br>#}
+                        {#<label><input type="checkbox">Ознакомлен с <a class="link-dotted" target="_blank" href="/politika-konfidencialnosti">политикой конфиденциальности</a></label>#}
+                    </div>
+                </div>
+
+                <div class="form-group mt-15">
+                    <button class="btn btn-primary btn-modify" type="submit">
+                        Регистрация
+                    </button>
+                </div>
+
+                {{ ActiveForm__end() }}
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

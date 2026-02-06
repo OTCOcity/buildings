@@ -1,0 +1,62 @@
+{% set team = work.team %}
+{% set tl = team | length %}
+{% set typeRowSpan = tl > 2 ? tl : 2 %}
+{% if work.t_active %}
+    <div class="content work__table">
+        <h2 class="work__table-title">Ключевая информация</h2>
+        <div class="work__table-container">
+            <table class="work__table-table">
+                <tr>
+                    <td>1</td>
+                    <td>Локация</td>
+                    <td class="nowrap" colspan="3">{{ work.t_loc }}</td>
+                    <td colspan="4" rowspan="4" class="work__table-fs-xl">{{ work.t_author }}</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Площадка</td>
+                    <td colspan="3">{{ work.t_place }}</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Дата</td>
+                    <td colspan="3">{{ work.t_date }}</td>
+                </tr>
+                <tr>
+                    <td class="work__table-fs-l" colspan="5">КОМАНДА</td>
+                </tr>
+                <tr>
+                    <td class="work__table-fs-s nowrap" colspan="2">{{ team[0][0] }}</td>
+                    <td class="work__table-fs-s nowrap" colspan="3">{{ team[0][1] }}</td>
+                    <td class="work__table-fs-s nowrap">Разработано</td>
+                    <td class="work__table-fs-s nowrap">Произведено</td>
+                    <td class="work__table-fs-s nowrap">Cмонтировано</td>
+                </tr>
+                <tr>
+                    <td class="work__table-fs-s nowrap" colspan="2">{{ team[1][0] }}</td>
+                    <td class="work__table-fs-s nowrap" colspan="3">{{ team[1][1] }}</td>
+                    <td class="work__table-fs-s nowrap">{{ work.t_r_days }}</td>
+                    <td class="work__table-fs-s nowrap">{{ work.t_p_days }}</td>
+                    <td class="work__table-fs-s nowrap">{{ work.t_m_days }}</td>
+                </tr>
+                <tr>
+                    <td class="work__table-fs-s nowrap" colspan="2">{% if team[2][0] %}{{ team[2][0] }}{% endif %}</td>
+                    <td class="work__table-fs-s nowrap" colspan="3">{% if team[2][0] %}{{ team[2][1] }}{% endif %}</td>
+                    <td class="work__table-fs-xl" colspan="4" {% if typeRowSpan > 3 %}rowspan="{{ typeRowSpan - 2 }}{% endif %}">
+                        {{ work.t_name }}
+                    </td>
+                </tr>
+                {% if tl > 3 %}
+                    {% for man in team %}
+                        {% if loop.index0 > 2 %}
+                            <tr>
+                                <td class="work__table-fs-s nowrap" colspan="2">{{ team[loop.index0][0] }}</td>
+                                <td class="work__table-fs-s nowrap" colspan="3">{{ team[loop.index0][1] }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+{% endif %}

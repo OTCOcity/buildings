@@ -1,0 +1,51 @@
+<main class="page page_product">
+
+    <div class="rout rout_product">
+
+        <a class="rout__link" href="/">Главная</a> <span class="lightgray">/</span> <a href="{{ thread.url }}" class="rout__link">Акции и скидки</a>
+
+    </div>
+    <!-- /.rout -->
+
+
+
+    <div class="act_page">
+        <h2 class="act_page__title">
+            Акции и скидки
+        </h2>
+        <ul class="act_page__list">
+            {% for good in goods %}
+            <li class="act_page__item">
+                {% if good.image %}
+                <img src="/upload/small/{{ good.image }}" alt="" class="act_page__item_img">
+                {% else %}
+                    <img src="/images/no-image.jpg" alt="" class="act_page__item_img">
+                {% endif %}
+                <div class="act_page__content">
+                    <h3 class="act_page__item_title">
+                        {{ good.name }}
+                    </h3>
+                    <div class="act_page__item_text">
+                        {{ good.sale_text | raw }}
+                    </div>
+                    <p class="act_page__item_price">
+                        {{ good.price }} руб.
+                    </p>
+                    <a href="{{ good.url }}" class="act_page__item_link">
+                        Купить
+                    </a>
+                </div>
+                <!-- /.act_page__content -->
+            </li>
+            {% else %}
+                <p>На данный момент на сайте нет акционных товаров.</p>
+            {% endfor %}
+        </ul>
+        <!-- /.act_page__list -->
+    </div>
+    <!-- /.act_page -->
+
+
+
+
+</main>

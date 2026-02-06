@@ -1,0 +1,118 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{# СПЕЦПРЕДЛОЖЕНИЕ #}
+<div id="deals-modal" class="deals-modal">
+    <div class="fancy-close"></div>
+    <div class="inner">
+        <div class="top-info">
+            <div class="header-phone">
+                <span class="f7">Телефон</span><br>
+                <span>{{  MiscFunc.getThreadData('options', 'phone') }}</span>
+            </div>
+            <a href="/" class="logo">
+                <img src="/img/logo.png" alt="">
+            </a>
+            <div class="header-mail header-small-mail">
+                <span class="f7">Mail</span><br>
+                <a href="mailto:{{ MiscFunc.getThreadData('options', 'email') }}">{{ MiscFunc.getThreadData('options', 'email') }}</a>
+            </div>
+        </div>
+
+        <div class="spinner deals-modal-preloader">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+
+        <div id="deals-modal-content" class="deals-modal-content content">
+
+        </div>
+    </div>
+
+    {# Call block #}
+    {{ MiscBlocks.callBlock() | raw }}
+    <div class="clear border-2"></div>
+</div>
+
+
+{# ОБРАТНАЯ СВЯЗЬ #}
+<div id="feedback" class="modal-foncybox modal-width-1">
+    {% set form = ActiveForm_begin({ 'action' : osUrl, 'options' : {'class' : 'ajax-validate', 'enctype' : 'multipart/form-data'}}) %}
+    <div class="fancy-close"></div>
+    <div class="modal-title">ОБРАТНАЯ СВЯЗЬ</div>
+    <div class="input">
+        {{ form.field(feedbackForm, 'name').textInput({'placeholder': feedbackForm.getAttributeLabel('name')}).label(false) | raw }}
+    </div>
+    <div class="inputs col-2">
+        <div class="input">
+            {{ form.field(feedbackForm, 'company').textInput({'placeholder': feedbackForm.getAttributeLabel('company')}).label(false) | raw }}
+        </div>
+        <div class="input">
+            {{ form.field(feedbackForm, 'phone').textInput({'placeholder': feedbackForm.getAttributeLabel('phone'), 'class' : 'input-mask--phone'}).label(false) | raw }}
+        </div>
+        <div class="input">
+            {{ form.field(feedbackForm, 'city').textInput({'placeholder': feedbackForm.getAttributeLabel('city')}).label(false) | raw }}
+        </div>
+        <div class="input">
+            {{ form.field(feedbackForm, 'email').textInput({'placeholder': feedbackForm.getAttributeLabel('email')}).label(false) | raw }}
+        </div>
+    </div>
+    <div class="input">
+        {{ form.field(feedbackForm, 'theme').textInput({'placeholder': feedbackForm.getAttributeLabel('theme')}).label(false) | raw }}
+    </div>
+    <div class="input">
+        {{ form.field(feedbackForm, 'text').textarea({'placeholder': feedbackForm.getAttributeLabel('text')}).label(false) | raw }}
+    </div>
+    <label for="feedbackform-file" class="feedback-file-label my-clear">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+        <span class="fileinput-span">Выберите файл…</span>
+        <div class="input">
+            {{ form.field(feedbackForm, 'file').fileInput({'class' : 'inputfile hidden'}).label(false) | raw }}
+        </div>
+    </label>
+    <div class="check">
+        {{ form.field(feedbackForm, 'check').checkboxList({'1':'Согласие на обработку персональных данных'}).label(false) | raw }}
+    </div>
+    <div class="center button-wrap">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+        <label for="feedbackform-submit">
+            <div class="button arrow-after-text" >Отправить</div>
+            <input type="submit" class="hidden" id="feedbackform-submit">
+        </label>
+    </div>
+    {{ ActiveForm_end() }}
+</div>
+
+
+{# ЗАКАЗАТЬ ЗВОНОК #}
+<div id="feedback-2" class="modal-foncybox modal-width-2">
+    {% set form = ActiveForm_begin({ 'action' : osUrl, 'options' : {'class' : 'ajax-validate'}}) %}
+    <div class="fancy-close"></div>
+    <div class="modal-title">Заказать звонок</div>
+    <div class="input">
+        {{ form.field(callForm, 'name').textInput({'placeholder': callForm.getAttributeLabel('name')}).label(false) | raw }}
+    </div>
+    <div class="input">
+        {{ form.field(callForm, 'phone').textInput({'placeholder': callForm.getAttributeLabel('phone'), 'class' : 'input-mask--phone'}).label(false) | raw }}
+    </div>
+    <div class="check">
+        {{ form.field(callForm, 'check').checkboxList({'1':'Согласие на обработку персональных данных'}).label(false) | raw }}
+    </div>
+
+    <div class="center button-wrap">
+        <div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>
+        <label for="callform-submit">
+            <div class="button arrow-after-text" >Отправить</div>
+            <input type="submit" class="hidden" id="callform-submit">
+        </label>
+    </div>
+    {{ ActiveForm_end() }}
+</div>
+<div id="feedback-ok" class="modal-foncybox modal-width-2">
+    <div class="fancy-close"></div>
+    <div class="modal-title">Отправлено</div>
+    <p>Спасибо! Наши менеджеры свяжутся с вами в ближайшее время с понедельника по пятницу с 9:00ч. до 18:00ч. (+2 часа к московскому времени).</p>
+    <div class="center button-wrap">
+        <div class="button fancy-ok" >Закрыть</div>
+    </div>
+</div>
+

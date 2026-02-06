@@ -1,0 +1,22 @@
+{% if lastNews | length > 0 %}
+    <div class="sidebar_latest">
+        <div class="sidebar_title">{{ MiscFunc.t('app', 'Последние публикации') }}</div>
+        <div class="sidebar_latest_posts">
+
+            <!-- Recent Post -->
+            {% for new in lastNews %}
+                <div class="latest_post d-flex flex-row align-items-start justify-content-start">
+                    <div>
+                        <div class="latest_post_image"><img src="/upload/medium/{{ new.source.main_image }}" alt=""></div>
+                    </div>
+                    <div class="latest_post_content">
+                        <div class="latest_post_date"><a href="{{ MiscFunc.urlLang(new.path) }}">{{ new.source.date | date('d.m.Y') }}</a></div>
+                        <div class="latest_post_title"><a href="{{ MiscFunc.urlLang(new.path) }}">{{ new.name }}</a></div>
+                        <div class="latest_post_author">{{ MiscFunc.t('app', 'Раздел') }}: {{ new.group }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,9 @@
+<div>
+    {% set langList = language.getLanguageListDefaultSort() %}
+    {% if langList | length > 1 %}
+        {% for lang in langList %}
+            <a href="{{ language.getLangUrl(lang.name) }}"
+               class="lang__item {% if lang.name == language.getLang() %}is-active{% endif %}">{{ lang.title }}</a>
+        {% endfor %}
+    {% endif %}
+</div>

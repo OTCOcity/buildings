@@ -1,0 +1,9 @@
+<div class="main-logo {{ class }}">
+    {% for char in logoArr %}
+        {% if char != ' ' %}
+            <span>{{ char | upper }}</span>
+        {% else %}
+            &nbsp;
+        {% endif %}
+    {% endfor %}
+</div>

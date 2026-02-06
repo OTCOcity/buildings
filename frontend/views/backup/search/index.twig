@@ -1,0 +1,21 @@
+<section class="main section--margin-top">
+    <div class="main_container text_style text_style--only-elements">
+        <h1 class="main__title">Результаты поиска</h1>
+
+        {% if shortText %}
+            <p>Слишком короткий запрос для поиска, введите не менее трех символов!</p>
+        {% elseif standarts | length == 0 %}
+            <p>По запросу <strong>&laquo;{{ q }}&raquo;</strong> ничего не найдено!</p>
+        {% else %}
+            <p>По запросу <strong>&laquo;{{ q }}&raquo;</strong> найдено {{ standarts | length }} {{ MiscFunc.pluralForm(standarts | length, ['результат', 'результата', 'результатов']) }}!</p>
+            {% for standart in standarts %}
+                <div class="search__item">
+                    <a href="{{ standart.path }}" class="search__item-link">{{ loop.index }}.  {{ standart.name }}</a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <!-- /.main_container -->
+</section>
+
+

@@ -1,0 +1,42 @@
+<div class="sliderBackground"></div>
+<div class="white"></div>
+<div class="inner prMenu">
+    <div class="rightColumn">
+        <div class="breadcrumbs">
+            <a href="/">Главная</a>
+            <span>-</span>
+            <span>История</span>
+        </div>
+        <h2>История заказов</h2>
+        {% set orderList = orders %}
+        {% if  orderList| length  %}
+        <table class="tableOrderlist" id="tableOrderlist">
+            <tbody><tr>
+                <td>№</td>
+                <td>Кол-во позиций</td>
+                <td>Сумма</td>
+                <td>Дата</td>
+                <td></td>
+            </tr>
+            {% for order in orderList %}
+            <tr>
+                <td>{{ order.name }}</td>
+                <td>{{ order.itemCount }}</td>
+                <td>{{ order.sum_itog | number_format(2, ',', ' ') }}</td>
+                <td> {{ order.date }}</td>
+                <td><a href="{{ misc.getThreadInfo('cabinet', 'url') }}/history/{{ order.id }}">Подробнее</a></td>
+            </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+        {% else  %}
+        <p>У вас нет ни одного заказа</p>
+        {% endif %}
+
+    </div>
+    <div class="leftColumn">
+        {{ this.render('__navigation.twig') | raw }}
+    </div>
+</div>

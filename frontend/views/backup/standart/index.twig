@@ -1,0 +1,61 @@
+{#
+<div class="panel-group" id="accordion">
+
+    {% for group in standartsByGroups %}
+    <div class="panel panel-default">
+        <!-- Заголовок группы -->
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">{{ group.name }}</a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <!-- Список стандартов в группе -->
+            <ul class="panel-body">
+                {% for item in group.items %}
+                <li>
+                    <a href="{{ item.path }}">{{ item.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+#}
+<section class="standarts section--margin-top">
+    <div class="main_container">
+        <h1 class="main__title">
+            Все стандарты
+        </h1>
+
+        {% for group in standartsByGroups %}
+        <div class="standarts__wrapp">
+            <div class="standarts__header">
+                <div class="standarts__arrow standarts__arrow--left"></div>
+                <div class="standarts__title standarts__title--right">{{ group.name }}</div>
+                <!-- /.standarts__arrow -->
+            </div>
+            <!-- /.standarts__header -->
+            <div class="standarts__pocket">
+                <div class="standarts__content">
+                    <ul>
+                        {% for item in group.items %}
+                            <li>
+                                <a href="{{ item.path }}">{{ item.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.standarts__content -->
+            </div>
+            <!-- /.standarts__pocket -->
+        </div>
+        <!-- /.standarts__wrapp -->
+        {% endfor %}
+
+    </div>
+    <!-- /.container -->
+</section>
+<!-- /.all -->

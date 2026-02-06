@@ -1,0 +1,8 @@
+{{ this.registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyBDoBRl5u9b4EyeU_QXSvtxO6bYwvwuJ6c') }}
+
+{{ form.field(model, config.key).hiddenInput({
+    'placeholder': config.name,
+}) | raw }}
+
+<div class="admin-gmap" style="height: 350px;"></div>
+<br>

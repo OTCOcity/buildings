@@ -1,0 +1,14 @@
+<div class="partners">
+    <div class="inner">
+        <div  id="owl-1" class="owl-carousel owl-theme">
+            {% for brand in brands %}
+                {% set logo = brand.logo.name %}
+                <div class="item">
+                    {% if logo %}
+                        <img src="/upload/thumb/{{ logo }}" alt="{{ brand.name | e }}" title="{{ brand.name | e }}">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="breadcrumbs">
+    <a href="/">Главная</a>
+    <span class="breadcrumbs__div">›</span>
+    {% for bc in app.params['breadcrumbs'] %}
+        {% if loop.last %}
+            <span class="breadcrumbs__label">{{ bc.label }}</span>
+        {% else %}
+            <a href="{{ bc.url }}">{{ bc.label }}</a>
+            <span class="breadcrumbs__div">›</span>
+        {% endif %}
+    {% endfor %}
+</div>
+

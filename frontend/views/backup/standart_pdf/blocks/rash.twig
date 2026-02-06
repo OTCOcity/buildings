@@ -1,0 +1,8 @@
+{% if subStandart.exp_text %}
+    <section class="spec page-break-before rash section--top-bordered" id="exp{{ subStandart.id }}">
+        <h1 class="desc__title">
+            Расход материалов
+        </h1>
+        {{ subStandart.exp_text | raw }}
+    </section>
+{% endif %}

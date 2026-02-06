@@ -1,0 +1,37 @@
+<section class="more">
+    <div class="container">
+        <h1>
+            Вам могут быть полезны
+        </h1>
+        <div class="more__wrapp">
+            <div class="more__slider">
+                {% for mStandart in standart.moreStandarts %}
+                    <div class="more__slide">
+                        {% set subStandart = mStandart.subStandarts[0] %}
+                        <div class="more__pic">
+                            {% if subStandart.image %}
+                                <img src="/upload/medium/{{ subStandart.image }}" alt=" {{ mStandart.name | e }}"
+                                     class="more__img">
+                            {% else %}
+                                <img src="/images/standart-no-image.png" alt=" {{ mStandart.name | e }}"
+                                     class="more__img">
+                            {% endif %}
+                        </div>
+                        <!-- /.more__pic -->
+                        <a href="{{ mStandart.path }}" class="more__link">
+                            {{ mStandart.name }}
+                        </a>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+            <!-- /.more__slider -->
+        </div>
+        <!-- /.more__wrapp -->
+    </div>
+    <!-- /.container -->
+    <div class="more__btn more__btn_back js_more__btn_back"></div>
+    <div class="more__btn more__btn_next js_more__btn_next"></div>
+</section>
+<!-- /.more -->

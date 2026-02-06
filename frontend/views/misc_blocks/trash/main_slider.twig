@@ -1,0 +1,18 @@
+<div class="slider">
+    {% for group in groups %}
+    <div class="boxSlider {% if loop.index0 == 0 %}active{% endif %}">
+        <div class="hoverBlock">
+            <div class="title">{{ group.name }}</div>
+            <a href="{{ group.url }}" class="catalogButton">Перейти в каталог</a>
+        </div>
+        {% set bg = group.model.background.name  %}
+        <div class="image" style="{% if bg %}background:url('/upload/orig/{{ bg }}');{% endif %}">
+            <div class="overlayColor" style="background:#0e6117"></div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="nav">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</div>

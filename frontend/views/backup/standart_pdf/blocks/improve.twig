@@ -1,0 +1,43 @@
+<section class="know" id="improve">
+    <div class="container">
+        <div class="os-success__cont">
+            <h2>
+                Знаете как улучшить этот стандарт?<br>
+                Напишите нам!
+            </h2>
+            <form action="/os" class="know__form ajax-validate">
+                <div class="know__wrapp">
+                    <input type="hidden" name="FeedbackForm[theme]" class="form__input" value="Улучшить стандарт!">
+                    <div class="know__input">
+                        <input type="text" name="FeedbackForm[name]" class="form__input" placeholder="Имя"
+                               id="improve-block-name">
+                    </div>
+                    <!-- /.know__input -->
+                    <div class="know__input">
+                        <input type="text" name="FeedbackForm[phone]" class="form__input"
+                               placeholder="Телефон или почта">
+                    </div>
+                    <!-- /.know__input -->
+                </div>
+                <!-- /.know__wrapp -->
+                <div class="know__massage">
+                    <textarea class="form__textarea" name="FeedbackForm[text]"
+                              placeholder="Ваше предложение, вопрос"></textarea>
+                </div>
+                <div class="know__checkbox styled-checkbox">
+                    <input id="os-know-checkbox" type="checkbox" name="FeedbackForm[agree]">
+                    <label for="os-know-checkbox">
+                        Я соглашаюсь с обработкой персональных данных
+                    </label>
+                </div>
+                <div class="errors-list">
+
+                </div>
+                <button class="form__btn">
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- /.container -->
+</section>

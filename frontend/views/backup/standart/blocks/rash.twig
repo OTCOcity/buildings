@@ -1,0 +1,41 @@
+{% if subStandart.exp_text %}
+    <section class="rash section--top-bordered" id="exp{{ subStandart.id }}">
+        <div class="container">
+            <div class="rash__head">
+                <div class="rash__title">
+                    <h1>
+                        Расход материалов
+                    </h1>
+                </div>
+                {#
+                <div class="rash__btns">
+                    <div class="print">
+                        <div class="print__btn">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M4 0H16V4H4V0ZM3 5H17C18.6602 5 20 6.33997 20 8V14H16V18H4V14H0V8C0 6.33997 1.33984 5 3 5ZM6 16H14V11H6V16ZM17 9C16.4502 9 16 8.55005 16 8C16 7.44995 16.4502 7 17 7C17.5498 7 18 7.44995 18 8C18 8.55005 17.5498 9 17 9Z"
+                                      transform="translate(8 9)"/>
+                            </svg>
+                        </div>
+                        <div class="print__btn">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2V4H0V0Z"
+                                      transform="translate(20 19)"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0L8 5H0L4 0Z"
+                                      transform="translate(17 28) scale(1 -1)"/>
+                                <path class="border" d="M5 16H0V0H10.0785L14 4.26667V11" transform="translate(11 10)"
+                                      stroke="#4285F4" stroke-width="2"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0V6H6L0 0Z"
+                                      transform="translate(20 9)"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                #}
+            </div>
+            {{ subStandart.exp_text | raw }}
+        </div>
+    </section>
+{% endif %}

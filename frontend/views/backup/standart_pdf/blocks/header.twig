@@ -1,0 +1,13 @@
+<header class="header" style="
+    {% if standart.file %}
+        background-image: url('/upload/orig/{{ standart.file }}') !important;
+    {% else %}
+        background-image: url('/images/header_bg.png') !important;
+    {% endif %}
+">
+    {% if not standart.file %}
+    <h1 class="header__title">
+        {{ standart.name }}
+    </h1>
+    {% endif %}
+</header>

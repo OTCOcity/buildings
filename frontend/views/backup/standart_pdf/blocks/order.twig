@@ -1,0 +1,31 @@
+{% if standart.buy_title %}
+<section class="order">
+    <div class="container">
+        <div class="order__content">
+            <h2>
+                {{ standart.buy_title }}
+            </h2>
+            {% if standart.buy_anons %}
+            <p>
+                {{ standart.buy_anons }}
+            </p>
+            {% endif %}
+        </div>
+        <!-- /.order__content -->
+        {% if standart.buy_image %}
+        <div class="order__pic">
+            <img src="/upload/medium/{{ standart.buy_image }}" alt="" class="order__img">
+        </div>
+        {% endif %}
+        <!-- /.order__pic -->
+        <div class="order__btns">
+            <div  data-fancybox href="javascript:;" data-src="#ordering_form"  class="order__btn order_btn">
+                Заказать услугу
+            </div>
+            <div  data-fancybox href="javascript:;" data-src="#buy_form"  class="order__btn buy_btn">
+                Купить материалы
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

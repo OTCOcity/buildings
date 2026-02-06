@@ -1,0 +1,84 @@
+{#{{ this.registerJsFile('/js/ace/dataTables/jquery.dataTables.js', {depends : 'yii\\bootstrap\\BootstrapPluginAsset'}) }}#}
+{#{{ this.registerJsFile('/js/ace/dataTables/jquery.dataTables.bootstrap.js', {depends : 'yii\\bootstrap\\BootstrapPluginAsset'}) }}#}
+
+<div class="page-header">
+    <h1><i class="fa fa-user"></i> Пользователи CMS</h1>
+</div>
+
+{% if users | length > 0 %}
+
+    <table class="data-table table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <!--
+            <th class="center">
+                <label class="pos-rel">
+                    <input type="checkbox" class="ace"/>
+                    <span class="lbl"></span>
+                </label>
+            </th>
+            -->
+            <th>Имя</th>
+            <th>E-mail</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for user in users %}
+            <tr class="{% if not user.active %}not-visible{% endif %}">
+
+                <!--
+                <td class="center">
+                    <label class="pos-rel">
+                        <input type="checkbox" class="ace"/>
+                        <span class="lbl"></span>
+                    </label>
+                </td>
+                -->
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ statuses[user.status] }}</td>
+                <td>
+                    {% if app.user.identity.status != 2 %}
+
+                    <div class="hidden-sm hidden-xs action-buttons">
+                        <a class="green" href="/admin/users/{{ user.id }}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
+                        <a class="red" href="/admin/users/delete/{{ user.id }}" onclick=" $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#confirm-block-modal').modal({ backdrop: 'static', keyboard: false }); return false;"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
+                        <a class="blue block-visible-toggle" href="/admin/users/activetoggle/{{ user.id }}" ><i class="ace-icon fa fa-eye{% if user.active %}-slash{% endif %} bigger-130"></i></a>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                            <div class="inline pos-rel">
+                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                    <li>
+                                        <a class="green" href="/admin/users/{{ user.id }}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="red" href="/admin/users/delete/{{ user.id }}" onclick=" $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#confirm-block-modal').modal({ backdrop: 'static', keyboard: false }); return false;"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="blue block-visible-toggle" href="/admin/users/activetoggle/{{ user.id }}" ><i class="ace-icon fa fa-eye{% if user.active %}-slash{% endif %} bigger-130"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Пока нет ни одной записи</p>
+{% endif %}
+<br>
+
+{% if app.user.identity.status != 2 %}
+    <a href="/admin/users/create" class="btn btn-sm btn-success">Добавить пользователя</a>
+{% endif %}

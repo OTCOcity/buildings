@@ -1,0 +1,143 @@
+<div class="desktop-menu">
+    <a class="dm__logo js-disable-animation" href="/">
+        <img src="/images/logo.svg" class="dm__logo-image" alt="Architection" title="Architection">
+    </a>
+    <div class="dm__menu-items">
+        <div class="dm__menu-item">
+            <a href="/"
+               class="link--lined link--lined-gray link--lined-left">
+                Главная
+            </a>
+        </div>
+        {% for thread in threads %}
+            <div class="dm__menu-item">
+                <a href="{{ thread.url }}"
+                   class="link--lined link--lined-gray link--lined-left {% if thread.url in app.request.url %}is-active{% endif %}">
+                    {{ thread.name }}
+                </a>
+            </div>
+        {% endfor %}
+        <div class="dm__menu-item">
+            <a href="/contacts"
+               {% if 'contacts' in app.request.url %}is-active{% endif %}
+               class="link--lined link--lined-gray link--lined-left">Контакты</a>
+        </div>
+    </div>
+    {#    <div class="dm__menu-lt">
+            <div class="dm__menu-langs">
+                <a href="/china" class="dm__menu-langs-item link--lined link--lined-left">漢語</a>
+                <a href="/eng" class="dm__menu-langs-item link--lined link--lined-left">En</a>
+            </div>
+            <div class="dm__menu-theme">
+                <label id="theme-switcher" class="theme-switcher">
+                    <input type="checkbox" id="theme-switcher" class="theme-switcher__checkbox js-theme-switch"
+                           {% if MiscFunc.getCookie('theme') %}checked{% endif %}>
+                    <div class="theme-switcher__bar">
+                        <div class="theme-switcher__circle"></div>
+                    </div>
+                </label>
+            </div>
+        </div>#}
+    <div class="dm__menu-start">
+        {#<div data-fancybox data-src="#feedback-popup" class="btn btn--reverse btn--rounded js-menu-close--delay">связаться</div>#}
+    </div>
+
+    <div class="dm__bg dm__bg--1"></div>
+    <div class="dm__bg dm__bg--2"></div>
+    <div class="dm__bg dm__bg--3"></div>
+</div>
+<div class="mobile-logo">
+    <a class="dm__logo js-disable-animation" href="/">
+        <img src="/images/logo.svg" class="dm__logo-image" alt="Architection" title="Architection">
+    </a>
+</div>
+
+
+{#
+<div class="menu">
+    {% if showTitle and 0 %}
+        <div class="menu__title">
+            <div>
+                {% if presUrl %}
+                    <a class="link link--lined" href="/presentation" title="Презентация">Мы</a>
+                {% elseif presFile %}
+                    <a download="M&M Presentation" class="link link--lined" href="/presentation" title="Презентация">Мы</a>
+                {% else %}
+                    Мы
+                {% endif %}
+                наполняем пространство
+            </div>
+            <div class="menu__hhr"></div>
+            <div class="js-menu-open">
+                <span class="link link--lined js-menu-title-value">Смыслом</span>
+            </div>
+        </div>
+    {% endif %}
+    <div class="menu__body">
+        <div class="menu__close js-menu-close">
+            <svg class="" viewBox="0 0 12 12">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="black"
+                      d="M10.6666 11.9988L11.9999 10.6655L7.33363 5.99922L11.9998 1.33307L10.6665 -0.000240447L6.00032 4.66591L1.33343 -0.000976562L0.000117558 1.33233L4.66701 5.99922L0 10.6662L1.33331 11.9995L6.00032 7.33253L10.6666 11.9988Z"></path>
+            </svg>
+        </div>
+
+        {% if app.controller.id != 'main' %}
+            <div class="menu__item">
+                <a href="/" class="link--lined link--lined-left js-disable-animation">Главная</a></sup>
+            </div>
+            <div class="menu__hr menu__hidden-md"></div>
+        {% endif %}
+
+        {% if app.controller.id == 'catalog' and app.controller.action.id == 'index' %}
+            <div class="menu__item">
+                <a href="#" class="link--lined link--lined-left js-filter-works">Все работы</a><sup>{{ workTotal }}</sup>
+            </div>
+
+            {% for group in groups %}
+                {% if group.group %}
+                    <div class="menu__item">
+                        <a href="#" data-group="{{ group.group | lower | e }}" data-group-title="{{ group.group | e }}"
+                           class="link--lined link--lined-left js-filter-works">
+                            {{ group.group }}
+                        </a>
+                        <sup>{{ group.cnt }}</sup>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="menu__item">
+                <a href="/works" class="link--lined link--lined-left">Все работы</a><sup>{{ workTotal }}</sup>
+            </div>
+
+            {% for group in groups %}
+                {% if group.group %}
+                    <div class="menu__item">
+                        <a href="/works#{{ group.group | lower | e }}" data-group="{{ group.group | lower | e }}" data-group-title="{{ group.group | e }}"
+                           class="link--lined link--lined-left">
+                            {{ group.group }}
+                        </a>
+                        <sup>{{ group.cnt }}</sup>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="menu__hr menu__hidden-md"></div>
+
+        {% for thread in threads %}
+            <div class="menu__item  menu__hidden-md">
+                <a href="{{ thread.url }}" class="link--lined link--lined-left">{{ thread.name }}</a>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+#}
+
+{#{% if showBurder %}#}
+<div class="menu-burger js-menu-toggle">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+{#{% endif %}#}

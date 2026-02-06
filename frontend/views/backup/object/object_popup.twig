@@ -1,0 +1,7 @@
+<div class="white-popup-block">
+    <h1>{{ object.header }}</h1>
+    <p>{{ object.description }}</p>
+
+    {% for image in object.images %}<img src="{{ image.mediumUrl }}">{% endfor %}
+    <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+</div>

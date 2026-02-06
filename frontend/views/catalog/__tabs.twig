@@ -1,0 +1,18 @@
+{% if data.tabs  %}
+    <div class="tabs">
+        <div class="tabs__header">
+            {% for key, tab in data.tabs %}
+                <div class="tabs__tab-title js-tab-show {% if loop.index == 1 %}is-active{% endif %}" data-key="{{ key }}">
+                    {{ tab.title }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tabs__body">
+            {% for key, tab in data.tabs %}
+                <div class="tabs__tab-text {% if loop.index == 1 %}is-active{% endif %}" data-key="{{ key }}">
+                    {{ tab.text | raw }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

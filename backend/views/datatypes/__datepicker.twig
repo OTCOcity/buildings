@@ -1,0 +1,35 @@
+{#
+{{ use('/kartik/date/DatePicker') }}
+
+{{ form.field(model, config.key).widget(
+    'kartik\\date\\DatePicker', {
+        'type': 1,
+        'language': 'ru',
+        'pluginOptions' : {
+            'autoclose': true,
+            'format': 'dd.mm.yyyy',
+        }
+    }
+) | raw }}
+#}
+
+{{ use('/dosamigos/datepicker/DatePicker') }}
+
+{% if not config.lang and not language.isDefault %}
+    <div class="form-group">
+        <label class="control-label" for="structurecat-color">{{ config.name }}</label>
+        <input type="text" disabled readonly class="form-control" value="{{ model[config.key] }}">
+    </div>
+{% else %}
+    {{ form.field(model, config.key).widget(
+        'dosamigos\\datepicker\\DatePicker', {
+            'language': 'ru',
+            'clientOptions' : {
+                'autoclose': true,
+                'placeholder': 'dd.mm.yyyy',
+                'format': 'dd.mm.yyyy',
+            }
+        }
+    ) | raw }}
+
+{% endif %}

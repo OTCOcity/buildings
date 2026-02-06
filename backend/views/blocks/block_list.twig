@@ -1,0 +1,105 @@
+{#{{ this.registerJsFile('/js/ace/dataTables/jquery.dataTables.js', {depends : 'yii\\bootstrap\\BootstrapPluginAsset'}) }}#}
+{#{{ this.registerJsFile('/js/ace/dataTables/jquery.dataTables.bootstrap.js', {depends : 'yii\\bootstrap\\BootstrapPluginAsset'}) }}#}
+
+{% set arules = app.get('arules') %}
+
+{% if data | length > 0 %}
+
+    <table class="data-table table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="center">
+                <label class="pos-rel">
+                    <input type="checkbox" class="ace"/>
+                    <span class="lbl"></span>
+                </label>
+            </th>
+            {% for field in block.fields %}
+                {% if field.in_list %}
+                    <th>{{ field.name }}</th>
+                {% endif %}
+            {% endfor %}
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for item in data %}
+            {% set b = block.loadData(item) %}
+            <tr class="{% if not item.visible %}not-visible{% endif %}">
+                <td class="center">
+                    {#{{ dump(block.attributes) }}#}
+                    <label class="pos-rel">
+                        <input type="checkbox" class="ace"/>
+                        <span class="lbl"></span>
+                    </label>
+                </td>
+
+                {% for field in block.fields %}
+                    {% if field.in_list %}
+                         <td>
+                            {{ field['_value_list'] | raw }}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+
+                <td>
+
+                    <div class="hidden-sm hidden-xs action-buttons">
+                        {% if arules.checkUserRule(app.user.id, block.thread_id, block.config.key, 'edit') %}
+                            <a class="green" href="/admin/blocks/{{ block.config.key }}/{{ item.id }}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
+                        {% endif %}
+                        {% if arules.checkUserRule(app.user.id, block.thread_id, block.config.key, 'delete') %}
+                            <a class="red" href="/admin/blocks/delete/{{ block.config.key }}/{{ item.id }}" onclick=" $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#block-delete-btn').attr('href', $(this).attr('href')); $('#confirm-block-modal').modal({ backdrop: 'static', keyboard: false }); return false;"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
+                        {% endif %}
+                        {% if block.sortable %}
+                            <a onclick="$.get($(this).attr('href'))" class="blue block-sort block-sort-up" href="/admin/blocks/sortup/{{ block.config.key }}/{{ item.id }}" ><i class="ace-icon fa fa-arrow-up bigger-130"></i></a>
+                            <a onclick="$.get($(this).attr('href'))" class="blue block-sort block-sort-down" href="/admin/blocks/sortdown/{{ block.config.key }}/{{ item.id }}" ><i class="ace-icon fa fa-arrow-down bigger-130"></i></a>
+                        {% endif %}
+                        {% if block.visibable %}
+                            <a onclick="$.get($(this).attr('href')); $(this).closest('tr').toggleClass('not-visible');return false;" class="blue block-visible-toggle" href="/admin/blocks/visibletoggle/{{ block.config.key }}/{{ item.id }}" ><i class="ace-icon fa fa-eye{% if block.visible %}-slash{% endif %} bigger-130"></i></a>
+                        {% endif %}
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline pos-rel">
+                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="/admin/blocks/{{ block.tableName() }}/{{ item.id }}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                    </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/blocks/delete/{{ block.config.key }}/{{ item.id }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="console.log(1);$('#block-delete-btn').attr('href', $(this).attr('href'));  $('#confirm-block-modal').modal({ backdrop: 'static', keyboard: false }); return false;">
+                                    <span class="red">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Пока нет ни одной записи</p>
+{% endif %}
+
+<br>
+{% if block.blockId %}
+    <a href="/admin/blocks/create/{{ block.config.key }}/{{ block.threadId }}/{{ parentKey }}/{{ block.blockId }}"  class="btn btn-sm btn-success">Добавить</a>
+{% else %}
+    {% if arules.checkUserRule(app.user.id, block.thread_id, block.config.key, 'add') %}
+        <a href="/admin/blocks/create/{{ block.config.key }}/{{ block.threadId }}" class="btn btn-sm btn-success">Добавить</a>
+    {% endif %}
+{% endif %}
+

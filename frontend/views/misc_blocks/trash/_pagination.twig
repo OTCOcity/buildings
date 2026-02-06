@@ -1,0 +1,59 @@
+<div class="pages_number">
+    <ul class="pages_number__list">
+        {% for page in pages %}
+            {% set pageQuery = page != 1 ? '?page=' ~ page ~ (filterQuery ? '&' : '') : '?' %}
+                <a href="{{ pageQuery }}{{ filterQuery }}" class="pages_number__item {% if page == activePage %}pages_number__item_active{% endif %}">
+                    {{ page }}
+                </a>
+        {% endfor %}
+    </ul>
+    {% if activePage != count %}
+        <a href="?page={{ activePage + 1 }}{{ filterQuery }}">
+            <div class="pages_number__btn">
+                Следующая →
+            </div>
+        </a>
+    {% endif %}
+</div>
+
+{#
+  <a {% if not page.disabled %}href="{{ page.url }}"{% endif %} class="{% if page.next %}next{% endif %} {% if page.prev %}prev{% endif %} {% if page.disabled %}disabled{% endif %} {% if page.active %}active{% endif %}">
+      {{ page.name }}
+  </a>
+  #}
+
+{#
+<div class="pages_number">
+
+    <ul class="pages_number__list">
+
+        <li class="pages_number__item pages_number__item_active">
+            1
+        </li>
+
+        <li class="pages_number__item">
+            2
+        </li>
+
+        <li class="pages_number__item">
+            3
+        </li>
+
+        <li class="pages_number__item">
+            ...
+        </li>
+
+        <li class="pages_number__item">
+            22
+        </li>
+
+    </ul>
+    <!-- /.pages_number__list -->
+
+    <div class="pages_number__btn">
+        Следующая →
+    </div>
+    <!-- /.pages_number__btn -->
+
+</div>
+#}

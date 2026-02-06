@@ -1,0 +1,139 @@
+<main class="page page_product">
+
+    <div class="rout rout_product">
+
+        <a class="rout__link" href="/">Главная</a> <span class="lightgray">/</span> <a href="{{ group.url }}" class="rout__link">{{ group.name }}</a> <span class="lightgray">/</span> <a href="{{ good.url }}"
+                                                                                                                                                                                          class="rout__link">{{ good.name }}</a>
+
+    </div>
+    <!-- /.rout -->
+
+    {% set images = good.images %}
+
+    <section class="product">
+
+        {% if images[0].file %}
+            <div class="product__photo">
+
+                <div class="product__pic">
+
+                    <div class="product__pic_square"></div>
+
+                    <img src="/upload/orig/{{ images[0].file }}" alt="{{ good.name | e }}" class="product__img">
+
+                    {% if good.sale %}
+                        <div class="product__skid">
+                            {{ good.sale }}
+                        </div>
+                    {% endif %}
+
+                    {% if good.is_cotton %}
+                        <div class="product__hlopok">
+
+                            <img src="/images/hlopok.png" alt="hlopok" class="product__hlopok_img">
+
+                            <p class="product__hlopok_number">
+                                100%
+                            </p>
+
+                            <p class="product__hlopok_text">
+                                хлопок
+                            </p>
+
+                        </div>
+                    {% endif %}
+
+                </div>
+                <!-- /.product__pic -->
+                
+                <ul class="product__list">
+                    {% for image in images %}
+                        <li class="product__item_wrapp">
+                            <div class="product__item {% if loop.index == 1 %}product__item_active{% endif %}">
+
+                                <div class="product__item_bg"></div>
+
+                                <img src="/upload/small/{{ image.file }}" data-orig="/upload/orig/{{ image.file }}" alt="photo" class="product__item_img">
+
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <!-- /.product__piks -->
+            </div>
+        {% else %}
+            <img src="/images/no-image.jpg" alt="">
+        {% endif %}
+
+        <div class="product__desc">
+
+            <h1 class="product__title">
+                {{ good.name }}
+            </h1>
+
+            {% if good.price %}
+                <div class="product__price">
+                    {% if good.old_price %}
+                        <span class="product__price_strike">{{ good.old_price }} руб.</span>
+                    {% endif %}
+                    {{ good.price }} руб.
+                </div>
+                <!-- /.product__price -->
+                {% set sizes = good.sizes %}
+
+                {% if sizes | length %}
+                <div class="product__size">
+
+                    <div class="product__select_size">
+                        Выбрите размер
+                    </div>
+
+                    <img src="/images/filters__arrow.png" alt="arrow" class="product__select_arrow">
+
+                    {% if sizes | length %}
+                        <ul class="product__size_list">
+                            {% for size in sizes %}
+                                <li class="product__size_item">
+                                    {{ size }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                </div>
+                    {% endif %}
+                <!-- /.product__size -->
+
+                <div class="product__btn to-cart" data-id="{{ good.id }}" data-size="">
+                    Добавить в корзину
+                </div>
+                <!-- /.product__btn -->
+
+            {% endif %}
+            <a href="/kak-vibrat-razmer" class="product__how_size">
+
+                <img src="/images/size.png" alt="size" class="product__how_size_img">
+
+                <p class="product__how_size_text">
+                    Как выбрать размер
+                </p>
+
+            </a>
+            <!-- /.product__how_size -->
+
+            <div class="product__desc_text text-content">
+
+                {{ good.text | raw }}
+
+            </div>
+            <!-- /.product__desc_text -->
+
+        </div>
+        <!-- /.product__desc -->
+
+    </section>
+    <!-- /.product -->
+
+
+</main>

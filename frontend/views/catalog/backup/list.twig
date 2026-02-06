@@ -1,0 +1,35 @@
+<div class="catalog__wrapper">
+    <div class="main__works">
+        <div class="main__works-cats ">
+            <div class="js-main__works-cats-sticky">
+                {% for g in groups %}
+                    {% set g = g ? g : 'Без категории' %}
+                    <a href="#{{ g | e }}" class="main__works-cats-item montserrat">{{ g }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="main__works-content">
+            <div class="cat-list cat-list--main" id="projects">
+                {% set lastGroup = 'tmp-group' %}
+                {% for work in works %}
+                    {% set group = work.group ? work.group : 'Без категории' %}
+                    {% if lastGroup != work.group %}
+                        {% set lastGroup = work.group %}
+                        <h2 class="cat-list__group" id="{{ group | e }}">{{ group }}</h2>
+                    {% endif %}
+                    <a href="{{ work.url }}" class="cat-list__item" data-group="{{ group | lower | e }}">
+                        <div class="cat-list__item--content is-small">
+                            <div class="cat-list__item-image-cont is-small">
+                                <div class="cat-list__item-image"
+                                     style="background-image: url('/upload/medium/{{ work.image }}')">
+                                </div>
+                            </div>
+                            <div class="cat-list__item-title montserrat">{{ work.name }}</div>
+                            <div class="cat-list__item-about montserrat">{{ group }}</div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

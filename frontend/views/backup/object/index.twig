@@ -1,0 +1,129 @@
+<div class="container-wrap">
+    <div id="fh5co-about">
+        <h1 class="inner-page__title">{{ thread.name }}</h1>
+
+        <form action="/realty" method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <div><b>Город</b></div>
+                    <select name="city" class="select--fw select" id="object-filter-city">
+                        {% if city %}
+                            <option value="{{ city.id }}">{{ city.name }}</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div><b>Тип аренды</b></div>
+                    <select name="rentType" class="select--fw select" id="object-filter-rent-type">
+                        {% for key, rentType in objectRentTypes %}
+                            <option value="{{ key }}" {% if app.request.get.rentType == key %}selected{% endif %}>
+                                {{ rentType }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div><b>Тип квартиры</b></div>
+                    <select name="roomType[]" multiple class="select--fw select" id="object-filter-room-type">
+                        {#                        <option value="all" selected>Любой</option>#}
+                        {% for key, roomType in objectRoomTypes %}
+                            <option value="{{ key }}" {% if ''~key in requestRoomTypes %}selected{% endif %}>
+                                {{ roomType }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <div><b>Цена</b></div>
+                    <div class="row no-gutter">
+                        <div class="col-xs-6">
+                            <input type="text" maxlength="8" placeholder="От" class="input--fw input"
+                                   name="priceFrom" value="{{ app.request.get.priceFrom }}"
+                                   id=object-filter-price-from">
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="text" maxlength="9" placeholder="До" class="input--fw input"
+                                   name="priceTo" value="{{ app.request.get.priceTo }}" id=object-filter-price-to">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div><b>&nbsp;</b></div>
+                    <button type="submit" class="btn btn-success btn-sm">Найти</button>
+                </div>
+            </div>
+        </form>
+
+        {% if objects | length %}
+            <table class="table object-table">
+                <thead>
+                <tr>
+                    <td>Адрес</td>
+                    <td class="hidden-xs">Аренда</td>
+                    <td>Комнат</td>
+                    <td>Цена</td>
+                    <td>Фото</td>
+                    {#<td>Дата</td>#}
+                    <td>Телефон</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in objects %}
+                    <tr>
+                        <td>{{ app.user.isGuest ? object.city.name : object.fullAddress }}</td>
+                        <td class="hidden-xs">{{ object.rentType }}</td>
+                        <td>{{ object.roomType }}</td>
+                        <td class="nowrap">{{ MiscFunc.priceFormat(object.price) }} ₽</td>
+                        <td>
+                            {% if object.is_image > 0 %}
+                                <a href="/realty/object-popup/{{ object.id }}" class="link-dotted object-gallery">
+                                    <span class="hidden-xs">
+                                    Посмотреть ({{ object.is_image }})
+                                    </span>
+                                    <i class="icon-image visible-xs"></i>
+                                </a>
+                            {% else %}
+                                <i>&laquo;Нет&raquo;</i>
+                            {% endif %}
+                        </td>
+                        {#<td>{{ object.date | date('d.m.Y') }}</td>#}
+                        <td>
+                            {% if isActiveRequest %}
+                                <a href="#" target="_blank" class="link-dotted text-success get-object-phone" data-id="{{ object.id }}">
+                                    Показать телефон
+                                </a>
+                            {% else %}
+                                <a href="/lk#requests" target="_blank" class="link-dotted text-primary">
+                                    Показать телефон
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mt-15">
+                {% if city %}
+                    <h4>По вашему запросов мы не нашли объекты. Задайте другие параметры поиска или свяжитесь с нашими
+                        менеджерами.</h4>
+                    {{ MiscBlocks.pageContacts() | raw }}
+                {% else %}
+                    <h4>Для поиска объектов выберите город</h4>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% set activePage = app.request.get.page ? app.request.get.page : 1 %}
+        {% if pagination.pageCount > 0 %}
+            <ul class="pagination">
+                {% for p in range(1, pagination.pageCount) %}
+                    <li class="{% if activePage == loop.index %}active{% endif %}"><a
+                                href="/realty?{{ qs }}&page={{ loop.index }}" data-page="{{ loop.index }}">{{ loop.index }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {{ page.text | raw }}
+    </div>
+</div>

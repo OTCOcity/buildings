@@ -1,0 +1,31 @@
+{% set tid = threads[0].parentthread.id %}
+{% set navOpen =attribute(navCookie, tid) %}
+{% set arules = app.get('arules') %}
+
+<ul class="submenu {% if navOpen %}nav-hide{% else %}nav-how{% endif %}" style="{% if not navOpen %}display: none;{% else %}display: block;{% endif %}">
+    {% for thread in threads %}
+        {% set threadChilds = thread.childthreadsAll %}
+        {% if arules.checkUserRule(app.user.id, thread.id, '', 'view') %}
+            <li class="{% if app.controller.actionParams.id == thread.id %}active open{% endif %}">
+                <a href="/admin/threads/{{ thread.id }}">
+                    {% if (thread.lvl > 1) %}
+
+                        <i class="menu-icon fa fa-{{ thread.icon }}"></i>
+
+                    {% else %}
+                        <i class="menu-icon fa fa-caret-right"></i>
+                    {% endif %}
+                    <span class="menu-text"> {{ thread.name }} </span>
+                    {% if (threadChilds | length) %}
+                        <b class="arrow fa fa-angle-down subnav-toggle" data-id="{{ thread.id }}"></b>
+                    {% endif %}
+                </a>
+
+                {% if (thread.childthreadsAll | length) %}
+                    {{ misc.leftNav(thread.id) | raw }}
+                {% endif %}
+                <b class="arrow"></b>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

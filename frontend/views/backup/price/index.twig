@@ -1,0 +1,78 @@
+{% set bg = page.background.name %}
+<div class="sliderBackground" style="{% if bg %}background-image: url('/upload/orig/{{ bg }}') !important;{% endif %}"></div>
+<div class="inner welcomeText">
+    {% if page.name %}
+        <h1>{{ page.name | raw }}</h1>
+        <div class="whr"><img src="/img/whiteHR.png" alt="" /></div>
+    {% endif %}
+    {% if page.anons %}
+        <div class="textTitle">{{ page.anons | raw }}</div>
+    {% endif %}
+</div>
+<div class="contentWrap">
+    <div class="inner">
+        <div class="priceWrap">
+            {{ misc.breadcrumbs() | raw }}<br>
+
+            {% set pf =  page.pricefile.name %}
+            {% if pf %}
+                <a class="downloadPrice" href="/upload/orig/{{ page.pricefile.name }}" target="_blank">Скачать прайс</a>
+            {% else %}
+                <a class="downloadPrice" href="#">Прайс недоступен</a>
+            {% endif %}
+            <form method="get" action="">
+                <input class="priceSerach" name="search" type="text" placeholder="Поиск..." value="{{ page.search | e }}"/>
+            </form>
+            <div class="clear"></div>
+            {% if priceStructure | length %}
+            <p>Цены в прайс-листе действительны с учётом самовывоза с московского склада</p>
+            <div class="tableWrap">
+                <table class="price-table">
+                    <tr class="center">
+                        <td>Наименование</td>
+                        <td>Назначение</td>
+                        <td>Расход</td>
+                        <td>Тара</td>
+                        <td>Цена за <br>1кг/л</td>
+                    </tr>
+                    {% for ps in priceStructure %}
+                        <tr class="center orange">
+                            <td colspan="5">{{ ps.name }}</td>
+                        </tr>
+                        {% for psSG in ps.item %}
+                            <tr class="fb" id="tabl{{ psSG.index }}">
+                                <td colspan="5">{{ psSG.name }}</td>
+                            </tr>
+                            {% for psP in psSG.item %}
+                                <tr class="tabl{{ psSG.index }}">
+                                    <td rowspan="{{ psP.pArr | length }}"><span>{{ psP.name }}</span>{{ psP.anons }}</td>
+                                    <td rowspan="{{ psP.pArr | length }}">
+                                        {{ psP.text | raw }}
+                                    </td>
+                                    <td rowspan="{{ psP.pArr | length }}">1кг на 3-4 кв.м.</td>
+                                    {% for pi in psP.pArr %}
+                                        {% if loop.index == 1 %}
+                                            <td>{{ pi[0] }}</td>
+                                            <td>{{ pi[1] }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                {% for pi in psP.pArr %}
+                                    {% if loop.index > 1 %}
+                                    <tr class="rowspaned tabl{{ psSG.index }}">
+                                        <td>{{ pi[0] }}</td>
+                                        <td>{{ pi[1] }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+                <p>По вашему запросу ничего не найдено.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

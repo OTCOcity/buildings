@@ -1,0 +1,26 @@
+<section class="desc" id="standart{{ subStandart.id }}">
+    <div class="container">
+
+        <div class="desc__text">
+            <h1>
+                {{ subStandart.name }}
+            </h1>
+            {% if subStandart.worth %}
+                <div class="desc__tezis">
+                    <b>Ключевая ценность:</b> {{ subStandart.worth | raw }}
+                </div>
+            {% endif %}
+            <!-- /.desc__tezis -->
+            {{ subStandart.text | raw }}
+
+        </div>
+        <!-- /.desc__text -->
+        {% if subStandart.image %}
+            <div class="desc__pic">
+                <img src="/upload/medium/{{ subStandart.image }}" alt="{{ subStandart.name | e }}">
+            </div>
+        {% endif %}
+        <!-- /.desc__pic -->
+    </div>
+    <!-- /.container -->
+</section>

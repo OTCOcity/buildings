@@ -1,0 +1,28 @@
+{{ register_asset_bundle('backend/assets/AppAsset') }}
+{{ void(this.beginPage()) }}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head>
+    <meta charset="{{ app.charset }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ html.encode(app.name) }}</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    {{ html.csrfMetaTags | raw }}
+    {{ void(this.head) }}
+</head>
+<body class="login-layout light-login">
+{{ void(this.beginBody()) }}
+
+<div class="main-container">
+    <div class="main-content">
+        {{ content | raw }}
+    </div>
+</div>
+
+
+
+{{ void(this.endBody()) }}
+</body>
+</html>
+{{ void(this.endPage()) }}

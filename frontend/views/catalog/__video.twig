@@ -1,0 +1,11 @@
+{% if data.vimeo %}
+    <div class="work-video__wrapper">
+        <div class="content content--video">
+            <div class='embed-overlay'></div>
+            <div class='embed-container'>
+                <iframe src="{{ data.vimeo }}?loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen"
+                        webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            </div>
+        </div>
+    </div>
+{% endif %}

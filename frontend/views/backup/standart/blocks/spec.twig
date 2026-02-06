@@ -1,0 +1,14 @@
+{% if subStandart.spec_text %}
+    <section class="spec section--top-bordered" id="spec{{ subStandart.id }}">
+        <div class="container">
+            <div class="spec__head">
+                <div class="spec__title">
+                    <h1>
+                        {{ subStandart.spec_title ? subStandart.spec_title : 'Спецификация'  }}
+                    </h1>
+                </div>
+            </div>
+            {{ subStandart.spec_text | raw }}
+        </div>
+    </section>
+{% endif %}

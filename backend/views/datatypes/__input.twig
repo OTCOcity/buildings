@@ -1,0 +1,5 @@
+{{ form.field(model, config.key).textInput({
+    'placeholder': config.name,
+    'disabled': not config.lang and not language.isDefault,
+    'data-transliterate-target': config.html_attrs['data-transliterate-target']
+}) | raw }}

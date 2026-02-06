@@ -1,0 +1,37 @@
+{% set calendarList = standart.calendars %}
+{% if calendarList | length %}
+    {% set monthList = calendarList[0].getMonthList(calendarList) %}
+    <h1 class="desc__title">Календарь работ</h1>
+    <div class="calendar__table">
+
+        <table>
+            <tbody>
+            <tr>
+                <td style="width:  100px;">
+                    <p></p>
+                </td>
+                {% set monthWidth = 650 / (monthList | length) %}
+                {% for m in monthList %}
+                    <td style="width:  {{ monthWidth }}px;">
+                        <p>{{ m.name }}</p>
+                    </td>
+                {% endfor %}
+
+            </tr>
+            {% for calendar in calendarList %}
+                <tr>
+                    <td style="width:  100px;">
+                        <p style="text-align: center">{{ calendar.name }}</p>
+                    </td>
+                    {% for m in monthList %}
+                        <td {% if calendar.isMonthActive(m) or calendar.isMonthStart(m) or calendar.isMonthEnd(m) %}style="background-color: {{ calendar.color }};"{% endif %}>
+
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <style> td{height: 20px;line-height:10px;}</style>
+    </div>
+{% endif %}

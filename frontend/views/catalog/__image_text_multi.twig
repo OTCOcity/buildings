@@ -1,0 +1,28 @@
+{# data.text #}
+{# data.text2 #}
+{# data.images (array of image filenames) #}
+
+{% set images = data.images %}
+{% set modifier = images | length > 1 ? 'image-block--two' : 'image-block--one' %}
+<div class="image-block {{ modifier }}">
+    <div class="image-block__list">
+        {% set image = images[0] %}
+        <div class="image-block__item">
+            {% if image %}
+                <img src="/upload/orig/{{ image.file }}" alt="" class="image-block__image">
+            {% endif %}
+            {% if data.text %}
+                <div class="image-block__caption">{{ data.text | raw }}</div>
+            {% endif %}
+        </div>
+        {% set image = images[1] %}
+        <div class="image-block__item">
+            {% if image %}
+                <img src="/upload/orig/{{ image.file }}" alt="" class="image-block__image">
+            {% endif %}
+            {% if data.text2 %}
+                <div class="image-block__caption">{{ data.text2 | raw }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>

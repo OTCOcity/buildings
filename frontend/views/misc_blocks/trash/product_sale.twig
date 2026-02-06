@@ -1,0 +1,11 @@
+<div class="product-sale">
+    <div class="product-sale_date-range">{{ sale.daterange }}</div>
+    <div class="product-sale_date-line"></div>
+    <div class="product-sale_title">
+        <span class="f7 s-15"> {{ sale.name | raw }}</span>
+    </div>
+    <div class="product-sale_anons">
+        {{ sale.anons | raw }}
+    </div>
+    <a href="{{ sale.path }}" class="link-arrow product-sale_more"><h3>Подробнее</h3></a>
+</div>

@@ -1,0 +1,1 @@
+cp -r common/widgets/bootstrapck vendor/2amigos/yii2-ckeditor-widget/src/assets/ckeditor/skins

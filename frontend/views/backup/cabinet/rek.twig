@@ -1,0 +1,80 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{{ this.registerCssFile('https:////cdn.jsdelivr.net/jquery.suggestions/16.2.2/css/suggestions.css') }}
+
+
+
+
+<div class="sliderBackground"></div>
+<div class="white"></div>
+<div class="inner prMenu">
+    <div class="rightColumn">
+        <div class="breadcrumbs">
+            <a href="/">Главная</a>
+            <span>-</span>
+            <span>Личный кабинет</span>
+        </div>
+        <h2>Личная информация</h2>
+        {% set form = ActiveForm_begin({
+        'action' : '/cabinet/rek',
+        'options' : {
+            'class' : 'profile-form'
+        }
+        }) %}
+            <div class="input">
+                <div class="form-group field-rekform-company required has-error">
+                    <label class="control-label" for="rek-dadata">Поиск компании</label>
+                    <input type="text" id="rek-dadata" class="form-control" name="rek-dadata" placeholder="Название компании или ИНН">
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="input">
+                {{ form.field(rekForm, 'company').textInput({
+                    'placeholder': 'Название компании',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'ogrn').textInput({
+                    'placeholder': 'ОГРН',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'kpp').textInput({
+                    'placeholder': 'КПП',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'inn').textInput({
+                    'placeholder': 'ИНН',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'bik').textInput({
+                    'placeholder': 'БИК',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'rs').textInput({
+                    'placeholder': 'Р/С',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'ks').textInput({
+                    'placeholder': 'К/С',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(rekForm, 'ur_adres').textInput({
+                    'placeholder': 'Юридический адрес',
+                }) | raw }}
+            </div>
+            <label for="profile-form-submit">
+                <div class="saveParams orangeBt">Сохранить</div>
+                <input id="profile-form-submit" type = submit class="hidden">
+            </label>
+        {{ ActiveForm_end() }}
+
+    </div>
+    <div class="leftColumn">
+        {{ this.render('__navigation.twig') | raw }}
+    </div>
+</div>

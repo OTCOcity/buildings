@@ -1,0 +1,25 @@
+<div class="contacts">
+    <div class="contacts__title">{{ MiscFunc.t('menu', 'Контакты') }}</div>
+    <ul class="contacts__list">
+        {% if options.email %}
+            <li class="contacts__list-item">
+            <a href="mailto:{{ options.email }}" class="contacts__list-item-link">{{ options.email }}</a>
+        </li>
+        {% endif %}
+        {% if options.phone %}
+        <li class="contacts__list-item">
+            <a href="tel:{{ options.phone }}" class="contacts__list-item-link">{{ options.phone }}</a>
+        </li>
+        {% endif %}
+        {% if options.soc_inst %}
+        <li class="contacts__list-item">
+            <a href="{{ options.soc_inst }}" target="_blank" class="contacts__list-item-link">instagram</a>
+        </li>
+        {% endif %}
+        {% if options.soc_vimeo %}
+        <li class="contacts__list-item">
+            <a href="{{ options.soc_vimeo }}" target="_blank" class="contacts__list-item-link">vimeo</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

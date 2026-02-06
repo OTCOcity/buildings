@@ -1,0 +1,20 @@
+{% if data.text or data.image %}
+    {% set contentDisabled = data.type == '0' ? '--disabled' : '' %}
+    <div class="content{{ contentDisabled }}">
+        <div class="image-text image-text--type-{{ data.type }}">
+
+            {% if data.image %}
+                <img src="/upload/orig/{{ data.image }}" alt="" class="image-text__image">
+            {% endif %}
+
+            {# Text #}
+            <div class="content">
+                {% if data.text %}
+                    <div class="image-text__text">
+                        <p>{{ data.text | raw }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

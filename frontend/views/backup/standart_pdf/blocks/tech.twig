@@ -1,0 +1,30 @@
+{% set techList = subStandart.techs %}
+{% if techList | length %}
+<section class="teh section--top-bordered" id="tech{{ subStandart.id }}">
+    <div class="container">
+        <h1>
+            Технологическая карта
+        </h1>
+        {% for tech in techList %}
+
+            <h2>
+                {{ loop.index }}. {{ tech.name }}
+            </h2>
+
+            {% if tech.image_schema or tech.image_photo or tech.video %}
+                {{ this.render('/standart/blocks/__schema.twig', {
+                    index: loop.index,
+                    name: tech.name,
+                    photo: tech.image_photo,
+                    schema: tech.image_schema,
+                    video: tech.video
+                }) | raw }}
+            {% endif %}
+
+            {{ tech.text | raw }}
+
+        {% endfor %}
+    </div>
+
+</section>
+{% endif %}

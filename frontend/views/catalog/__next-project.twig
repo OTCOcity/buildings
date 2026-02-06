@@ -1,0 +1,31 @@
+<a href="{{ work.url }}" class="next-project">
+    <div class="next-project__cont">
+        <div class="next-project__info">
+            <div>
+                <div class="next-project__next">
+                    {% if app.controller.id == 'presentation' %}Пример работы{% else %}Следующий проект{% endif %}
+                    <img src="/images/icons/arrow-right.svg" alt="">
+                </div>
+            </div>
+            <div>
+                <div class="next-project__title">{{ work.name }}</div>
+                <div>
+                    <div class="next-project__group">{{ work.group }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="next-project__image-cont">
+            <div class="next-project__image-cont-pad">
+                {% if work.shine_color and not work.shine_pos is null %}
+                    <div class="project__shine project__shine--{{ work.shine_pos }}"
+                         style="box-shadow: 0 0 150px 0 {{ work.shine_color }};">
+                    </div>
+                {% endif %}
+                <div class="next-project__image-radius">
+                    <div class="next-project__image"
+                         style="background-image: url('/upload/medium/{{ work.image }}')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

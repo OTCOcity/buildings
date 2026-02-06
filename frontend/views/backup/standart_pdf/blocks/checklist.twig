@@ -1,0 +1,26 @@
+{% if standart.check_text %}
+    <div class="desc__header">
+        <div class="container">
+            <h1 class="desc__title">
+                Чек-лист
+            </h1>
+            <div class="all__dropp_dn_arrow"></div>
+        </div>
+    </div>
+    <div class="desc__content">
+        <div class="desc__content_wrapp">
+            <section class="check" id="checklist">
+                <div class="container">
+                    <h1 class="hide-sm">
+                        Чек-лист
+                    </h1>
+                    <div class="check__wrapp">
+                        {{ standart.check_text | raw }}
+                    </div>
+                    <!-- /.check__wrapp -->
+
+                </div>
+            </section>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,109 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{{ use ('vova07\imperavi\Widget') }}
+
+
+<div class="page-header">
+    {% if not block.name %}
+
+        <h1><i class="fa fa-{{ block.config.icon }}"></i> Новый блок
+            <small><i class="ace-icon fa fa-angle-double-right"></i> добавление</small>
+        </h1>
+
+    {% else %}
+
+        <h1><i class="fa fa-{{ block.config.icon }}"></i> {{ block.name | striptags }}
+            <small><i class="ace-icon fa fa-angle-double-right"></i> редактирование</small>
+        </h1>
+
+    {% endif %}
+
+</div>
+
+<div class="tabbable" id="admin-tabs">
+
+
+    <ul class="nav nav-tabs" id="myTab">
+        {% for tab in block.tabs %}
+            <li class="{% if loop.index == 1 %}active{% endif %}">
+                <a data-toggle="tab" href="#tab-{{ loop.index0 }}" onclick="window.location.href=$(this).attr('href')">
+                    {% if tab.icon is defined %}<i
+                        class="{% if tab.color is defined %}{{ tab.color }}{% else %}blue{% endif %} ace-icon fa fa-{{ tab.icon }} bigger-120"></i>{% endif %}
+                    {{ tab.name }}
+                    {% if tab.inner_blocks is defined %}&nbsp;<span
+                        class="badge {% if tab.count_color is defined %}badge-{{ tab.count_color }}{% else %}badge-danger{% endif %}">{% if tab._count %}{{ tab._count }}{% else %}0{% endif %}</span>{% endif %}
+                </a>
+            </li>
+        {% endfor %}
+        {% if block.seo %}
+            <li class="">
+                <a data-toggle="tab" href="#tab-seo" onclick="window.location.href=$(this).attr('href')">
+                    <i class="blue ace-icon fa fa-search bigger-120"></i>
+                    Seo
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+    <div class="tab-content">
+        {% set form = ActiveForm_begin() %}
+
+        <input type="hidden" value="{{ block.id }}" name="blockid">
+        <input type="hidden" value="{{ block.config.key }}" name="blockkey">
+
+        {% if block.seo %}
+            <div id="tab-seo" class="tab-pane">
+                {{ this.render('__seoform.twig', {'item': block, 'form' : form}) | raw }}
+            </div>
+        {% endif %}
+
+        {% for tab in block.tabs %}
+            <div id="tab-{{ loop.index0 }}" class="tab-pane {% if loop.index == 1 %}active in{% endif %}">
+
+                {# ---------- Поля формы ----------- #}
+                {% for field in tab.fields %}
+
+                    {{ block.renderField(field.key, form) | raw }}
+
+
+                {% endfor %}
+
+                {% if tab.fields | length %}
+                    <button type="submit" class="btn btn-sm btn-success">
+                        Сохранить
+                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                    </button>&nbsp;
+                    {% if block.blockId %}
+                        <button type="submit" name="saveAndBack" value="/admin/blocks/{{ block.blockKey }}/{{ block.blockId }}#tab-{{ block.tab }}" class="btn btn-sm btn-primary">
+                            <i class="ace-icon fa fa-arrow-left icon-on-left"></i>
+                            Сохранить и назад
+                        </button>&nbsp;
+                        <a href="/admin/blocks/{{ block.blockKey }}/{{ block.blockId }}#tab-{{ block.tab }}"
+                           class="btn btn-sm btn-danger">
+                            Отмена <i class="ace-icon fa fa-ban icon-on-right"></i>
+                        </a>
+                    {% else %}
+                        <button type="submit" name="saveAndBack" value="/admin/threads/{{ block.threadId }}#tab-{{ block.tab }}" class="btn btn-sm btn-primary">
+                            <i class="ace-icon fa fa-arrow-left icon-on-left"></i>
+                            Сохранить и назад
+                        </button>&nbsp;
+                        <a href="/admin/threads/{{ block.threadId }}#tab-{{ block.tab }}" class="btn btn-sm btn-danger">
+                            Отмена <i class="ace-icon fa fa-ban icon-on-right"></i>
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+
+                {# ---------- Вложенные блоки ----------- #}
+                {% if tab.inner_blocks %}
+                    {{ block.renderInnerblocks(tab.inner_blocks, block.config.key) | raw }}
+                {% endif %}
+
+            </div>
+        {% endfor %}
+        {{ ActiveForm_end() }}
+
+    </div>
+
+</div>
+
+

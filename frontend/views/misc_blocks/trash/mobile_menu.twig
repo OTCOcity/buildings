@@ -1,0 +1,41 @@
+<div class="mobile-menu js-mobile-menu">
+    <div class="mobile-menu__inner">
+        <div class="mobile-menu__scroll-wrap">
+            <div class="mobile-menu__scroll-content">
+                <div class="mobile-menu__align-wrap">
+                    <div class="mobile-menu__section mobile-menu__section_nav">
+
+                        <nav class="sub-nav">
+                            <ul class="sub-nav__list">
+                                {% for thread in threads %}
+                                    {% if thread.module != 4 %}
+                                        <li class="sub-nav__list-item">
+                                            <a href="{{ thread.url }}"
+                                               class="sub-nav__list-item-link {% if thread.url in app.request.url %}sub-nav__list-item-link_active{% endif %}">
+                                                {{ MiscFunc.t('menu', thread.name) }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <div class="mobile-menu__section mobile-menu__section_contacts">
+
+                        {{ MiscBlocks.pageContacts() | raw }}
+
+                    </div>
+                    <div class="mobile-menu__lang-wrap">
+                        {% if app.language == 'ru' %}
+                            <a href="{{ Language.getChangeUrlLang('en') }}" class="mobile-menu__lang-toggle">Eng</a>
+                        {% else %}
+                            <a href="{{ Language.getChangeUrlLang('ru') }}" class="mobile-menu__lang-toggle">Rus</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

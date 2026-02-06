@@ -1,0 +1,32 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+
+{% set form = ActiveForm_begin({
+    'id': 'thread-create',
+}) %}
+{{ form.field(item, 'seo_title').textInput({
+    'placeholder': 'Seo title',
+    'class': 'input-sm form-control thread-name'
+}) | raw }}
+
+{{ form.field(item, 'seo_keywords').textInput({
+    'placeholder': 'Seo keywords',
+    'class': 'input-sm form-control thread-name'
+}) | raw }}
+
+{{ form.field(item, 'seo_description').textInput({
+    'placeholder': 'Seo description',
+    'class': 'input-sm form-control thread-name'
+}) | raw }}
+
+<br>
+{% if app.get('arules').checkUserRule(app.user.id, item.thread_id, '', 'edit') %}
+    <button type="submit" class="btn btn-sm btn-success">
+        Сохранить
+        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+    </button>
+{% endif %}
+
+{{ ActiveForm_end() }}
+
+{# 'action': path("/admin/threads/"~cat.thread_id), #}

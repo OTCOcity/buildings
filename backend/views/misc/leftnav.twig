@@ -1,0 +1,47 @@
+{% set arules = app.get('arules') %}
+<div class="sidebar-shortcuts text-left" id="sidebar-shortcuts">
+    <div class="sidebar-shortcuts-large text-left" id="sidebar-shortcuts-large">
+        &nbsp;
+        {% if arules.isAdmin or arules.isSuper %}
+            <a href="/admin/threads/create" class="btn btn-success" title="Создать новый раздел">
+                <i class="ace-icon fa fa-plus-circle"></i>
+            </a>
+        {% endif %}
+        <a href="{{ misc.getSiteUrl() }}" target="_blank" class="btn btn-info" title="Посмотреть на сайте">
+            <i class="ace-icon fa fa-eye"></i>
+        </a>
+        <a href="/admin/threads/{{ miscFunc.getThreadInfo('options', 'id') }}" class="btn btn-danger" title="Настройки">
+            <i class="ace-icon fa fa-cogs"></i>
+        </a>
+        {% if arules.isAdmin or arules.isSuper %}
+            <a href="/admin/users" class="btn btn-primary" title="Пользователи">
+                <i class="ace-icon fa fa-users"></i>
+            </a>
+        {% endif %}
+        {% if arules.isAdmin or arules.isSuper %}
+            <a href="/admin/translate" class="btn btn-success" title="Переводы">
+                <i class="ace-icon fa fa-globe"></i>
+            </a>
+        {% endif %}
+    </div>
+</div>
+<ul class="nav nav-list" id="sortable">
+    {% for thread in threads %}
+        {% set threadChilds = thread.childthreadsAll %}
+        {% if arules.checkUserRule(app.user.id, thread.id, '', 'view') %}
+            <li class="draggable {% if app.controller.actionParams.id == thread.id %}active open{% endif %}">
+                <a href="/admin/threads/{{ thread.id }}">
+                    <i class="menu-icon fa fa-{{ thread.icon }}"></i>
+                    <span class="menu-text"> {{ thread.name }} </span>
+                    {% if (threadChilds | length) %}
+                        <b class="arrow fa fa-angle-down subnav-toggle" data-id="{{ thread.id }}"></b>
+                    {% endif %}
+                </a>
+                {% if (threadChilds | length) %}
+                    {{ misc.leftNav(thread.id) | raw }}
+                {% endif %}
+                <b class="arrow"></b>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

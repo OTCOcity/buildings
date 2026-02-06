@@ -1,0 +1,67 @@
+<div class="home_search">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="home_search_container">
+                    <div class="home_search_content">
+                        <form action="/{{ Language.getLang() }}/realty" method="get" class="search_form d-flex flex-row align-items-start justfy-content-start">
+                            <div class="search_form_content d-flex flex-row align-items-start justfy-content-start flex-wrap">
+                                <div class="search__item-cont">
+                                    <select class="search_form_select" name="rent" id="search-obj-rent-type">
+                                        <option value="all"></option>
+                                        {% for item in MiscData.getDbData('obj_rent_type') %}
+                                            <option value="{{ item.name | lower }}" {% if app.request.get('rent') == item.name | lower %}selected{% endif %}>
+                                                {{ item.name | capitalize}}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="search__item-cont">
+                                    <select class="search_form_select" name="type" id="search-obj-type">
+                                        <option value="all"></option>
+                                        {% for item in MiscData.getDbData('obj_type') %}
+                                            <option value="{{ item.name | lower }}" {% if app.request.get('type') == item.name | lower %}selected{% endif %}>
+                                                {{ item.name | capitalize }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="search__item-cont">
+                                    <select class="search_form_select" name="room" id="search-obj-room-type">
+                                        <option value="all"></option>
+                                        {% for item in MiscData.getDbData('obj_room_type') %}
+                                            <option value="{{ item.name | lower }}" {% if app.request.get('room') == item.name | lower %}selected{% endif %}>
+                                                {{ item.name | capitalize }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="search__item-cont">
+                                    <select class="search_form_select" name="city" id="search-obj-city">
+                                        <option value="all"></option>
+                                        {% for item in MiscData.getDbData('obj_city', [], 'name') %}
+                                            <option value="{{ item.name | lower }}" {% if app.request.get('city') == item.name | lower %}selected{% endif %}>
+                                                {{ item.name | capitalize }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="search__item-cont">
+                                    <select class="search_form_select" name="district" id="search-obj-district">
+                                        <option value="all"></option>
+                                        {% for item in MiscData.getDbData('obj_district', [], 'name') %}
+                                            <option data-city-id="{{ item.city_id }}" value="{{ item.name | lower }}" {% if app.request.get('district') == item.name | lower %}selected{% endif %}>
+                                                {{ item.name | capitalize }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="search_form_button ml-auto">{{ MiscFunc.t('app', 'Поиск') }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

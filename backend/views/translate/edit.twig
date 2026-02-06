@@ -1,0 +1,23 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+{% set form = ActiveForm_begin({id: 'translate-edit-form'}) %}
+
+<div class="form-group field-structureblock-name">
+    <label class="control-label">Категория</label>
+    <select name="translate[category]" class="form-control">
+        {% for category in language.getCategoryList() %}
+            <option value="{{ category }}"
+                    {% if categoryDefault == category %}selected{% endif %}>{{ category }}</option>
+        {% endfor %}
+    </select>
+</div>
+{% for lang in language.getLanguageListDefaultSort %}
+    <div class="form-group field-structureblock-name">
+        <label class="control-label">{{ loop.index == 1 ? 'Фраза для перевода' : lang.title }}</label>
+        <input type="text" class="form-control" name="translate[{{ lang.name }}]"
+               value="{{ translateData[lang.name] | e }}"
+               placeholder="{{ lang.title | e }}">
+    </div>
+{% endfor %}
+<input type="submit" class="hidden">
+{{ ActiveForm_end() }}

@@ -1,0 +1,108 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div class="container-wrap">
+    <div id="fh5co-about">
+
+        <h1 class="inner-page__title">Личный кабинет</h1>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#info">Данные</a></li>
+            <li><a data-toggle="tab" href="#requests">Заявки</a></li>
+            <li><a data-toggle="tab" href="#balance">Платежи</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            {# Tab Info #}
+            <div id="info" class="tab-pane fade in active">
+
+                <br>
+                <p><b>Договор:</b> Скачать <a href="/lk/offer" target="_blank" class="link-dotted">Договор оферты</a></p>
+                <p><b>Фио:</b> {{ client.name }}</p>
+                <p><b>Телефон:</b> {{ MiscFunc.beautyPhone(client.phone) }}</p>
+                <p><b>Логин:</b> {{ client.login }}</p>
+                <p><b>Баланс:</b> {{ MiscFunc.priceFormat2(client.balance) }} ₽</p>
+
+            </div>
+
+            {# Tab Balance #}
+            <div id="balance" class="tab-pane fade">
+
+                {% set clientPays = client.pays %}
+
+                {% if clientPays | length %}
+                <table class="table object-table">
+                    <thead>
+                    <tr>
+                        <td>Способ</td>
+                        <td>Сумма</td>
+                        <td>Дата</td>
+                        <td>Статус</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for pay in clientPays %}
+                        <tr>
+                            <td>{{ pay.payTypes[pay.payment_type] }}</td>
+                            <td>{{ MiscFunc.priceFormat2(pay.sum) }}</td>
+                            <td>{{ pay.date | date('d.m.Y') }}</td>
+                            <td>
+                                {% if pay.checked %}
+                                    <span class="text-success"><i class="icon-check"></i>&nbsp;&nbsp; Подтверждено</span>
+                                {% else %}
+                                    <span class="text-danger"><i class="icon-clock3"></i>&nbsp;&nbsp; На проверке</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mt-25">У вас нет ни одного платежа</p>
+                {% endif %}
+            </div>
+
+            {# Tab Requests #}
+            <div id="requests" class="tab-pane fade">
+
+                {% set clientRequests = client.requests %}
+
+                {% if clientRequests | length %}
+                <table class="table object-table">
+                    <thead>
+                    <tr>
+                        <td>№</td>
+{#                        <td>Заселение</td>#}
+                        <td>Недвижимость</td>
+                        <td>Услуги</td>
+                        <td>Статус</td>
+                        <td>Просмотр</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for request in clientRequests %}
+                        <tr>
+                            <td>{{ request.id }}</td>
+{#                            <td>{{ MiscFunc.date(request.period_begin_date) }} - {{ MiscFunc.date(request.period_end_date) }}</td>#}
+                            <td>{{ request.city.name }}, {{ request.roomAndRentType }}</td>
+                            <td>{{ request.notificationsStr }}</td>
+                            <td>{{ request.statusMessagesShort | raw }}</td>
+                            <td class="nowrap">
+                                {% if request.status %}
+                                    <a href="/realty?city={{ request.city_id }}&rentType={{ request.rent_type }}&roomType={{ request.room }}" class="link-dotted" target="_blank">Просмотр</a>
+                                {% else %}
+                                    <i class="small">Не доступен</i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p class="mt-25">У вас нет ни одной заявки</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,39 @@
+{{ use('/yii/widgets/Pjax') }}
+
+{{ Pjax_begin({'id' : 'vac-pjax' }) }}
+<section class="content content-type-2" >
+    <div class="inner">
+        <div class="right-col">
+            <h1 class="red-line-left">{{ vac.name }}</h1>
+            <div>
+                <h3>Требования:</h3>
+                <div class="clear border-3"></div>
+                {{ vac.text_require | raw }}
+            </div>
+            <div>
+                <h3>Обязанности:</h3>
+                <div class="clear border-3"></div>
+                {{ vac.text_respons | raw }}
+            </div>
+            <div>
+                <h3>Условия работы:</h3>
+                <div class="clear border-3"></div>
+                {{ vac.text_conditions | raw }}
+            </div>
+            <div class="competition">
+                {{ vac.text_comment | raw }}
+            </div>
+        </div>
+        <div class="left-col">
+            <h1 class="red-line-left">ВАКАНСИИ</h1>
+            <div class="menu-jobs">
+                <ul>
+                    {% for vacItem in vacList %}
+                        <li><a class="{% if vacItem.id == vac.id %}active{% endif %}" href="{{ thread.url }}/{{ vacItem.id }}">{{ vacItem.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{{ Pjax_end() }}

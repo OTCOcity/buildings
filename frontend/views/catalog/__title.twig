@@ -1,0 +1,11 @@
+{% if title %}
+    <div class="content">
+        <div class="block-title-cont">
+            {% if isH1 %}
+                <h1 class="block-title">{{ title }}</h1>
+            {% else %}
+                <h2 class="block-title">{{ title }}</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

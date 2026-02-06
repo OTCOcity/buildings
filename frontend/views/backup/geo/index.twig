@@ -1,0 +1,72 @@
+{{ this.registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyBDoBRl5u9b4EyeU_QXSvtxO6bYwvwuJ6c') }}
+
+{{ this.registerJsFile('/js/geo.js', {depends: 'yii\\web\\JqueryAsset'}) }}
+
+<section class="content">
+    <div class="mapes-page">
+		<div class="input geo-select-cont">
+			<h3>Выберите город</h3>
+			<select class="geo-select">
+				<option value="0">Выберите город</option>
+				{% for city in cities %}
+					<option value="city-{{ city.id }}">{{ city.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+        {% for city in cities %}
+            <div class="list {% if loop.index0 %}hidden-cancel{% endif %} geo-city" id="city-{{city.id}}" data-lat="{{ city.coords['lat'] }}" data-lng="{{ city.coords['lng'] }}">
+                <div class="list-element list-title">
+                    <div class="inner">
+                        <div>
+                            <div class="left-col">
+                            </div>
+                            <div class="right-col">
+                                <h2 >{{ city.name }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                {% for item in city.items %}
+                    {% set image = item.image %}
+                    <a href="{{ item.url }}" class="list-element geo-city-item-link">
+                        <div class="inner">
+                            <div>
+                                <div class="left-col">
+                                    <div class="img">
+                                        {% if image %}
+                                            <img src="/upload/small/{{ image }}" alt="{{ item.name|e }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="right-col">
+                                    <div class="title">{{ item.name }}</div>
+                                    <div class="description">{{ item.text | raw }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+		<div class="list">
+		<div class="list-element">
+			<div class="inner">
+				<div>
+					<div class="left-col"></div>
+					<div class="right-col">
+						<div class="geo__text">
+							{{ info.text | raw }}
+							{% for region in regions %}
+								<div class="region-item hidden" id="reg-{{region.id}}" data-lat="{{ region.coords['lat'] }}" data-lng="{{ region.coords['lng'] }}">{{ region.name }}</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="map" id="map-geo"></div>
+    </div>
+
+</section>

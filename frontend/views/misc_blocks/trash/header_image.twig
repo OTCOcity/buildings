@@ -1,0 +1,36 @@
+<div class="home">
+    <div class="parallax_background parallax-window"
+         data-parallax="scroll"
+         {% if imageSrc %}
+            data-image-src="{{ imageSrc }}"
+         {% else %}
+             data-image-src="/images/properties.jpg"
+         {% endif %}
+         data-speed="1.25"></div>
+    <div class="home_container">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="home_content d-flex flex-row align-items-end justify-content-start">
+                        <div class="home_title">{{ title }}</div>
+                        {{ imageSrcs }}
+                        <div class="breadcrumbs ml-auto">
+                            <ul>
+                                <li><a href="/{{ app.language }}">{{ MiscFunc.t('menu', 'Главная') }}</a></li>
+                                {% for b in app.params.breadcrumbs %}
+                                    <li>
+                                    {% if b.url %}
+                                        <a href="{{ b.url }}">{{ MiscFunc.t('menu',  b.label) }}</a>
+                                    {% else %}
+                                        {{ MiscFunc.t('menu', b.label) }}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

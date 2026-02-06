@@ -1,0 +1,211 @@
+{% set videoId = video.videoId %}
+{% if videoId %}
+    <div class="video-container">
+        <div class="video-container__iframe-holder">
+            <iframe src="https://player.vimeo.com/video/{{ videoId }}?autoplay=1" frameborder="0" allow="autoplay; fullscreen"
+                    allowfullscreen class="video-container__iframe js-video-iframe"></iframe>
+        </div>
+    </div>
+{% endif %}
+
+<div class="inner-page film-page">
+    <div class="inner-page__container container">
+        <div class="inner-page__title-wrap">
+            <h1 class="inner-page__title">{{ video.name }}</h1>
+            <div class="inner-page__sub-title">{{ video.anons }}</div>
+        </div>
+        <div class="film-page__section-wrap">
+            <div class="film-page__section film-page__section_descr">
+                <div class="film-page__text info-box">
+                    {{ video.text | raw }}
+                </div>
+            </div>
+            <div class="film-page__section film-page__section_credits">
+                <div class="film-page__section-title">Credits:</div>
+                <ul class="cast-crew-list">
+
+                    {% for credit in video.creditsArr %}
+                        <li class="cast-crew-list__row">
+                            <div class="cast-crew-list__credit">{{ credit.post }}:</div>
+                            <div class="cast-crew-list__name-wrap">
+                                <div class="cast-crew-list__name">{{ credit.name }}</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+
+        {% set imageAwwards = video.imageAwards %}
+        {% if imageAwwards | length %}
+        <div class="film-page__section">
+            <div class="film-page__section-title">Awards:</div>
+
+
+            <ul class="awards-list">
+                {% for image in imageAwwards %}
+                <li class="awards-list__item">
+                    <img src="/upload/orig/{{ image.file }}" alt="" class="awards-list__img">
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        {% endif %}
+
+        {% set imageSelections = video.imageSelections %}
+        {% if imageSelections | length %}
+        <div class="film-page__section">
+            <div class="film-page__section-title">Selection:</div>
+
+
+            <ul class="awards-list">
+                {% for image in imageSelections %}
+                <li class="awards-list__item">
+                    <img src="/upload/orig/{{ image.file }}" alt="" class="awards-list__img">
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        {% endif %}
+
+        {% set imageScreenshots = video.imageScreenshots %}
+        {% if imageScreenshots | length %}
+        <div class="film-page__section">
+            <div class="film-page__section-title">Screenshots:</div>
+            <ul class="screenshots-gallery">
+                {% for image in imageScreenshots %}
+                <li class="screenshots-gallery__item">
+                    <a href="/upload/big/{{ image.file }}" data-fancybox="gallery-desktop" class="screenshots-gallery__item-link">
+                        <span class="screenshots-gallery__item-img-wrap">
+                            <img src="/upload/medium/{{ image.file }}" alt="" class="screenshots-gallery__item-img">
+                        </span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="video-container video-container_mobile">
+        <div class="video-container__iframe-holder">
+            <iframe src="https://player.vimeo.com/video/{{ videoId }}" frameborder="0" allow="autoplay; fullscreen"
+                    allowfullscreen class="video-container__iframe js-video-iframe1"></iframe>
+        </div>
+    </div>
+
+
+    {% if imageAwwards | length %}
+    <div class="swiper-container awards-slider js-awards-slider">
+        <div class="swiper-wrapper awards-slider__wrap">
+
+            {% for image in imageAwwards %}
+            <div class="swiper-slide awards-slider__slide">
+                <div class="awards-slider__img-wrap">
+                    <img src="/upload/orig/{{ image.file }}" alt="" class="awards-slider__img">
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination awards-slider__pagination js-awards-slider-pagination"></div>
+    </div>
+    {% endif %}
+
+
+    {% if imageSelections | length %}
+    <div class="swiper-container awards-slider awards-slider_small js-awards-slider">
+        <div class="swiper-wrapper awards-slider__wrap">
+
+            {% for image in imageSelections %}
+                <div class="swiper-slide awards-slider__slide">
+                    <div class="awards-slider__img-wrap">
+                        <img src="/upload/orig/{{ image.file }}" alt="" class="awards-slider__img">
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination awards-slider__pagination js-awards-slider-pagination"></div>
+    </div>
+    {% endif %}
+
+
+    <div class="credits-mobile">
+        <div class="credits-mobile__container container">
+            <ul class="cast-crew-list">
+
+                {% for credit in video.creditsArr %}
+                <li class="cast-crew-list__row">
+                    <div class="cast-crew-list__credit">{{ credit.post }}:</div>
+                    <div class="cast-crew-list__name-wrap">
+                        <div class="cast-crew-list__name">{{ credit.name }}</div>
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+
+
+    {% if imageScreenshots | length %}
+    <div class="gallery-slider-wrap gallery-slider-wrap_mobile">
+        <div class="gallery-slider-wrap__container container">
+            <div class="gallery-slider-wrap__inner">
+                <div class="gallery-slider-wrap__slider-holder">
+
+                    <div class="swiper-container gallery-slider js-gallery-slider">
+                        <div class="swiper-wrapper gallery-slider__wrap">
+
+                            {% for image in imageScreenshots %}
+
+                            <div class="swiper-slide gallery-slider__slide">
+                                <div data-src="/upload/orig/{{ image.file }}" data-fancybox="gallery"
+                                     class="gallery-slider__slide-inner">
+                                    <div class="gallery-slider__align">
+                                        <div class="gallery-slider__image-wrap">
+                                            <img src="/upload/orig/{{ image.file }}" alt="" class="gallery-slider__img">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+                        </div>
+                        <div class="swiper-pagination gallery-slider__pagination js-gallery-slider-pagination"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% set nextVideo = video.nextVideo %}
+    {% if nextVideo %}
+    <div class="inner-page__container inner-page__container_footer container">
+        <div class="inner-page__footer">
+            <a href="{{ nextVideo.url }}" class="inner-page__go-to-next-film">
+                <span class="inner-page__go-to-next-film-title">{{ nextVideo.name }}</span>
+
+                <svg class="icon icon-next">
+                    <use xlink:href="/img/sprite.svg?b1#icon-next"></use>
+                </svg>
+
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+

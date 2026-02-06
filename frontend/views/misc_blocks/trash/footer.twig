@@ -1,0 +1,49 @@
+<div class="container-wrap">
+    <footer id="fh5co-footer">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <h3>{{ options.slogan }}</h3>
+                <div class="politics=">
+                    <small class="block"><a href="/policy">Политика</a></small>
+                </div>
+                <div class="politics=">
+                    <small class="block"><a href="/dogovor-oferti">Договор оферты</a></small>
+                </div>
+                <div class="politics=">
+                    <small class="block"><a href="/polzovatelskoe-soglashenie">Пользовательское соглашение</a></small>
+                </div>
+                <div class="politics=">
+                    <small class="block"><a href="/politika-konfidencialnosti">Политика конфиденциальности</a></small>
+                </div>
+                <p>
+                    <small class="block">{{ options.copyrights }}</small>
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h2><a href="/">{{ options.slogan_text }}</a></h2>
+                <span class="col-md-12">{{ options.phone }}</span>
+                <span class="col-md-12">{{ options.email }}</span>
+            </div>
+            <div class="col-md-4 text-center">
+                <ul class="fh5co-social-icons">
+                    {% if options.soc_tw %}
+                        <li><a href="{{ options.soc_tw }}" target="_blank"><i class="icon-twitter2"></i></a>
+                        </li>{% endif %}
+                    {% if options.soc_fb %}
+                        <li><a href="{{ options.soc_fb }}" target="_blank"><i class="icon-facebook2"></i></a>
+                        </li>{% endif %}
+                    {% if options.soc_vk %}
+                        <li><a href="{{ options.soc_vk }}" target="_blank"><i class="icon-vk"></i></a></li>{% endif %}
+                    {% if options.soc_inst %}
+                        <li><a href="{{ options.soc_inst }}" target="_blank"><i class="icon-instagram"></i></a>
+                        </li>{% endif %}
+                </ul>
+                <img src="/images/pay-logo.png" width="150">
+            </div>
+        </div>
+    </footer>
+</div><!-- END container-wrap -->
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+</div>

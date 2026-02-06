@@ -1,0 +1,18 @@
+{% if page.image %}
+    {{ MiscBlocks.banner('/upload/orig/' ~ page.image, page.name, page.anons) | raw }}
+{% else %}
+    <div class="no-banner-padding"></div>
+{% endif %}
+
+{{ MiscBlocks.breadcrumbs() | raw }}
+
+<section class="about-generic-area">
+    <div class="container border-top-generic">
+        {{ page.text | raw }}
+    </div>
+</section>
+
+
+{% if services | length %}
+    {{ MiscBlocks.services(services, '', '') | raw }}
+{% endif %}

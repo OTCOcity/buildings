@@ -1,0 +1,51 @@
+<div class="content-layout">
+    <div class="content">
+        {{ MiscBlocks.breadcrumbs() | raw }}
+        <a href="{{ thread.url }}?group={{ work.group | e }}" class="work__title-group">{{ work.group }}</a>
+        <h1 class="work__title">{{ work.name }}</h1>
+{#        {% if work.image %}
+            {{ MiscBlocks.picture(work.image, 'work__image', ['orig', 'medium', 'medium']) | raw }}
+        {% endif %}#}
+
+        {# Header #}
+        {#
+        {% if work.image and work.view_image %}
+            {{ MiscBlocks.pageHead(work.name, work.group, work.color, '/upload/orig/' ~ work.image) | raw }}
+        {% endif %}
+        #}
+
+        {% for contentItem in work.contentItems %}
+
+            {# Title #}
+            {{ this.render('/catalog/__title.twig', {title: contentItem.title}) | raw }}
+
+            {# Tabs #}
+            {{ this.render('/catalog/__tabs.twig', {data: contentItem}) | raw }}
+
+            {# Image + text #}
+{#            {{ this.render('/catalog/__image_text.twig', {data: contentItem}) | raw }}#}
+            {{ this.render('/catalog/__image_text_multi.twig', {data: contentItem}) | raw }}
+
+            {# Image + text #}
+            {{ this.render('/catalog/__video.twig', {data: contentItem}) | raw }}
+
+            {# BlockQuot #}
+            {{ this.render('/catalog/__blockquot.twig', {data: contentItem}) | raw }}
+
+
+        {% endfor %}
+
+        {# Table #}
+        {{ this.render('/catalog/__table.twig', {work: work}) | raw }}
+
+        {# {% if not isPresentation %} #}
+        {# Buy action #}
+        {# {{ this.render('/catalog/__buy.twig', {work: work}) | raw }} #}
+        {# {% endif %} #}
+
+        {# Next project #}
+        {{ this.render('/catalog/__next-project.twig', {work: work.nextProject}) | raw }}
+    </div>
+</div>
+
+{{ MiscBlocks.contacts() | raw }}

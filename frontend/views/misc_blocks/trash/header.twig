@@ -1,0 +1,26 @@
+<nav class="fh5co-nav" role="navigation">
+    <div class="container-wrap">
+        <div class="top-menu">
+            <div class="row">
+                <div class="col-md-12 col-offset-0 text-center">
+                    <div id="fh5co-logo">
+                        <a href="/">{{ options.sitename }}</a>
+                        <span class="col-md-12 h4"><span
+                                    class="header__phone-title">Номер горячей линии</span> {{ options.phone }}</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-md-offset-0 text-center menu-1">
+                    <ul>
+                        <li class="{% if app.request.url == '/' %}active{% endif %}"><a href="/">Главная</a></li>
+                        {% for thread in threads %}
+                            <li class="{% if thread.url in '/' ~ app.request.url %}active{% endif %}"><a
+                                        href="{{ thread.url }}">{{ thread.name }}</a></li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>

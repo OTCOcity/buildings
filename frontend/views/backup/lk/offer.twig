@@ -1,0 +1,25 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div class="container-wrap">
+    <div id="fh5co-about">
+
+        <h1 class="inner-page__title">Договор оферты</h1>
+        <p>Для начала пользования Личным Кабинетом, пожалуйста ознакомьтесь с договором оферты</p>
+        <p>Скачать <a href="/lk/offer" target="_blank" class="link-dotted">Договор оферты</a></p>
+
+        {% set form = ActiveForm_begin({'action': '/lk'}) %}
+
+        <div class="checkbox">
+            {{ form.field(offerForm, 'accept').checkbox({'label':'Согласен с договором оферты'}) | raw }}
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-modify" type="submit">
+                Согласен
+            </button>
+        </div>
+        {{ ActiveForm__end() }}
+
+
+    </div>
+</div>

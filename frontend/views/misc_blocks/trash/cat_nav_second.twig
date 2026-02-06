@@ -1,0 +1,29 @@
+{% set at = "" %}
+<div class="input">
+    <select id="cat-nav-select" onchange="window.location.href = $(this).val()">
+        {% for thread in threads %}
+            {% if thread.url == app.params['breadcrumbs'][1].url %}
+                {% set at = thread %}
+            {% endif %}
+            <option value="{{ thread.url }}" {% if thread.url == app.params['breadcrumbs'][1].url %}selected{% endif %}>{{ thread.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<a href="{{ at.url }}" class="cat-nav__main-link"><span class="red-line-left">{{ at.name |raw }}</span></a>
+{% set subThreads = at.childMenuthreads %}
+{% if subThreads | length %}
+<div class="menu-jobs">
+    <ul>
+        {% for subThread in subThreads %}
+            {% set active =  subThread.url == app.params['breadcrumbs'][2].url %}
+            <li class="{% if active %}parent{% endif %}">
+                <a href="{{ subThread.url }}" class="{% if active%}active{% endif %}">{{ subThread.name }}</a>
+                {% if active %}
+                    {{ MiscBlocks.catalogTree(subThread.id) | raw }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

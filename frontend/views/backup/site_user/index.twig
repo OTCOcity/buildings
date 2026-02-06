@@ -1,0 +1,27 @@
+{{ use('/yii/widgets/ActiveForm') }}
+<section class="main section--margin-top">
+    <div class="main_container">
+        <h1 class="main__title">Необходима авторизация</h1>
+
+        {% set form = ActiveForm_begin({ action: '/login', 'options' : { method: 'post', class: 'know__form'}}) %}
+            <div class="know__wrapp">
+                <div class="know__input">
+                    <input type="text" autofocus name="login" class="form__input" placeholder="Логин" value="{{ user.name }}">
+                </div>
+                <!-- /.know__input -->
+                <div class="know__input">
+                    <input type="password" name="password" class="form__input" placeholder="Пароль">
+                </div>
+                <!-- /.know__input -->
+            </div>
+            <!-- /.know__wrapp -->
+        {% if user.name %}
+            <p class="error">Неверный логин или пароль</p>
+        {% endif %}
+            <button class="form__btn">
+                Войти
+            </button>
+            {{ ActiveForm_end() }}
+    </div>
+</section>
+

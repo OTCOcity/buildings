@@ -1,0 +1,43 @@
+{{ use('/dosamigos/fileupload/FileUpload') }}
+
+<div>
+    <label class="control-label">{{ config.name }}</label>
+</div>
+<div class="admin-image" id="admin-file-list{{ config.key }}">
+    {% for image in data %}
+        {{ this.render("/upload/image-item.twig", {'id': image.id, 'crop':config.options.crop, 'key': config.key, 'filename': image.file, 'ownName': image.name, 'newimage' : false, 'inputName' : model.structureType == 'block' ? 'StructureBlock' : 'StructureCat'}) | raw }}
+    {% else %}
+        {% if not config.lang and not language.isDefault %}
+            <i style="opacity: .55">Не загружено</i>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+{% if not config.lang and not language.isDefault %}
+{% else %}
+
+    {{ FileUpload_widget({
+        'model' : model,
+        'attribute' : config.key,
+        'url' : {'0' : '/admin/upload/uploadimage', 'id' : 1},
+        'options' : {
+            'accept' : 'image/*',
+            'multiple' : config.multiple,
+        },
+        'clientOptions' : {
+            'maxFileSize' : 1,
+        },
+        'clientEvents' : {
+            'fileuploaddone' : 'function(e, data) {
+            result = JSON.parse(data.result);
+            $("#admin-file-list' ~ config.key ~ '").append(result.files[0].html);
+        }',
+            'fileuploadfail' : 'function(e, data) {
+            console.log(e);
+            console.log(data);
+        }',
+        },
+    }) | raw }}
+    <br><br>
+{% endif %}

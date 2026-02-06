@@ -1,0 +1,4 @@
+{% if subStandart.spec_text %}
+    <h2>{{ subStandart.spec_title ? subStandart.spec_title : 'Спецификация' }}</h2>
+    {{ subStandart.spec_text | raw }}
+{% endif %}

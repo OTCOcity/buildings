@@ -1,0 +1,16 @@
+{% for item in items %}
+    <div class="nav__block">
+        <a href="#{{ item[0].hash }}" class="nav__title {% if loop.index == 1 %}active{% endif %}">
+            {{ item[0].name }}
+        </a>
+        <div class="nav__sub-items">
+        {% for subItem in item %}
+            {% if loop.index > 1 %}
+                <a href="#{{ subItem.hash }}" class="nav__item">
+                    {{ subItem.name }}
+                </a>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endfor %}

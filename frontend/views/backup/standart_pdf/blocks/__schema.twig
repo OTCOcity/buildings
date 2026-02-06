@@ -1,0 +1,126 @@
+<div class="shema">
+    <div class="shema__nav">
+        <div class="shema__nav_left">
+            <div class="shema__btns">
+                {% if schema %}
+                    <div class="shema__btn active" data-vid="shema" data-slide="0">
+                        Схема
+                    </div>
+                {% endif %}
+                {% if photo %}
+                    <div class="shema__btn {% if not schema %}active{% endif %}" data-vid="photo" data-slide="1">
+                        Фото
+                    </div>
+                {% endif %}
+                {% if video %}
+                    <div class="shema__btn {% if not schema and not photo %}active{% endif %}" data-vid="video"
+                         data-slide="2">
+                        Видео
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="shema__nav_right">
+
+            <!-- /.print -->
+            {% if schema or photo %}
+                {% set origUrl = schema ? "/upload/orig/" ~ schema : "/upload/orig/" ~ photo %}
+                <div class="print js-print-image" data-title="{{ name | e }}" data-image="{{ (schema ? schema : photo) | e }}">
+                    <div class="print__btn">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M4 0H16V4H4V0ZM3 5H17C18.6602 5 20 6.33997 20 8V14H16V18H4V14H0V8C0 6.33997 1.33984 5 3 5ZM6 16H14V11H6V16ZM17 9C16.4502 9 16 8.55005 16 8C16 7.44995 16.4502 7 17 7C17.5498 7 18 7.44995 18 8C18 8.55005 17.5498 9 17 9Z"
+                                  transform="translate(8 9)"/>
+                        </svg>
+                    </div>
+                    <div class="print__btn js-download-image" data-title="{{ name | e }}" data-image="{{ (schema ? schema : photo) | e }}">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2V4H0V0Z"
+                                  transform="translate(20 19)"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0L8 5H0L4 0Z"
+                                  transform="translate(17 28) scale(1 -1)"/>
+                            <path class="border" d="M5 16H0V0H10.0785L14 4.26667V11"
+                                  transform="translate(11 10)" stroke="#4285F4" stroke-width="2"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0V6H6L0 0Z"
+                                  transform="translate(20 9)"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="zoom">
+                    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                        <path class="zoom__border"
+                              d="M0.5 4C0.5 2.067 2.067 0.5 4 0.5H32C33.933 0.5 35.5 2.067 35.5 4V32C35.5 33.933 33.933 35.5 32 35.5H4C2.067 35.5 0.5 33.933 0.5 32V4Z"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(9 9)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(20 9)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(20 25)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(9 25)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(11 20) rotate(90)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(11 9) rotate(90)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(27 9) rotate(90)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H7V2H0V0Z"
+                              transform="translate(27 20) rotate(90)" \/>
+                    </svg>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- /.shema__nav -->
+    <div class="shema__slider">
+
+        {% if schema %}
+            <div class="shema__pics">
+                <a data-caption="{{ name | e }}" data-fancybox="{{ gallery ? gallery : 'gallery' }}"
+                   href="/upload/orig/{{ schema }}" class="shema__pic shema__pic_shema" data-vid="shema">
+                    <img src="/upload/medium/{{ schema }}" alt="Схема" class="shem__img">
+                </a>
+                <!-- /.shema__shema -->
+                <div class="shema__title">
+                    Схема {{ MiscFunc.nextNumber('schema') }}. {{ name }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if photo %}
+            <div class="shema__pics">
+                <a data-caption="{{ name | e }}" data-fancybox="{{ gallery ? gallery : 'gallery' }}"
+                   href="/upload/orig/{{ photo }}" class="shema__pic shema__pic_photo" data-vid="photo">
+                    <img src="/upload/medium/{{ photo }}" alt="Фото" class="shem__img">
+                </a>
+                <div class="shema__title">
+                    Фото {{ MiscFunc.nextNumber('photo') }}. {{ name }}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if video %}
+            <div class="shema__pics shema__pics--video">
+                <div class="shema__pic shema__pic_video" data-vid="video">
+                    <iframe class="shema__video" width="560" height="315"
+                            src="https://www.youtube.com/embed/{{ MiscFunc.youtubeVideoId(video) }}?rel=0&amp;showinfo=0"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="shema__title">
+                        Видео {{ MiscFunc.nextNumber('video') }}. {{ name }}
+                    </div>
+                </div>
+                <!-- /.shema__shema -->
+            </div>
+        {% endif %}
+
+
+    </div>
+    <!-- /.shema__slider -->
+    {% if showArrows %}
+        <div class="more__btn more__btn_back js_shema_btn_back"></div>
+        <div class="more__btn more__btn_next js_shema_btn_next"></div>
+    {% endif %}
+</div>

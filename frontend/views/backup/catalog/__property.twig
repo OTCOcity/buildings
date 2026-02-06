@@ -1,0 +1,33 @@
+<div class="col-xl-4 col-lg-6 property_col">
+    <div class="property as-href">
+        <div class="property_image">
+            {% if object.image %}
+                <img class="property_image__image" src="/upload/medium/{{ object.image }}" alt="">
+            {% else %}
+                <img class="property_image__image" src="/images/property_6.jpg" alt="">
+            {% endif %}
+            {% if object.is_hot %}
+                <div class="tag_featured property_tag"><span>{{ MiscFunc.t('app', 'Горячее') }}</span></div>
+            {% endif %}
+            {% if object.is_super %}
+                <div class="tag_offer property_tag"><span>{{ MiscFunc.t('app', 'Супер') }}</span></div>
+            {% endif %}
+        </div>
+        <div class="property_body text-center">
+            <div class="property_location">{{ object.address }}</div>
+            <div class="property_title"><a href="{{ object.url }}">{{ object.name }}</a></div>
+            <div class="property_price">{{ MiscFunc.priceFormat(object.price) }} TL</div>
+        </div>
+        <div class="property_footer d-flex flex-row align-items-center justify-content-start">
+            <div>
+                <div class="property_icon"><img src="/images/icon_1.png" alt=""></div>
+                <span>{{ object.sq }} м<sup>3</sup></span></div>
+            <div>
+                <div class="property_icon"><img src="/images/icon_2.png" alt=""></div>
+                <span>Спален {{ object.badrooms }} </span></div>
+            <div>
+                <div class="property_icon"><img src="/images/icon_3.png" alt=""></div>
+                <span>Ванных {{ object.baths }}</span></div>
+        </div>
+    </div>
+</div>

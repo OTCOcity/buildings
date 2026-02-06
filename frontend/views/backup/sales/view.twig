@@ -1,0 +1,16 @@
+<section class="content content-padding">
+    <div class="inner new-view-content">
+        {{ sale.text | raw }}
+
+        <div class="my-clear"></div>
+        <br>
+
+        {# Share block #}
+        {{ MiscBlocks.shareBlock(thread.url~'/'~sale.link, sale.name, app.params['siteurl']~"/upload/small/"~sale.image, sale.anons) | raw }}
+
+    </div>
+
+    {# Call block #}
+    {# {{ MiscBlocks.callBlock() | raw }} #}
+
+</section>

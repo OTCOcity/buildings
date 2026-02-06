@@ -1,0 +1,31 @@
+<li class="advise__item">
+
+    <a href="{{ good.url }}" class="advise__link" data-pjax="0">
+
+        <div class="advise__pic">
+
+            {% if good.image %}
+                <img src="/upload/small/{{ good.image }}" alt="advise" class="advise__img">
+            {% else %}
+                <img src="/images/no-image.jpg" alt="advise" class="advise__img">
+            {% endif %}
+
+        </div>
+
+        <div class="advise__header">
+
+            <h4 class="advise__name">
+                {{ good.name }}
+            </h4>
+
+            <p class="advise__price">
+                {% if good.price %}
+                    {{ good.price }} руб
+                {% endif %}
+            </p>
+
+        </div>
+
+    </a>
+
+</li>

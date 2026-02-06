@@ -1,0 +1,34 @@
+{{ this.render('/standart_pdf/blocks/header.twig', { standart: standart }) | raw }}
+{% for subStandart in standart.subStandarts %}
+    
+        <div class="text_style {% if loop.index == 1 %}text_style--first{% endif %}">
+            <div class="desc__header">
+                <div class="container">
+                    <h1 class="desc__title">
+                        {{ subStandart.name }}
+                    </h1>
+                    <div class="all__dropp_dn_arrow"></div>
+                </div>
+            </div>
+            <!-- /.desc__header -->
+            <div class="desc__content">
+                <div class="desc__content_wrapp">
+                    {{ this.render('/standart_pdf/blocks/description.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart_pdf/blocks/tech.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart_pdf/blocks/extra_schemas.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart_pdf/blocks/spec.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart_pdf/blocks/rash.twig', { subStandart: subStandart }) | raw }}
+                </div>
+                <!-- /.desc__content_wrapp -->
+            </div>
+            <!-- /.desc__content -->
+        </div>
+{% endfor %}
+
+<div class="text_style pdf-container page-break-before">
+    {{ this.render('/standart_pdf/blocks/checklist.twig', { standart: standart }) | raw }}
+</div>
+<div class="text_style pdf-container page-break-before">
+    {{ this.render('/standart_pdf/blocks/calendar.twig', { standart: standart }) | raw }}
+</div>
+

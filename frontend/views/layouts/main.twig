@@ -1,0 +1,31 @@
+{{ register_asset_bundle('frontend/assets/AppAsset') }}
+{{ void(this.beginPage()) }}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+
+    {{ MiscBlocks.title() | raw }}
+    {{ MiscBlocks.keywords() | raw }}
+    {{ MiscBlocks.description() | raw }}
+
+    {{ html.csrfMetaTags | raw }}
+    {{ void(this.head) }}
+
+     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+
+</head>
+<body>
+{{ void(this.beginBody()) }}
+
+ {{ content | raw }}
+
+{{ void(this.endBody()) }}
+</body>
+</html>
+{{ void(this.endPage()) }}

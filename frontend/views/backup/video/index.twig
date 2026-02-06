@@ -1,0 +1,54 @@
+<div class="inner-page">
+    <div class="inner-page__container container">
+        <div class="inner-page__title-wrap inner-page__title-wrap_single">
+            <h1 class="inner-page__title">{{ MiscFunc.t('menu', thread.name) }}</h1>
+        </div>
+        <div class="inner-page__text info-box">
+
+            {{ page.text | raw }}
+        </div>
+
+        {% if videos | length %}
+            <ul class="films-list">
+
+                {% for video in videos %}
+                    {% set video = video.langData %}
+                    {% set awwardsCount = video.awwardsCount %}
+                    <li class="films-list__item">
+                        <a href="{{ video.url }}" class="films-list__item-link">
+                            <span class="films-list__item-poster-wrap">
+                                <img src="/upload/orig/{{ video.image_poster }}" alt=""
+                                     class="films-list__item-poster">
+                             </span>
+                            <span class="films-list__item-info-wrap">
+                                <span class="films-list__item-info">
+                                     <span class="films-list__item-title">{{ video.name }}</span>
+                                     <span class="films-list__item-type">{{ video.anons }}</span>
+                                </span>
+                                {% if awwardsCount > 0 %}
+                                    <span class="films-list__item-awards">
+
+                                      <svg class="icon icon-award-left">
+                                        <use xlink:href="/img/sprite.svg?b1#icon-award-left"></use>
+                                      </svg>
+
+                                        {{ video.awwardsCount }}
+
+                                        <svg class="icon icon-award-right">
+                                        <use xlink:href="/img/sprite.svg?b1#icon-award-right"></use>
+                                      </svg>
+
+                                 </span>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+    </div>
+</div>
+
+

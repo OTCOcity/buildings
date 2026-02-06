@@ -1,0 +1,6 @@
+<picture{% if class %} class="{{ class | e }}"{% endif %}>
+    {% for index, media in medias %}
+        <source src="/upload/{{ sizes[index] }}/{{ srcs[index] }}" media="(min-width: {{ media }}px)">
+    {% endfor %}
+    <img src="/upload/{{ sizes[(sizes | length) - 1] }}/{{ srcs[(srcs | length) - 1] }}" alt="{{ alt | e }}" {% if title %}title="{{ title | e }}"{% endif %}>
+</picture>

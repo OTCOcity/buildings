@@ -1,0 +1,52 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div class="sliderBackground"></div>
+<div class="white"></div>
+<div class="inner prMenu">
+    <div class="rightColumn">
+        <div class="breadcrumbs">
+            <a href="/">Главная</a>
+            <span>-</span>
+            <span>Личный кабинет</span>
+        </div>
+        <h2>Личная информация</h2>
+        {% set form = ActiveForm_begin({
+        'action' : '/cabinet',
+        'options' : {
+            'class' : 'profile-form'
+        }
+        }) %}
+            <div class="input">
+                {{ form.field(profileForm, 'sirname').textInput({
+                    'placeholder': 'Фамилия',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(profileForm, 'name').textInput({
+                    'placeholder': 'Имя',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(profileForm, 'midname').textInput({
+                    'placeholder': 'Отчество',
+                }) | raw }}
+            </div>
+            <div class="input">
+                {{ form.field(profileForm, 'phone').textInput({
+                    'placeholder': 'Телефон',
+                    'class': 'input-mask--phone',
+                }) | raw }}
+            </div>
+
+            <label for="profile-form-submit">
+                <div class="saveParams orangeBt">Сохранить</div>
+                <input id="profile-form-submit" type = submit class="hidden">
+            </label>
+
+        {{ ActiveForm_end() }}
+
+    </div>
+    <div class="leftColumn">
+        {{ this.render('__navigation.twig') | raw }}
+    </div>
+</div>

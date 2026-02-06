@@ -1,0 +1,32 @@
+{% if goods | length %}
+    <section class="history">
+
+        <div class="container">
+
+            <h3 class="history__title">
+                Вы недавно смотрели
+            </h3>
+
+            <ul class="history__list">
+                {% for good in goods %}
+                    <li class="history__item">
+                        <a href="{{ good.url }}" class="history__link">
+                            {% if good.image %}
+                                <img src="/upload/small/{{ good.image }}" alt="history" class="history__img">
+                            {% else %}
+                                <img src="/images/no-image.jpg" alt="history" class="history__img">
+                            {% endif %}
+
+                        </a>
+
+                    </li>
+                    <!-- /.history__item -->
+                {% endfor %}
+            </ul>
+            <!-- /.history__list -->
+
+        </div>
+        <!-- /.container -->
+
+    </section>
+{% endif %}

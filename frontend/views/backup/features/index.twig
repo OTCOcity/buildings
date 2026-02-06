@@ -1,0 +1,49 @@
+<div class="inner">
+    {{ misc.breadcrumbs() | raw }}
+    <h1>{{ thread.name }}</h1>
+    <div class="aboutCompSlider">
+        {% for slide in slides %}
+        <div class="slide {% if loop.index0 == 0 %}active{% endif %}">
+            {% if slide[0] %}
+            <div>
+                {% set bg = slide[0].image %}
+                <div class="title">
+                    <i>
+                        {% if bg %}
+                            <img src="/upload/orig/{{ bg.name }}" alt="">
+                        {% else %}
+                            <img src="/img/iconSlide2.png" alt="">
+                        {% endif %}
+                    </i>{{ slide[0].name }}
+                </div>
+                <div class="text">
+                    {{ slide[0].text | raw }}
+                </div>
+            </div>
+            {% endif %}
+            {% if slide[1] %}
+            <div>
+                {% set bg = slide[1].image %}
+                <div class="title">
+                    <i>
+                        {% if bg %}
+                            <img src="/upload/orig/{{ bg.name }}" alt="">
+                        {% else %}
+                            <img src="/img/iconSlide2.png" alt="">
+                        {% endif %}
+                    </i>{{ slide[1].name }}
+                </div>
+                <div class="text">
+                    {{ slide[1].text | raw }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="aboutSliderNavi">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
+    </div>
+</div>
+

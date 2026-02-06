@@ -1,0 +1,114 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{{ use('/kartik/select2/Select2') }}
+
+{% set arules = app.get('arules') %}
+
+{% if arules.canEditThread(thread.id) or thread.id is null %}
+    {% set form = ActiveForm_begin({
+    'action': thread.id ? path("/admin/threads/"~thread.id) : path("/admin/threads/create"),
+    'id': 'thread-create',
+    }) %}
+{% else %}
+    {% set form = ActiveForm_begin({
+    'action': path("/admin/threads"),
+    'id': 'thread-create',
+    }) %}
+{% endif %}
+{{ form.field(thread, 'name').textInput({
+    'placeholder': 'Наименование',
+    'class': 'input-sm form-control thread-name'
+}) | raw }}
+
+{{ form.field(thread, 'link').textInput({
+    'placeholder': 'Ссылка на раздел',
+    'class': 'input-sm form-control',
+    'data-transliterate-target': '#thread-name'
+}) | raw }}
+
+
+{{ form.field(thread, 'parent').widget('\\kartik\\select2\\Select2', {
+    'data': parentData,
+    'language' : 'ru',
+    'size': 'sm',
+    'theme' : 'bootstrap',
+    'options' : {'placeholder' : 'Нет родительского раздела'},
+    'pluginOptions' : {
+        'allowClear' : true
+    },
+}) | raw }}
+
+{{ form.field(thread, 'module').widget('\\kartik\\select2\\Select2', {
+    'data': moduleData,
+    'language' : 'ru',
+    'size': 'sm',
+    'theme' : 'bootstrap',
+    'pluginOptions' : {
+        'allowClear' : false
+    },
+}) | raw }}
+
+{{ form.field(thread, 'active').checkbox({
+}) | raw }}
+
+{{ form.field(thread, 'inmenu').checkbox({
+}) | raw }}
+
+
+{{ form.field(thread, 'sort').textInput({
+    'placeholder': 'Порядковый номер',
+    'class': 'input-sm form-control'
+}) | raw }}
+
+<br>
+
+{% if arules.canEditThread(thread.id) or thread.id is null %}
+    {% if app.get('arules').checkUserRule(app.user.id, thread.id, '', 'edit') %}
+        <button type="submit" class="btn btn-sm btn-success">
+            Сохранить
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+    {% endif %}
+{% else %}
+    <button type="button" class="btn btn-sm btn-success disabled">
+        Сохранить
+        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+    </button>
+{% endif %}
+
+{% if arules.canDeleteThread(thread.id) and app.get('arules').checkUserRule(app.user.id, thread.id, '', 'delete') %}
+
+
+        {% if thread.id %}
+        &nbsp;
+        <a href="#" class="btn btn-sm btn-danger"
+           onclick=" $('#confirm-modal').modal({ backdrop: 'static', keyboard: false }); return false;">
+            Удалить
+            <i class="ace-icon fa fa-trash icon-on-right"></i>
+        </a>
+    {% endif %}
+
+{% endif %}
+
+{{ ActiveForm_end() }}
+
+
+<div id="confirm-modal" class="modal fade bs-example-modal-sm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Удаление раздела!</h4>
+            </div>
+            <div class="modal-body">
+                <p>При удаление раздела все его наполнение бесследно исчезнет, а вложенные разделы перенесутся на
+                    уровень выше.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/admin/threads/delete/{{ thread.id }}" class="btn btn-sm btn-danger">Удалить</a>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+

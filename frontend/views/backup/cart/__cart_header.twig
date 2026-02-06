@@ -1,0 +1,105 @@
+{% set itemsLenght = items | length %}
+<div class="basket" id="header-basket">
+
+    <div class="basket__text">
+
+        <h4 class="basket__header">
+            Моя корзина
+        </h4>
+
+        <p class="basket__item basket__summ">
+            {{ sum }} руб
+        </p>
+
+        <p class="basket__item basket__quan">
+            {{ itemsLenght }} шт
+        </p>
+
+    </div>
+    <!-- /.basket__text -->
+
+    <div class="bascet__pic">
+
+        <img src="/images/basket.png" alt="basket" class="basket__img">
+
+    </div>
+    <!-- /.bascet__pic -->
+
+    <div class="basket__pop_up">
+
+        <div class="basket__pop_up_header">
+
+            <h4 class="basket__pop_up_title">
+                Корзина
+            </h4>
+
+            <p class="basket__pop_up_desc">
+                {{ itemsLenght }} {{ MiscFunc.pluralForm(itemsLenght) }} | {{ sum }} руб.
+            </p>
+
+        </div>
+
+        <ul class="basket__pop_up_list">
+
+            {% for item in items %}
+            <li class="basket__pop_up_item">
+
+                <ul class="basket__pop_up_row">
+
+                    <li class="basket__pop_up_col">
+                        {{ loop.index }}. <span class="blue">{{ item.good.name }} {{ item.size ? '(' ~ item.size ~ ')' : '' }} </span>
+                    </li>
+
+                    <li class="basket__pop_up_col">
+                        {{ item.good.price }} руб.
+                    </li>
+
+                    <li class="basket__pop_up_col">
+
+                        <p class="basket__pop_up_num">
+                            {{ item.count }} шт.
+                        </p>
+
+                        <div class="basket__pop_up_arrows">
+
+                            <img src="/images/arrow_up.png" data-count="{{ item.count + 1 }}" data-size="{{ item.size }}" data-id="{{ item.good.id }}" alt="arrow" class="basket__pop_up_arrow basket__pop_up_arrow_up to-cart">
+
+                            <img src="/images/arrow_up.png" data-count="{{ item.count - 1 < 1 ? 1 : item.count - 1 }}" data-size="{{ item.size }}" data-id="{{ item.good.id }}" alt="arrow" class="basket__pop_up_arrow basket__pop_up_arrow_dn to-cart">
+
+                        </div>
+
+                    </li>
+
+                    <li class="basket__pop_up_col">
+
+                        <p class="basket__pop_up_sum">
+                            {{ item.count * item.good.price }} руб.
+                        </p>
+
+                        <img src="/images/del.png" alt="del" class="basket__pop_up_del to-cart" data-count="0" data-size="{{ item.size }}" data-id="{{ item.good.id }}">
+
+                    </li>
+
+                </ul>
+                <!-- /.basket__pop_up_col -->
+
+            </li>
+            {% endfor %}
+            <!-- /.basket__pop_up_item -->
+
+            {% if itemsLenght > 0 %}
+            <a href="/cart" class="basket__pop_up_btn">
+                формить зака
+            </a>
+            {% else %}
+                <li class="basket__pop_up_empty">Корзина пуста</li>
+            {% endif %}
+
+        </ul>
+        <!-- /.basket__pop_up_list -->
+
+    </div>
+    <!-- /.basket__pop_up -->
+
+</div>
+<!-- /.basket -->

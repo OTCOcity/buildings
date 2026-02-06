@@ -1,0 +1,75 @@
+<div class="sliderBackground"></div>
+<div class="white"></div>
+<div class="inner prMenu">
+    <div class="rightColumn">
+        <div class="breadcrumbs">
+            <a href="/">Главная</a>
+            <span>-</span>
+            <a href="{{ misc.getThreadInfo('cabinet', 'url') }}/history">История</a>
+            <span>-</span>
+            <span>Информаия о заказе</span>
+        </div>
+        <h2>Заказ {{ order.name }}</h2>
+        <p>Дата оформления: {{ order.date }}</p>
+        <p>Город: {{ order.city }}</p>
+        <p>Тип оплаты: {{ order.payType }}</p>
+        <p>Тип доставки: {{ order.delivType }}</p>
+        {% if order.deliv_adres %}<p>Адрес: {{ order.deliv_adres }}</p>{% endif %}
+        <p>Стоимость доставки: {{ order.deliv_sum | number_format(2, ',', ' ') }} {{ order.currency }}</p>
+
+
+        {% set orderItems = order.items  %}
+        <table class="tableOrderlist" id="tableOrderlist">
+            <tbody><tr>
+                <td class="ta-center">№</td>
+                <td>Наименование</td>
+                <td class="ta-center">Цена</td>
+                <td class="ta-center">Кол-во</td>
+                <td class="ta-center">Сумма</td>
+            </tr>
+            {% for item in orderItems %}
+            <tr>
+                <td class="ta-center">{{ loop.index }}</td>
+                <td>
+                    {% set link = item.good.link %}
+                    {% if link %}
+                        <a target="_blank" href="{{ misc.getThreadInfo('catalog', 'url') }}/{{ link }}">{{ item.name }}</a>
+                    {% else %}
+                        {{ item.name }}
+                    {% endif %}
+                    <br>
+                    {% if item.color %}<span class="orer-list--color" title="{{ item.color_name | e }}" style="background-color: {{ item.color }};">&nbsp;</span>{% endif %}
+                    {% if item.subname %}<span class="orer-list--subname">{{ item.subname }}</span>{% endif %}
+                </td>
+                <td class="ta-center">{{ item.price | number_format(2, ',', ' ') }} {{ order.currency }}</td>
+                <td class="ta-center">{{ item.count }}</td>
+                <td class="ta-center">{{ item.sum | number_format(2, ',', ' ') }} {{ order.currency }}</td>
+            </tr>
+            {% endfor %}
+
+            <tr class="order-list-noborder">
+                <td class="ta-right" colspan="4">Сумма:</td>
+                <td class="ta-center">{{ order.sum | number_format(2, ',', ' ') }} {{ order.currency }}</td>
+            </tr>
+            <tr class="order-list-noborder">
+                <td class="ta-right" colspan="4">В том числе НДС:</td>
+                <td class="ta-center">{{ order.nds | number_format(2, ',', ' ') }} {{ order.currency }}</td>
+            </tr>
+            <tr class="order-list-noborder">
+                <td class="ta-right" colspan="4">Стоимость доставки:</td>
+                <td class="ta-center">{{ order.deliv_sum | number_format(2, ',', ' ') }} {{ order.currency }}</td>
+            </tr>
+            <tr class="order-list-noborder">
+                <td class="ta-right" colspan="4"><b>Итого к оплате:</b></td>
+                <td class="ta-center"><b>{{ order.sum_itog | number_format(2, ',', ' ') }} {{ order.currency }}</b></td>
+            </tr>
+
+            </tbody>
+        </table>
+        {% if order.file_dog %}<p>Договор на заказ: <a target="_blank" href="/upload/orders/{{ order.file_dog }}">Скачать</a></p>{% endif %}
+        {% if order.file_scet %}<p>Счет на заказ: <a target="_blank" href="/upload/orders/{{ order.file_scet }}">Скачать</a></p>{% endif %}
+    </div>
+    <div class="leftColumn">
+        {{ this.render('__navigation.twig') | raw }}
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<section class="desc" id="standart{{ subStandart.id }}">
+
+    <h1>
+        {{ subStandart.name }}
+    </h1>
+    {% if subStandart.worth %}
+        <div class="desc__tezis">
+            <b>Ключевая ценность:</b> {{ subStandart.worth | raw }}
+        </div>
+    {% endif %}
+    <!-- /.desc__tezis -->
+    {{ subStandart.text | raw }}
+
+    <!-- /.desc__text -->
+    {% if subStandart.image %}
+        <div class="desc_pic" style="background-image: url('/upload/medium/{{ subStandart.image }}');"></div>
+    {% endif %}
+    <!-- /.desc__pic -->
+</section>
+{% set techList = subStandart.techs %}
+{% if techList | length %}
+    <section class="teh section--top-bordered" id="tech{{ subStandart.id }}">
+        <h1 class="desc__title">
+            Технологическая карта
+        </h1>
+        {% for tech in techList %}
+
+            {{ tech.text | raw }}
+        {% endfor %}
+
+    </section>
+{% endif %}

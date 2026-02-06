@@ -1,0 +1,13 @@
+{% if items | length %}
+<ul>
+    {% for item in items %}
+        {% set active = item.url == app.params['breadcrumbs'][item.lvl].url %}
+        <li>
+            <a href="{{ item.url }}" class="{% if active %}active{% endif %}">{{ item.name }}</a>
+            {% if active and not item.isgood %}
+                {{ MiscBlocks.catalogTree(item.id) | raw }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

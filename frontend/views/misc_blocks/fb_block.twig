@@ -1,0 +1,33 @@
+<section class="direct">
+    <div class="direct__wrapper">
+        <div class="direct__heading">
+            <div class="direct__aside">
+                <div class="direct__title">
+                    {{ options.fb_title }}
+                </div>
+                <div class="direct__subtitle">
+                    {{ options.fb_text }}
+                </div>
+            </div>
+            {% if options.fb_image %}
+                <div class="direct__img" style="background-image: url('/upload/orig/{{ options.fb_image }}')"></div>
+            {% endif %}
+        </div>
+        <div class="direct__cards">
+            <div class="direct__card">
+                <div class="direct__card-aside">
+                    <div class="direct__card-title">Моя почта</div>
+                    <div class="direct__card-subtitle">{{ options.fb_email }}</div>
+                </div>
+                <a href="mailto:{{ options.fb_email }}" target="_blank" style="background-image: url('/images/icons/icon.png')" class="direct__card-icon"></a>
+            </div>
+            <div class="direct__card">
+                <div class="direct__card-aside">
+                    <div class="direct__card-title">Мой Telegram</div>
+                    <div class="direct__card-subtitle">{{ options.fb_tg }}</div>
+                </div>
+                <a href="https://t.me/{{ options.fb_tg }}" target="_blank" style="background-image: url('/images/icons/icon.png')" class="direct__card-icon"></a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,15 @@
+<section class="banner-area" id="home" style="background-image: url({{ image }});">
+    <div class="banner-area__shadow"></div>
+    <div class="container banner-area__container">
+        <div class="row fullscreen--half d-flex align-items-center justify-content-center">
+            <div class="banner-content col-lg-7">
+                {% if title %}
+                    <div class="h1">{{ title }}</div>
+                {% endif %}
+                {% if text %}
+                    <div class="pt-20 pb-20">{{ text | raw }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

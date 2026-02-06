@@ -1,0 +1,39 @@
+{% set bg = page.background.name %}
+<div class="sliderBackground" style="{% if bg %}background-image: url('/upload/orig/{{ bg }}') !important;{% endif %}"></div>
+<div class="inner welcomeText">
+    <h1>{{ page.name }}</h1>
+    <div class="whr"><img src="/img/whiteHR.png" alt=""/></div>
+    <div class="textTitle">
+        {{ page.text }}
+    </div>
+</div>
+<div class="contentWrap">
+    <div class="inner prMenu">
+        <div class="rightColumn">
+            {{ misc.breadcrumbs() | raw }}
+            <h2>{{ portfolio.name }}</h2>
+            {{ portfolio.text | raw }}
+        </div>
+        <div class="leftColumn">
+            <div class="imageMenu folioMenu">
+                <ul>
+                    {% for portfolio in page.portfolios %}
+                        <li>
+                            <a href="{{ thread.url }}/{{ portfolio.link }}">
+                                <div class="nameBlock">
+                                    <div class="title">{{ portfolio.name }}</div>
+                                    <div class="srok">{{ portfolio.anons }}</div>
+                                </div>
+                                <div class="slided">
+                                    <div class="eaye"><i></i> Посмотреть</div>
+                                    <img src="/img/bgSharesMenu.jpg" alt=""/>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="white"></div>
+<div class="inner">
+    <div class="leftColumn">
+        {{ misc.catalogNavigation | raw }}
+    </div>
+    <div class="rightColumn">
+        {{ misc.breadcrumbs() | raw }}
+        <h1>{{ palitra.name }}</h1>
+        {{ palitra.text | raw }}
+        <div class="sort">
+            <span>Сортировать по: </span>
+            <a class="active" onclick="$(this).addClass('active'); $(this).next().removeClass('active');$('.colorsWrap').hide();$('#colors-by-name').show();">Цвету</a>
+            <a onclick="$(this).addClass('active'); $(this).prev().removeClass('active'); $('.colorsWrap').hide();$('#colors-by-color').show();">Коду цвета</a>
+        </div>
+        <div class="colorsWrap" id="colors-by-name">
+            {% for color in palitra.colors %}
+                <a href='{{ misc.getThreadInfo('catalog', 'url') }}?filter=%7B"colors"%3A%5B{{ color.id }}%5D%7D'><span data="{{ color.name }}" article="{{ color.name }}" style="background:{{ color.color }};">{{ color.name }}</span></a>
+            {% endfor %}
+        </div>
+        <div class="colorsWrap" id="colors-by-color" style="display: none;">
+            {% for color in palitra.colorsSort %}
+                <a href='{{ misc.getThreadInfo('catalog', 'url') }}?filter=%7B"colors"%3A%5B{{ color.id }}%5D%7D'><span data="{{ color.name }}" article="{{ color.name }}" style="background:{{ color.color }};">{{ color.name }}</span></a>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

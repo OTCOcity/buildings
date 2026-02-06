@@ -1,0 +1,34 @@
+<section class="we-offer-area section-gap section-gap--nt" id="offer">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-30 col-lg-10">
+                <div class="title text-center">
+                    {% if title %}<h1 class="mb-10">{{ title }}</h1>{% endif %}
+                    {% if text %}<p>{{ text | raw }}</p>{% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for service in services %}
+                <div class="col-lg-6">
+                    <div class="single-offer d-flex flex-row pb-30">
+                        <div class="icon">
+                            <img class="services__image" src="/upload/small/{{ service.image }}" alt="">
+                        </div>
+                        <div class="desc">
+                            <div {#href="{{ service.url }}"#}>
+                                <h4>{{ service.name }}</h4>
+                            </div>
+                            {#
+                            <p>
+                                {{ service.anons }}
+                            </p>
+                            #}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

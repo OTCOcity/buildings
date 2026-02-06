@@ -1,0 +1,11 @@
+<div class="buy-block">
+    <div class="content">
+        <h2 class="buy-block--title">Приобрести<br> ’{{ work.name }}’</h2>
+        {% if work.buy_link %}
+            <h2 class="buy-block--title">{{ work.buy_link }} ₽</h2>
+            <a href="{{ work.url }}/buy" target="_blank" class="btn">Перейти к оплате</a>
+        {% else %}
+            <a href="#" class="btn js-fp-show" data-text="Здравствуйте, меня заинтересовала ваша работа «‎{{ work.name | e }}»‎">Купить</a>
+        {% endif %}
+    </div>
+</div>

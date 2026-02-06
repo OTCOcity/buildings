@@ -1,0 +1,71 @@
+<div class="imageMenu personMenu">
+    <ul>
+        <li>
+            <a href="/cabinet" class="{% if app.request.queryParam('params') == '' %}active{% endif %}">
+                <div class="nameBlock" style="background:url(/img/per1.jpg)">
+                    <div class="overlay"></div>
+                    <div class="title">Личная информация</div>
+                </div>
+                <div class="slided">
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="/cabinet/password" class="{% if app.request.queryParam('params') == 'password' %}active{% endif %}">
+                <div class="nameBlock" style="background:url(/img/per2.jpg)">
+                    <div class="overlay"></div>
+                    <div class="title">Сменить пароль</div>
+                </div>
+                <div class="slided">
+                </div>
+            </a>
+        </li>
+        {% if app.user.identity.type %}
+        <li>
+            <a href="/cabinet/rek" class="{% if app.request.queryParam('params') == 'rek' %}active{% endif %}">
+                <div class="nameBlock" style="background:url(/img/per3.jpg)">
+                    <div class="overlay"></div>
+                    <div class="title">Реквизиты</div>
+                </div>
+                <div class="slided">
+                </div>
+            </a>
+        </li>
+        {% endif %}
+        {#<li class="orangeFill">#}
+        <li>
+            <a href="/cabinet/history" class="{% if 'history' in app.request.queryParam('params') %}active{% endif %}">
+                <div class="nameBlock" style="background:url(/img/per4.jpg)">
+                    <div class="overlay"></div>
+                    <div class="title">История заказов</div>
+                </div>
+                <div class="slided">
+                </div>
+            </a>
+        </li>
+    </ul>
+    {% set dogUrl = misc.getThreadData('options', 'dogovor') %}
+    {% if app.user.identity.type == 1 %}
+        {% if not app.user.identity.dogovor and dogUrl and app.user.identity.file_dog == ''  %}
+            <a href="/upload/orig/{{ dogUrl }}" class="cabinet-dogovor-link"><div class="dogovor">Генерация долгосрочного договора</div></a>
+            <br>
+            {% if app.session.hasFlash('cabinet-dogovor-error') %}<div class="cabinet-dogovor-error">{{ app.session.removeFlash('cabinet-dogovor-error') }}</div> {% endif %}
+            <label for="dogovor-file-input">
+                <div class="cabinet-dogovor-link"><div class="dogovor">Загрузить свой договор</div></div>
+            </label>
+            <form action="{{ misc.getThreadInfo('cabinet', 'url') }}" method="post" enctype="multipart/form-data" class="hidden">
+                <input type="file" id="dogovor-file-input" name="dogovor">
+                <input type="submit">
+            </form>
+            <br>
+        {% endif %}
+
+        {% if not app.user.identity.dogovor and app.user.identity.file_dog  %}
+            <div class="dogovor">Ваш договор на рассмотрении</div>
+        {% endif %}
+
+        {% if app.user.identity.dogovor and app.user.identity.file_dog  %}
+            <a href="/upload/orig/{{ app.user.identity.file_dog }}" class="cabinet-dogovor-link"><div class="dogovor">Ваш договор принят (скачать)</div></a>
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,0 +1,60 @@
+{{ use('/yii/widgets/Pjax') }}
+
+{{ Pjax_begin({'id' : 'sales-pjax' }) }}
+<section class="content content-type-2">
+    {% if filters | length %}
+    <div class="filter-top">
+        <div class="inner">
+            <form action="/{{ app.request.pathinfo }}" method="get" id="sales-filter-form" data-pjax="true">
+                {% for filter in filters %}
+                    <div class="checkbox no-select">
+                        <input type="checkbox" name="sf[]" {% if filter.checked %}checked{% endif %} value="{{ filter.id }}" id="filter-{{ loop.index }}">
+                        <label for="filter-{{ loop.index }}">{{ filter.name }}</label>
+                    </div>
+                {% endfor %}
+                <input type="submit" class="hidden">
+            </form>
+            <a href="/{{ app.request.pathinfo }}" class="link-arrow"><h3>Все спецпредложения</h3></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="deals">
+        <div class="tr-deals">
+            {% for sale in sales %}
+                {% set image = sale.image %}
+                <div> 
+                    <a class="popup-link-cncl deals-modal-open-cncl" href="{{ thread.url }}/{{ sale.link }}" data-href="#deals-modal-cncl"><div class="image" style="background:url({% if image %}'/upload/small/{{ image }}'{% else %}'/img/balon.jpg'{% endif %});"></div></a>
+                    <div class="inner-deals">
+                        <div class="date">{{ sale.datestr | raw }}</div>
+                        <div class="red-clear"></div>
+                        <a class="popup-link deals-modal-open" href="{{ thread.url }}/{{ sale.link }}" data-href="#deals-modal"><h2 class="no-before">{{ sale.name }}</h2></a>
+                        <div class="description">
+                            {{ sale.anons }}
+                        </div>
+                        <div class="range-date">
+                            {% if sale.date_start and sale.date_finish %}
+                                Срок проведения:
+                                <br>{{ sale.daterange }}
+                            {% endif %}
+                        </div>
+                        <a class="link-arrow popup-link deals-modal-open"  href="{{ thread.url }}/{{ sale.link }}" data-href="#deals-modal"><h3>Подробнее</h3></a>
+                    </div>
+                </div>
+
+                {% if loop.index % 4 == 0 %}
+                    </div><div class="tr-deals">
+                {% endif %}
+
+            {% endfor %}
+            {% if sales | length < 4 %}
+                {% for num in range (0 , (4 - sales | length)) %}
+                    <div></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+
+</section>
+{{ Pjax_end() }}

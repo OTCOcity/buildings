@@ -1,0 +1,7 @@
+<div class="admin-image_item" >
+    <a target="_blank" href="{{ app.params['siteurl'] }}/upload/orig/{{ filename }}">{{ ownName }}</a>
+    <i class="text-danger fa fa-trash-o admin-delete-image admin-delete-image--file"></i>
+
+    <input type="hidden" name="{{ inputName }}[{{ key }}][]" value="{{ filename }}">
+    <input type="hidden" name="{{ inputName }}[{{ key }}-ownname][]" value="{{ ownName }}">
+</div>

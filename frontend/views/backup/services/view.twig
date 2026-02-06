@@ -1,0 +1,11 @@
+<div class="no-banner-padding"></div>
+
+{{ MiscBlocks.breadcrumbs() | raw }}
+
+<section class="about-generic-area section-gap section-gap--nt">
+    <div class="container border-top-generic">
+        <h1>{{ service.name }}</h1>
+        <p><i>{{ service.anons }}</i></p>
+        {{ service.text | raw }}
+    </div>
+</section>

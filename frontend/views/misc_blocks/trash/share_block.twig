@@ -1,0 +1,17 @@
+<div class="clear border-2"></div>
+<div class="inner">
+    <div class="published">
+        <div class="title">Опубликовать:</div>
+        {#
+        <div class="social-buttons">
+            <div class="fb social-share" data-soc="fb"></div>
+            <div class="gp social-share" data-soc="gplus"></div>
+            <div class="tw social-share" data-soc="twi"></div>
+            <div class="vk social-share" data-soc="vk"></div>
+            <div class="odkl social-share" data-soc="odkl"></div>
+        </div>
+        #}
+        <div class="share42init my-clear" style="display: inline-block" {% if url %}data-url="{{ app.params['siteurl'] }}{{ url }}"{% endif %} {% if title %}data-title="{{ title }}"{% endif %} {% if image %}data-image="{{ image }}"{% else %}data-image="{{ app.params['siteurl'] }}/img/logo_pik.png"{% endif %} {% if description %}data-description="{{ description }}"{% endif %}></div>
+    </div>
+
+</div>

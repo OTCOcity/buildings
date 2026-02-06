@@ -1,0 +1,20 @@
+{{ use ('vova07\imperavi\Widget') }}
+{{ use ('yii\helpers\Url') }}
+
+{{ form.field(model, config.key).widget(
+    'vova07\\imperavi\\Widget', {
+        'settings' : {
+            'lang': 'ru',
+            'minHeight': 200,
+            'imageUpload' : '/admin/upload/imageupload',
+            'imageManagerJson' : '/admin/upload/imageget',
+            'plugins' : [
+                'clips',
+                'fullscreen',
+                'table',
+                'imagemanager',
+                'counter',
+            ]
+        }
+    }
+) | raw }}

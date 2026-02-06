@@ -1,0 +1,33 @@
+{% set techList = subStandart.techs %}
+{% set schemaNumber = app.request.get.schemaNumber ? app.request.get.schemaNumber : 0  %}
+{% if techList | length %}
+    {% for tech in techList %}
+        {% if tech.image_schema %}
+            {% set schemaNumber = schemaNumber + 1 %}
+            <div class="full-page-image-title">{{ schemaNumber }}. {{ tech.name }}. Схема.</div>
+            <div class="full-page-image page-break-after" style="background-image: url('/upload/orig/{{ tech.image_schema }}');" alt=""></div>
+        {% endif %}
+        {% if tech.image_photo %}
+            {% set schemaNumber = schemaNumber + 1 %}
+            <div class="full-page-image-title">{{ schemaNumber }}. {{ tech.name }}. Фото.</div>
+            <div class="full-page-image page-break-after" style="background-image: url('/upload/orig/{{ tech.image_photo }}');" alt=""></div>
+        {% endif %}
+
+    {% endfor %}
+{% endif %}
+
+{% set extraSchemas = subStandart.extraSchemas %}
+{% if extraSchemas | length %}
+    {% for eSchema in extraSchemas %}
+        {% if eSchema.image_schema %}
+            {% set schemaNumber = schemaNumber + 1 %}
+            <div class="full-page-image-title">{{ schemaNumber }}. {{ eSchema.name }}. Схема.</div>
+            <div class="full-page-image page-break-after" style="background-image: url('/upload/orig/{{ eSchema.image_schema }}');" alt=""></div>
+        {% endif %}
+        {% if eSchema.image_photo %}
+            {% set schemaNumber = schemaNumber + 1 %}
+            <div class="full-page-image-title">{{ schemaNumber }}. {{ eSchema.name }}. Фото.</div>
+            <div class="full-page-image page-break-after" style="background-image: url('/upload/orig/{{ eSchema.image_photo }}');" alt=""></div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

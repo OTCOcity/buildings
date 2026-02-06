@@ -1,0 +1,35 @@
+{{ use('/yii/widgets/ActiveForm') }}
+<div class="fbi fbi--{{ topMargin }}" id="feedback">
+    <div class="fbi__content">
+        <div class="fbi__title">{{ title | raw }}</div>
+        {% set form = ActiveForm_begin({ action: '/feedback', options: {class: 'ajax-validate js-fbi-main'}}) %}
+        {{ form.field(feedbackForm, 'name').textInput({'placeholder': feedbackForm.getAttributeLabel('name'),}).label(false) | raw }}
+        {{ form.field(feedbackForm, 'company').textInput({'placeholder': feedbackForm.getAttributeLabel('company'),}).label(false) | raw }}
+        {{ form.field(feedbackForm, 'email').textInput({'placeholder': feedbackForm.getAttributeLabel('email')}).label(false) | raw }}
+        {{ form.field(feedbackForm, 'phone').textInput({'placeholder': feedbackForm.getAttributeLabel('phone')}).label(false) | raw }}
+        {{ form.field(feedbackForm, 'text').textarea({'rows': 5, 'placeholder': feedbackForm.getAttributeLabel('text'),}).label(false) | raw }}
+        {#<div class="form-group field-feedbackform-agree" data-name="agree">#}
+        {#<input type="hidden" name="FeedbackForm[agree]" value="0">#}
+        {#<label class="feedbackform-agree input-checkbox">#}
+        {#<input type="checkbox" id="feedbackform-agree" name="FeedbackForm[agree]" value="1" class="hidden">#}
+        {#<img src="/images/check.svg" class="input-checkbox-icon" alt="">#}
+        {#Согласие на обработку персональных данных#}
+        {#</label>#}
+        {#<div class="help-block"></div>#}
+        {#</div>#}
+        <div>
+            Нажимая на кнопку «Отправить запрос», вы ознакомлены и подтверждаете согласие с&nbsp;политикой обработки персональных данных
+        </div>
+        <br>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn--reverse btn--rounded btn--large btn--fw">Отправить запрос</button>
+        </div>
+        <input type="hidden" name="scenario" value="vac">
+        {{ ActiveForm_end() }}
+
+        <div class="fp-success">
+            <h1 class="fp-success__title">Спасибо, <span class="fp-success__title-name"></span>!</h1>
+            <p>Мы свяжемся с вами в ближайшее время</p>
+        </div>
+    </div>
+</div>

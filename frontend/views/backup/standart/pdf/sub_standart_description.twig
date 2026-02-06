@@ -1,0 +1,5 @@
+<h1>{{ subStandart.name }}</h1>
+{% if subStandart.worth %}
+    <div style="color: #4285f4;"><b>Ключевая ценность:</b> {{ subStandart.worth | raw }}</div>
+{% endif %}
+{{ subStandart.text | raw }}

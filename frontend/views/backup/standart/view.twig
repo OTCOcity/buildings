@@ -1,0 +1,46 @@
+{{ this.render('/standart/blocks/header.twig', { standart: standart }) | raw }}
+{% for subStandart in standart.subStandarts %}
+    
+        <div class="text_style {% if loop.index == 1 %}text_style--first{% endif %}">
+            <div class="desc__header">
+                <div class="container">
+                    <h1 class="desc__title">
+                        {{ subStandart.name }}
+                    </h1>
+                    <div class="all__dropp_dn_arrow"></div>
+                </div>
+            </div>
+            <!-- /.desc__header -->
+            <div class="desc__content">
+                <div class="desc__content_wrapp">
+                    {{ this.render('/standart/blocks/description.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart/blocks/tech.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart/blocks/extra_schemas.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart/blocks/spec.twig', { subStandart: subStandart }) | raw }}
+                    {{ this.render('/standart/blocks/rash.twig', { subStandart: subStandart }) | raw }}
+                </div>
+                <!-- /.desc__content_wrapp -->
+            </div>
+            <!-- /.desc__content -->
+        </div>
+{% endfor %}
+
+<div class="text_style">
+    {{ this.render('/standart/blocks/checklist.twig', { standart: standart }) | raw }}
+</div>
+
+<div class="text_style">
+    {{ this.render('/standart/blocks/calendar.twig', { standart: standart }) | raw }}
+</div>
+
+<div class="text_style text_style--print-hide">
+    {{ this.render('/standart/blocks/order.twig', { standart: standart }) | raw }}
+</div>
+
+<div class="text_style text_style--print-hide">
+    {{ this.render('/standart/blocks/more.twig', { standart: standart }) | raw }}
+</div>
+
+<div class="text_style text_style--print-hide">
+    {{ this.render('/standart/blocks/improve.twig', { standart: standart }) | raw }}
+</div>

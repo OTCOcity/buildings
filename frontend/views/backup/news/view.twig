@@ -1,0 +1,13 @@
+<div class="container-wrap">
+    <div id="fh5co-about">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="inner-page__title">{{ new.name }}</h1>
+                <p><b>Дата новости:</b> {{ (new.date + 43200) | date('d.m.Y') }}</p>
+                <p>{{ new.text | raw }}</p>
+                <a href="{{ thread.url }}"><i class="icon-arrow-left3"></i> Вернуться к новостям</a>
+            </div>
+        </div>
+    </div>
+</div>

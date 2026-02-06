@@ -1,0 +1,52 @@
+<div class="page-statics">
+
+    {% if page.image %}
+        {{ MiscBlocks.pageHead(page.name, page.subtitle, page.color, '/upload/orig/' ~ page.image) | raw }}
+    {% else %}
+        <div class="content-layout">
+            <div class="page-head page-head--no-image">
+                <div class="page-head__text" style="opacity: 1; transform: translate(0px, 0px);">
+                    <div class="page-head__subtitle">{{ page.subtitle }}</div>
+                    <h1 class="page-head__title">{{ page.name ? page.name : thread.name }}</h1>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="content-layout">
+        <div class="content content--static-page">
+            {% if page.text_pos == 1 %}
+                {% set textClass = 'text-right' %}
+            {% elseif page.text_pos == 2 %}
+                {% set textClass = 'text-left' %}
+            {% else %}
+                {% set textClass = 'text-full' %}
+            {% endif %}
+            <div class="{{ textClass }}">
+                <p>{{ page.text | raw }}</p>
+            </div>
+
+            {% set subThread = thread.childMenuthreads %}
+            {% if subThread %}
+                <div class="static-sub">
+                    {% for st in subThread %}
+                        <div class="static-sub__thread">
+                            <span class="static-sub__thread-number">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}/</span>
+                            <div class="static-sub__thread-link">
+                                <a href="{{ st.url }}" class="link--lined link--lined-left">{{ st.name }}</a>
+                                <a href="{{ st.url }}" class="link--lined link--lined-left">→</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if thread.lvl >= 1 %}
+            {{ MiscBlocks.feedbackInline(
+                'Откликнуться на вакансию',
+                'Здравствуйте, хочу откликнуться на вакансию ' ~ (page.name ? page.name : thread.name),
+            'small'
+            ) | raw }}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,165 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{{ use('/kartik/select2/Select2') }}
+
+<div class="page-header">
+    {% if (user.id) %}
+        <h1><i class="fa fa-user"></i> {{ user.email }}</h1>
+    {% else %}
+        <h1><i class="fa fa-user"></i> Добавление пользователя</h1>
+    {% endif %}
+</div>
+
+<div class="tabbable" id="admin-tabs">
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active">
+            <a data-toggle="tab" href="#tab-info" onclick="window.location.href=$(this).attr('href')">
+                <i class="blue ace-icon fa fa-user"></i>
+                Данные
+            </a>
+        </li>
+        {% if user.hasRules %}
+            <li class="">
+                <a data-toggle="tab" href="#tab-access" onclick="window.location.href=$(this).attr('href')">
+                    <i class="blue ace-icon fa fa-eye-slash"></i>
+                    Права
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="tab-content">
+        <div id="tab-info" class="tab-pane active in">
+            {% set form = ActiveForm_begin() %}
+
+
+            {{ form.field(user, 'username').textInput({
+                'placeholder': 'Логин',
+            }) | raw }}
+
+            {{ form.field(user, 'email').textInput({
+                'placeholder': 'Email',
+            }) | raw }}
+
+            {{ form.field(user, 'password').passwordInput({
+                'placeholder': 'Пароль',
+            }) | raw }}
+
+            {{ form.field(user, 'status').widget('\\kartik\\select2\\Select2', {
+                'data': statuses,
+                'language' : 'ru',
+                'size': 'sm',
+                'theme' : 'bootstrap',
+                'options' : {'placeholder' : 'Не выбрано', 'multiple' : false},
+                'pluginOptions' : {
+                    'allowClear' : false
+                },
+            }) | raw }}
+
+            <br>
+            {% if (user.id) %}
+                <input type="submit" class="btn btn-sm btn-success" value="Сохранить">
+            {% else %}
+                <input type="submit" class="btn btn-sm btn-success" value="Добавить">
+            {% endif %}
+            &nbsp;<a href="/admin/users" class="btn btn-sm btn-danger">Назад</a>
+
+            {{ ActiveForm_end() }}
+        </div>
+
+        {% if user.hasRules %}
+            <div id="tab-access" class="tab-pane">
+
+                {% set ruleForm = ActiveForm_begin() %}
+
+                    <table id="simple-table" class="table  table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            Раздел
+                        </th>
+                        <th class="center">Просмотр</th>
+                        <th class="center">Изменение</th>
+                        <th class="center">Добавление</th>
+                        <th class="center">Удаление</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for thread in ruleThreads %}
+                        <tr class="user-rule-cat">
+                            <td class="user-rule-cat_title">
+                                <b>«{{ thread.name }}»</b>
+                            </td>
+
+                            <td class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, '', 'view') %}checked{% endif %} name="thread[view][{{ thread.id }}]" class="ace">
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+
+                            <td class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, '', 'edit') %}checked{% endif %} name="thread[edit][{{ thread.id }}]" class="ace">
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+                            <td class="center">
+                            {#
+                                <label class="pos-rel">
+                                    <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, '', 'add') %}checked{% endif %} name="thread[add][{{ thread.id }}]" class="ace">
+                                    <span class="lbl"></span>
+                                </label>
+                            #}
+                            </td>
+                            <td class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, '', 'delete') %}checked{% endif %} name="thread[delete][{{ thread.id }}]" class="ace">
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        {% for block in thread.blockList %}
+                            <tr class="user-rule-block">
+                                <td class="user-rule-block_title">
+                                    {{ block.name }}
+                                </td>
+
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, block.key, 'view') %}checked{% endif %} name="block[view][{{ thread.id }}][{{ block.key }}]" class="ace">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, block.key, 'edit') %}checked{% endif %} name="block[edit][{{ thread.id }}][{{ block.key }}]" class="ace">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, block.key, 'add') %}checked{% endif %} name="block[add][{{ thread.id }}][{{ block.key }}]" class="ace">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" {% if app.get('arules').checkUserRule(user.id, thread.id, block.key, 'delete') %}checked{% endif %} name="block[delete][{{ thread.id }}][{{ block.key }}]" class="ace">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                    <input type="submit" class="btn btn-sm btn-success" value="Сохранить">
+
+                {{ ActiveForm_end() }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+

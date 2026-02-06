@@ -1,0 +1,42 @@
+{{ use('/yii/widgets/Pjax') }}
+
+{{ Pjax_begin({'id' : 'projects-pjax' }) }}
+<section class="project">
+    <div class="project__wrapper">
+        <div class="project__aside">
+            <div class="project__title">Избранные проекты</div>
+            <div class="project__tabs">
+                <a href="/projects" class="project__tab {% if app.request.get.group == null %}active{% endif %}">все</a>
+                {% for g in groups %}
+                    {% set gKey = g ? g : '0' %}
+                    {% set gLabel = g ? g : 'Без категории' %}
+                    <a href="?group={{ gKey | e }}" class="project__tab {% if app.request.get.group == gKey %}active{% endif %}">{{ gLabel }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="project__cards">
+            {% for work in works %}
+                {% set group = work.group ? work.group : 'Без категории' %}
+                <a href="{{ work.url }}" class="project__card">
+                    <div class="project__card-img" style="background-image: url('/upload/medium/{{ work.image }}')">
+                        {% if work.shine_color and not work.shine_pos is null %}
+                            <div class="project__shine project__shine--{{ work.shine_pos }}"
+                                 style="box-shadow: 0 0 150px 0 {{ work.shine_color }};">
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="project__card-aside">
+                        <div class="project__card-title">{{ work.name }}</div>
+                        <div class="project__card-tag">{{ group | lower }}</div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+{#        <div class="news__button">
+            <div class="news__button-text">Показать еще</div>
+            <div class="news__button-icon"></div>
+        </div>#}
+    </div>
+</section>
+{{ Pjax_end() }}

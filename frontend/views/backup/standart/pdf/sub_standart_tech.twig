@@ -1,0 +1,11 @@
+{% set techList = subStandart.techs %}
+{% if techList | length %}
+
+    <h2>Технологическая карта</h2>
+    {% for tech in techList %}
+        <h3>{{ loop.index }}. {{ tech.name }}</h3>
+        {{ tech.text | raw }}
+    {% endfor %}
+
+
+{% endif %}

@@ -1,0 +1,51 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div id="feedback-popup" style="display: none;">
+    <div class="modal">
+        {#<div class="modal__close"></div>#}
+        <div class="modal__content">
+            <div class="modal__title">Связаться</div>
+            {% set form = ActiveForm_begin({ action: '/feedback', options: {class: 'ajax-validate'}}) %}
+            <div class="modal__form">
+                <div class="modal__wrapper">
+                    <div class="modal__aside">
+                        <div data-name="name">
+                            <label style="display: none" for="name">
+                            </label>
+                            <input class="modal__input" name="FeedbackForm[name]" type="text" placeholder="Ваше имя">
+                            <div class="help-block"></div>
+                        </div>
+                        <div data-name="phone">
+                            <label style="display: none" for="phone">
+                            </label>
+                            <input class="modal__input phone-mask" name="FeedbackForm[phone]" type="text" placeholder="Телефон">
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div data-name="text">
+                        <label style="display: none" for="task"></label>
+                        <textarea data-name="text" class="modal__textarea" name="FeedbackForm[text]" placeholder="Расскажите коротко о задаче"></textarea>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <div class="modal__text">Нажимая на кнопку «Отправить», вы ознакомлены и подтверждаете
+                        согласие  с&nbsp;политикой <a href="/policy">обработки персональных данных</a>
+                    </div>
+                    <button type="submit" class="modal__button">отправить</button>
+                </div>
+                <input type="hidden" name="scenario" value="feedback">
+            </div>
+            {{ ActiveForm_end() }}
+        </div>
+        <div class="modal__content modal__content--thanks js-fb-thanks" style="display: none;">
+            <div class="modal__title">Спасибо!</div>
+            <div class="modal__footer modal__footer--thanks">
+                <div class="modal__text modal__text--thanks">Мы уже получили ваш запрос и свяжемся
+                    с вами как можно скорее.
+                </div>
+                <button class="modal__button modal__button--thanks" data-fancybox-close>хорошо</button>
+            </div>
+        </div>
+    </div>
+</div>

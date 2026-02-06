@@ -1,0 +1,91 @@
+{% set calendarList = standart.calendars %}
+{% if calendarList | length %}
+    {% set monthList = calendarList[0].getMonthList(calendarList) %}
+    {#{{ dump(monthList) }}#}
+    <div class="desc__header">
+        <div class="container">
+            <h1 class="desc__title">
+                Календарь работ
+            </h1>
+            <div class="all__dropp_dn_arrow"></div>
+        </div>
+    </div>
+    <div class="desc__content">
+        <div class="desc__content_wrapp">
+            <section class="calendar" id="calendar">
+                <div class="container">
+                    <div class="calendar__head">
+                        <div class="rash__title">
+                            <h1 class="hide-sm">
+                                Календарь работ
+                            </h1>
+                        </div>
+                        <!-- /.rash__title -->
+                        {#
+                        <div class="calendar__btns">
+                            <div class="print">
+                                <div class="print__btn">
+                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M4 0H16V4H4V0ZM3 5H17C18.6602 5 20 6.33997 20 8V14H16V18H4V14H0V8C0 6.33997 1.33984 5 3 5ZM6 16H14V11H6V16ZM17 9C16.4502 9 16 8.55005 16 8C16 7.44995 16.4502 7 17 7C17.5498 7 18 7.44995 18 8C18 8.55005 17.5498 9 17 9Z"
+                                              transform="translate(8 9)"></path>
+                                    </svg>
+                                </div>
+                                <div class="print__btn">
+                                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H2V4H0V0Z"
+                                              transform="translate(20 19)"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0L8 5H0L4 0Z"
+                                              transform="translate(17 28) scale(1 -1)"></path>
+                                        <path class="border" d="M5 16H0V0H10.0785L14 4.26667V11" transform="translate(11 10)"
+                                              stroke="#4285F4" stroke-width="2"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0V6H6L0 0Z"
+                                              transform="translate(20 9)"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- /.print -->
+                        </div>
+                        #}
+                        <!-- /.rash__btns -->
+                    </div>
+                    <!-- /.rash__head -->
+                    <div class="calendar__table">
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <p></p>
+                                </td>
+                                {% for m in monthList %}
+                                    <td>
+                                        <p>{{ m.name }}</p>
+                                    </td>
+                                {% endfor %}
+
+                            </tr>
+                            {% for calendar in calendarList %}
+                                <tr>
+                                    <td>
+                                        <p>{{ calendar.name }}</p>
+                                    </td>
+                                    {% for m in monthList %}
+                                        <td class="{% if calendar.isMonthActive(m) %}active{% endif %} {% if calendar.isMonthStart(m) %}start{% endif %} {% if calendar.isMonthEnd(m) %}end{% endif %}">
+                                            <span style="background-color: {{ calendar.color }}"></span>
+                                            {#{{ calendar.dateFrom }} <b style="color: red;">{{ calendar.dateFrom | date('d.m.Y H.i.s') }}</b>       /#}
+                                            {#{{ m.date }}#}
+                                            {#<b style="color: green;">{{ calendar.dateTo2 | date('d.m.Y H.i.s') }}</b>  /#}
+                                            {#<b style="color: red;">{{ m.date | date('d.m.Y H.i.s') }}    </b>#}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endif %}

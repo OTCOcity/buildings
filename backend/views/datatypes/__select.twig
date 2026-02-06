@@ -1,0 +1,13 @@
+{{ use('/kartik/select2/Select2') }}
+
+{{ form.field(model, config.key).widget('\\kartik\\select2\\Select2', {
+    'data': data,
+    'language' : 'ru',
+    'disabled' : not config.lang and not language.isDefault,
+    'size': 'sm',
+    'theme' : 'bootstrap',
+    'options' : {'placeholder' : 'Не выбрано', 'multiple' : config.multiple},
+    'pluginOptions' : {
+        'allowClear' : true
+    },
+}) | raw }}

@@ -1,0 +1,95 @@
+{% set items = compare.activeItems %}
+<div class="sliderBackground"></div>
+<div class="inner">
+    {{ misc.breadcrumbs() | raw }}
+    <h2>Сравнение</h2>
+    <div class="comparisonGroups">
+        {% for type in compare.types %}
+            {% if type.name %}
+                <a href="?type={{ type.id }}"><span id="group{{ loop.index }}" class="{% if compare.activeType == type.id %}active{% endif %}">{{ type.name }}</span></a>
+            {% else %}
+                <a href="?type=0"><span id="group{{ loop.index }}" class="{% if compare.activeType == 0 %}active{% endif %}">Без группы</span></a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="sort">
+        <a class="active compare-params-show compare-params-show--all">Все параметры</a>
+        <a class="compare-params-show compare-params-show--different">Различающиеся</a>
+    </div>
+    <div class="compareWrap">
+        {% if items | length == 0 %}
+         <h3>Список сравнения пуст</h3>
+        {% else %}
+            <table class="compareList">
+                <tr>
+                    <td></td>
+                    {% for item in items  %}
+                    {% set image = item.imageFirst.name %}
+                    <td>
+                        <div class="image">
+                            {% if image %}<img src='/upload/small/{{ image }}' alt=''/>{% endif %}
+                        </div>
+                        <a href="{{ catThread.url }}/{{ item.link }}" target="_blank" class="title">{{ item.name }}</a>
+                        <div class="remove compare-remove" data-id="{{ item.id }}"></div>
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr class="orange">
+                    <td>Цена</td>
+                    {% for item in items  %}
+                        {% set variant = item.variant %}
+                        <td>
+                            {% if variant.price %}
+                                {{ variant.price }} Р/кг
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Рейтинг <span class="qu">?<div class="pops">Рейтинг товара по 4-бальной системе, баллы которогой оставлены покупателями</div></span></td>
+                    {% for item in items %}
+                    <td>
+                        {% set rating = item.rating %}
+                        <div class="rating2">
+                            {% if rating > 0 %}
+                                {% for i in 1..rating %}
+                                    <div></div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <a href="/" target="_blank" class="ratingCount">1 отзыв</a>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% for option in compare.options %}
+                <tr class="compare-item-row">
+                    <td>{{ option.name }}</td>
+                    {% for value in option.values %}
+                    <td class="compare-item-row-value">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <td></td>
+                    {% for item in items  %}
+                    <td class="compare-tocart">
+                        {% set variant = item.variant %}
+                        {% set price = variant.price %}
+                        {% if price %}
+                            <div class="buttonsProd">
+                                <div class="addOrange variant-to-cart {% if item.inCart %}added{% endif %}" data-id="{{ variant.id }}" data-color="{{ variant.fcolor.id }}"><i></i>
+                                    {% if item.inCart %}Добавлено{% else %}В корзину{% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+
+            </table>
+        {% endif %}
+    </div>
+</div>

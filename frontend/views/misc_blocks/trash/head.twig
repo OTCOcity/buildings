@@ -1,0 +1,38 @@
+{{ use('/yii/jui') }}
+
+<div class="head head_white">
+    <a href="#" class="head__all_standarts">
+        Все стандарты
+    </a>
+    <!-- /.head__all_standarts -->
+    <div class="head__search">
+        <div class="close"></div>
+        <form action="/search" method="get" class="search">
+            <input type="submit" class="search__icon">
+            {#<input type="text" class="search__input" placeholder="Поиск стандартов">#}
+            {{ auto_complete_widget({
+                name: 'q',
+                clientOptions: {
+                    source: standarts,
+                    appendTo: ".search"
+                },
+            }) | raw }}
+            <input type="submit" class="search__btn" value="Найти">
+        </form>
+        <!-- /.search -->
+    </div>
+    <!-- /.head__search -->
+    <img src="/images/shape.svg" alt="" class="head__search_btn">
+    <div class="head__logo">
+        <a href="/" class="logo">
+            <img src="/images/logo.svg" alt="logo" class="logo__img">
+        </a>
+        <!-- /.logo -->
+    </div>
+    <!-- /.head__logo -->
+    <div class="burger">
+        <div class="burger__line"></div>
+    </div>
+    <!-- /.burger -->
+</div>
+<!-- /.head -->

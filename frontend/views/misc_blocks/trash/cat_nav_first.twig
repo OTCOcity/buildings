@@ -1,0 +1,62 @@
+<aside class="sidebar {{ sideClass }}">
+
+    <nav class="catalog">
+
+        <h4 class="catalog__title">
+            Каталог
+        </h4>
+
+        <ul class="catalog__list">
+            {% for thread in threads %}
+                <li class="catalog__item">
+
+                    <a href="{{ thread.url }}" class="catalog__link">
+                        {{ thread.name }}
+                    </a>
+
+                </li>
+                <!-- /.catalog__item -->
+            {% endfor %}
+
+
+        </ul>
+        <!-- /.catalog__list -->
+
+    </nav>
+    <!-- /.catalog -->
+
+    {% if sideClass == '' %}
+        <div class="vk" id="vk-wrapper">
+
+            <script type="text/javascript" src="//vk.com/js/api/openapi.js?149"></script>
+
+            <div id="vk_groups"></div>
+            <script type="text/javascript">
+                var vkWidth = document.getElementById('vk-wrapper').offsetWidth || 240;
+                VK.Widgets.Group("vk_groups", {mode: 3, width: vkWidth, color1: 'D6F0F7', color2: '404141', color3: 'FF9190'}, 144718664);
+            </script>
+
+        </div>
+
+        <!-- <div class="novelty">
+
+            <a href="#" class="novelty__link">
+
+                <div class="novelty__pic">
+
+                    <img src="/images/novelty.png" alt="novelty" class="novelty__img">
+
+                </div>
+
+                <h4 class="novelty__title">
+                    Новая коллекция футболок <br>
+                    на тему «Игры престолов»
+                </h4>
+
+            </a>
+
+        </div> -->
+    {% endif %}
+
+</aside>
+<!-- /.sidebar -->

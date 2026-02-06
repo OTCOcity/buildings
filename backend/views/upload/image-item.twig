@@ -1,0 +1,26 @@
+{{dump(app.params)}}
+<div class="admin-image_item" >
+    <a target="_blank" href="{{ app.params['siteurl'] }}/upload/orig/{{ filename }}">
+        <div class="admin-image_item-img" style="background-image: url('{{ app.params['siteurl'] }}/upload/thumb/{{ filename }}')"></div>
+    </a>
+    <span class="admin-image_item-name">{{ ownName }}</span>
+    {% if crop %}
+        <span>
+            <i title="Обрезать избражение"
+               href="#crop-image-modal"
+               data-toggle="modal"
+               data-id="{{ id }}"
+               data-src="{{ app.params['siteurl'] | e }}/upload/orig/{{ filename | e }}"
+               data-crop-x="{{ crop[0] }}"
+               data-crop-y="{{ crop[1] }}"
+               class="text-primary fa fa-crop admin-crop-image">
+            </i>
+        </span>
+    {% endif %}
+    <i class="text-danger fa fa-trash-o admin-delete-image" title="Удалить избражение"></i>
+
+
+    <input type="hidden" name="{{ inputName }}[{{ key }}][]" value="{{ filename }}">
+    <input type="hidden" name="{{ inputName }}[{{ key }}-ownname][]" value="{{ ownName }}">
+</div>
+

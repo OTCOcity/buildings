@@ -1,0 +1,78 @@
+{{ use('/yii/widgets/ActiveForm') }}
+
+<div class="container-wrap">
+    <div id="fh5co-about">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="inner-page__title">{{ thread.name }}</h1>
+                <p>{{ page.text | raw }}</p>
+
+                {% if app.request.get('fb-success') is not null %}
+                    <div class="alert alert-success">
+                        <strong>Отправлено!</strong> Спасибо за ваш отзыв. Наши менеджеры свяжутся с вами в ближайшее
+                        время.
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-modify" type="button" data-toggle="collapse"
+                            data-target="#feedback-container"
+                            aria-expanded="{{ app.request.isPost ? 'true' : 'false' }}" aria-controls="feedback-container">
+                        Оставить отзыв
+                    </button>
+                </div>
+                <div class="feedback-container collapse {% if app.request.isPost %}in{% endif %}"
+                     id="feedback-container">
+                    {% set form = ActiveForm_begin({action: '/os'}) %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group {% if feedbackForm.errors.name %}has-error{% endif %}">
+                                <input type="text" value="{{ feedbackForm.name | e }}" class="form-control"
+                                       name="FeedbackForm[name]" placeholder="Ваше имя">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group {% if feedbackForm.errors.phone %}has-error{% endif %}">
+                                <input type="text" value="{{ feedbackForm.phone | e }}" class="form-control"
+                                       name="FeedbackForm[phone]" placeholder="Как с вами связаться">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group {% if feedbackForm.errors.text %}has-error{% endif %}">
+                                <textarea class="form-control" name="FeedbackForm[text]" cols="30" rows="7"
+                                          placeholder="Сообщение...">{{ feedbackForm.text }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="Отправить" class="btn btn-primary btn-modify">
+                            </div>
+                        </div>
+                    </div>
+                    {{ ActiveForm_end() }}
+                </div>
+
+                <div class="feedback">
+                    {% for fb in fbs %}
+                        <div class="feedback-item">
+                            <p>
+                                <small class="pull-right">{{ (fb.date + 43200) | date('d.m.Y') }}</small>
+                            <h4>{{ fb.name }}</h4>
+                            </p>
+                            <p class="feedback-text">{{ fb.text }}</p>
+                            {% if fb.answer %}
+                                <blockquote>
+                                    <p class="feedback-answer">{{ fb.answer }}</p>
+                                </blockquote>
+                            {% endif %}
+                        </div>
+                        {% if not loop.last %}
+                            <hr><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+{{ this.registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=' ~ 'df9a2a7a-0f5e-4fd6-9041-3b3508a6ee29' ~ '"') }}
+{#
+<footer class="footer" id="contacts">
+    <div class="footer-map" id="footer-map" data-location="{{ options.rek_ks }}"></div>
+    <div class="footer__content">
+        <div class="footer__title">Офис и производство</div>
+        {% if options.rek_address %}
+            <div class="footer__item footer__item--address">{{ options.rek_address }}</div>{% endif %}
+        {% if options.phone %}
+            <div class="footer__item"><a href="tel:{{ options.phone | e }}">{{ options.phone }}</a></div>{% endif %}
+        {% if options.email %}
+            <div class="footer__item"><a href="mailto:{{ options.email | e }}" target="_blank">{{ options.email }}</a></div>{% endif %}
+        {% if options.soc_tw %}
+            <div class="footer__item">telegram: <a href="https://t.me/{{ options.soc_tw | e }}" target="_blank">{{ options.soc_tw }}</a></div>
+        {% endif %}
+        {% if options.email_personal %}
+            <div class="footer__item-label">Почта для партнеров:</div>
+            <div class="footer__item"><a href="mailto:{{ options.email_personal | e }}" target="_blank">{{ options.email_personal }}</a></div>
+        {% endif %}
+    </div>
+</footer>#}
+
+<section class="contacts">
+    <div class="contacts__wrapper">
+
+        <div class="contacts__map js-yandex-map" id="js-yandex-map" data-location="{{ options.rek_ks }}">
+            <div class="js-map-touch-tip">
+                Чтобы переместить карту проведите по ней двумя пальцами
+            </div>
+            <div class="contacts__shadow"></div>
+        </div>
+        <div class="contacts__aside">
+            <div class="contacts__title">Офис<br> и производство</div>
+            <div class="contacts__list">
+                <div class="contacts__list-wrapper">
+                    <div class="contacts__item">
+                        <div class="contacts__item-icon"></div>
+                        <div class="contacts__item-separator"></div>
+                        <div class="contacts__item-info">{{ options.rek_address }}</div>
+                    </div>
+                    <div class="contacts__item">
+                        <div class="contacts__item-icon"></div>
+                        <div class="contacts__item-separator"></div>
+                        <div class="contacts__item-info">
+                            <a href="tel:{{ options.phone }}">{{ options.phone }}</a>
+                        </div>
+                    </div>
+                    <div class="contacts__item">
+                        <div class="contacts__item-icon"></div>
+                        <div class="contacts__item-separator"></div>
+                        <div class="contacts__item-info">
+                            <a href="mailto:{{ options.email }}">{{ options.email }}</a>
+                        </div>
+                    </div>
+                    <div class="contacts__item">
+                        <div class="contacts__item-icon"></div>
+                        <div class="contacts__item-separator"></div>
+                        <div class="contacts__item-info">
+                            <a href="https://t.me/{{ options.soc_tw | slice(1) }}" target="_blank">{{ options.soc_tw }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contacts__list-aside">
+                    <div class="contacts__list-subtitle">Для партнеров:</div>
+                    <div class="contacts__item">
+                        <div class="contacts__item-icon"></div>
+                        <div class="contacts__item-separator"></div>
+                        <div class="contacts__item-info">
+                            <a href="mailto:{{ options.email_personal }}">{{ options.email_personal }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

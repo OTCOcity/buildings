@@ -1,0 +1,35 @@
+<div class="fixed-menu">
+    <div data-tooltip="Обратная связь" class="m-email popup-link tooltip" data-href="#feedback" ></div>
+    <div data-tooltip="Заказать звонок" class="m-phone popup-link tooltip" data-href="#feedback-2" ></div>
+    <div class="m-menu">
+        <div class="clicked-button"></div>
+        <ul class="menu">
+            {% for thread in threads %}
+                {% set subthreads = thread.childMenuthreads %}
+                <li class="{% if subthreads | length %}parent{% endif %}">
+                    <a href="{{ thread.url }}">{{ thread.name }}</a>
+                    {% if subthreads | length %}
+                        <ul>
+                            {% for subthread in subthreads %}
+                                <li><a href="{{ subthread.url }}">{{ subthread.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div data-tooltip="Поиск" class="m-search tooltip">
+        <div class="clicked-button"></div>
+        <div class="search-input">
+            <div class="input">
+                <form action="{{ MiscFunc.getThreadInfo('search', 'url') }}" method="get">
+                    <input name="text" type="text" placeholder="Введите свой запрос...">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="m-cart tooltip" data-tooltip="Корзина"><a href="{{ MiscFunc.getThreadInfo('cart', 'url') }}"><span class="cart-count {% if cartCount == 0 %}hidden{% endif %}">{{ cartCount }}</span></a></div>
+    <div data-tooltip="Спецпредложения" class="m-deals tooltip"><a href="{{ MiscFunc.getThreadInfo('sales', 'url') }}"></a></div>
+</div>

@@ -1,0 +1,36 @@
+<div class="page-header">
+    <h1><i class="fa fa-globe"></i> Переводы</h1>
+</div>
+<table class="data-table table table-striped table-bordered table-hover dataTable no-footer" id="translate-table">
+    <thead>
+    <tr>
+        <th>Категория</th>
+        {% for lang in language.getLanguageListDefaultSort() %}
+            <th>{{ lang.title }} ({{ lang.name }})</th>
+        {% endfor %}
+        <td>Дейсвтия</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for catKey, cat in translateData %}
+        {% for row in cat %}
+            <tr>
+                <td>{{ catKey }}</td>
+                {% for lang in language.getLanguageListDefaultSort() %}
+                    {% if loop.index == 1 %}
+                        <td>{{ row['default'].translate }}</td>
+                    {% else %}
+                        <td>{{ row[lang.name].translate }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    <a class="green translate-block-edit" data-id="{{ row['default'].id }}" href="#"><i class="ace-icon fa fa-pencil bigger-130"></i></a>&nbsp;
+                    <a class="red translate-block-delete translate-block-delete--{{ row['default'].id | e }}" data-id="{{ row['default'].id }}" href="#"><i class="ace-icon fa fa-trash-o bigger-130"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<a href="#" class="btn btn-sm btn-success translate-block-edit">Добавить перевод</a>

@@ -1,0 +1,44 @@
+{{ use ('backend\components\ECKEditor') }}
+
+{{ form.field(model, config.key).widget(
+    'backend\\components\\ECKEditor', {
+        'preset': 'full',
+        'options' : {
+            'rows': 6,
+            'disabled': not config.lang and not language.isDefault,
+        },
+        'clientOptions' : {
+            'allowedContent': true,
+            'skin': 'bootstrapck',
+            'stylesSet' : 'my_styles:' ~ app.params.siteurl ~ '/js/ckeditor/styles.js',
+            'contentsCss' : '/js/ckeditor/content.css',
+            'toolbarGroups' : [
+                {'name' : 'document', 'groups' : ['mode', 'document', 'doctools']},
+                {'name' : 'clipboard', 'groups' : ['clipboard', 'undo']},
+                {'name' : 'editing', 'groups' : [ 'find', 'selection', 'spellchecker']},
+                {'name' : 'forms'},
+                '/',
+                {'name' : 'basicstyles', 'groups' : ['basicstyles', 'colors','cleanup']},
+                {'name' : 'paragraph', 'groups' : [ 'list', 'indent', 'blocks', 'align', 'bidi' ]},
+                {'name' : 'links'},
+                {'name' : 'insert'},
+                '/',
+                {'name' : 'styles'},
+                {'name' : 'blocks'},
+                {'name' : 'colors'},
+                {'name' : 'tools'},
+                {'name' : 'others'},
+            ],
+        }
+    }
+) | raw }}
+
+{#
+        'clientOptions' : {
+            'allowedContent': true,
+            'enterMode': 2,
+            'autoParagraph': false,
+            'fillEmptyBlocks': true,
+        }
+
+#}

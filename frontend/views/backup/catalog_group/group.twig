@@ -1,0 +1,262 @@
+{{ use('/yii/widgets/Pjax') }}
+<main class="page">
+
+    <div class="rout">
+
+        <a class="rout__link" href="/">Главная</a> <span class="lightgray">/</span> <a href="{{ thread.url }}" class="rout__link">{{ thread.name }}</a>
+
+    </div>
+    <!-- /.rout -->
+
+    <input type="hidden" id="catalog-pjax-query" data-url="{{ thread.url | e }}">
+
+    {{ Pjax_begin({'id' : 'catalog-pjax' }) }}
+
+    <div class="advise categories">
+
+        <h3 class="advise__title">
+            {{ thread.name }} <span class="categories__quan">{{ count }} {{ MiscFunc.pluralForm(count, ['товар', 'товара', 'товаров']) }}</span>
+        </h3>
+
+
+        <div class="filters">
+
+            <h4 class="filters__title">
+                Фильты:
+            </h4>
+
+            <ul class="filters__list">
+
+                <li class="filters__item">
+
+                    <p class="filters__name">
+                        Цена
+                    </p>
+
+                    <img src="/images/filters__arrow.png" alt="arrow" class="filters__arrow">
+
+                    <div class="filters__pop_up">
+
+                        <div class="filters__square"></div>
+
+                            <ul class="filters__pop_up_list">
+
+                                <li class="filters__pop_up_item">
+
+                                    <div class="filters__pop_up_radio {% if app.request.get.price == 'up' %}radio_active{% endif %}" data-price="up"></div>
+                                    <!-- /.filters__pop_up_check -->
+
+                                    <p class="filters__pop_up_name">
+                                        По возрастанию
+                                    </p>
+
+                                </li>
+                                <!-- /.filters__pop_up_item -->
+
+                                <li class="filters__pop_up_item">
+
+                                    <div class="filters__pop_up_radio {% if app.request.get.price == 'down' %}radio_active{% endif %}"  data-price="down"></div>
+                                    <!-- /.filters__pop_up_check -->
+
+                                    <p class="filters__pop_up_name">
+                                        По убыванию
+                                    </p>
+
+                                </li>
+                                <!-- /.filters__pop_up_item -->
+
+                            </ul>
+                            <!-- /.filters__pop_up_list -->
+
+                        <div class="filters__pop_up_apply">
+
+                            <div class="filters__pop_up_btn">
+                                Применить
+                            </div>
+                            <!-- /.filters__pop_up_btn -->
+
+                        </div>
+                        <!-- /.filters__pop_up_apply -->
+
+                    </div>
+                    <!-- /.filters__pop_up -->
+
+                </li>
+                <!-- /.filters__item -->
+
+                <li class="filters__item">
+
+                    <p class="filters__name">
+                        Размер
+                    </p>
+
+                    <img src="/images/filters__arrow.png" alt="arrow" class="filters__arrow">
+
+                    <div class="filters__pop_up">
+
+                        <div class="filters__square"></div>
+
+                        <ul class="filters__pop_up_list">
+                            {% for size in filterSizeList %}
+                            <li class="filters__pop_up_item">
+
+                                <div class="filters__pop_up_check {% if size.active %}check_active{% endif %}" data-size="{{ size.value }}"></div>
+                                <!-- /.filters__pop_up_check -->
+
+                                <p class="filters__pop_up_name">
+                                    {{ size.size }}
+                                </p>
+
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+                        <!-- /.filters__pop_up_list -->
+
+                        <div class="filters__pop_up_apply">
+
+                            <div class="filters__pop_up_btn">
+                                Применить
+                            </div>
+                            <!-- /.filters__pop_up_btn -->
+
+                        </div>
+                        <!-- /.filters__pop_up_apply -->
+
+                    </div>
+                    <!-- /.filters__pop_up -->
+
+                </li>
+                <!-- /.filters__item -->
+
+                <li class="filters__item">
+
+                    <p class="filters__name">
+                        Пол
+                    </p>
+
+                    <img src="/images/filters__arrow.png" alt="arrow" class="filters__arrow">
+
+                    <div class="filters__pop_up">
+
+                        <div class="filters__square"></div>
+
+                        <ul class="filters__pop_up_list">
+
+                            <li class="filters__pop_up_item">
+
+                                <div class="filters__pop_up_check {% if '1' in app.request.get.sex %}check_active{% endif %}"  data-sex="1"></div>
+                                <!-- /.filters__pop_up_check -->
+
+                                <p class="filters__pop_up_name">
+                                    Мальчик
+                                </p>
+
+                            </li>
+                            <!-- /.filters__pop_up_item -->
+
+                            <li class="filters__pop_up_item">
+
+                                <div class="filters__pop_up_check {% if '2' in app.request.get.sex %}check_active{% endif %}"  data-sex="2"></div>
+                                <!-- /.filters__pop_up_check -->
+
+                                <p class="filters__pop_up_name">
+                                    Девочка
+                                </p>
+
+                            </li>
+                            <!-- /.filters__pop_up_item -->
+
+                        </ul>
+                        <!-- /.filters__pop_up_list -->
+
+                        <div class="filters__pop_up_apply">
+
+                            <div class="filters__pop_up_btn">
+                                Применить
+                            </div>
+                            <!-- /.filters__pop_up_btn -->
+
+                        </div>
+                        <!-- /.filters__pop_up_apply -->
+
+                    </div>
+                    <!-- /.filters__pop_up -->
+
+                </li>
+                <!-- /.filters__item -->
+
+                <li class="filters__item">
+
+                    <p class="filters__name">
+                        Возраст
+                    </p>
+
+                    <img src="/images/filters__arrow.png" alt="arrow" class="filters__arrow">
+
+                    <div class="filters__pop_up">
+
+                        <div class="filters__square"></div>
+
+                        <ul class="filters__pop_up_list">
+
+                            {% for age in filterAgeList %}
+                                <li class="filters__pop_up_item">
+
+                                    <div class="filters__pop_up_check {% if age.active %}check_active{% endif %}" data-age="{{ age.value }}"></div>
+                                    <!-- /.filters__pop_up_check -->
+
+                                    <p class="filters__pop_up_name">
+                                        {{ age.age }}
+                                    </p>
+
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+                        <!-- /.filters__pop_up_list -->
+
+                        <div class="filters__pop_up_apply">
+
+                            <div class="filters__pop_up_btn">
+                                Применить
+                            </div>
+                            <!-- /.filters__pop_up_btn -->
+
+                        </div>
+                        <!-- /.filters__pop_up_apply -->
+
+                    </div>
+                    <!-- /.filters__pop_up -->
+
+                </li>
+                <!-- /.filters__item -->
+
+            </ul>
+            <!-- /.filters__list -->
+
+        </div>
+        <!-- /.filters -->
+
+        <ul class="advise__list">
+
+            {% for good in goods %}
+                {{ this.render('/catalog_group/__list_item.twig', { good: good }) | raw }}
+            {% endfor %}
+
+        </ul>
+        <!-- /.advise__list -->
+
+    </div>
+
+    {{ MiscBlocks.pagination(page, pageCount, thread.url, filterQuery) | raw }}
+    {% if (page == 1) %}
+        <div class="text-content" style="clear: both">
+            {{ group.text | raw }}
+        </div>
+    {% endif %}
+
+    {{ Pjax_end() }}
+
+</main>

@@ -1,0 +1,15 @@
+{% if data.blockquot %}
+    <div class="block-quot">
+        <div class="content">
+            <p class="block-quot__text">
+                ’{{ data.blockquot }}’
+            </p>
+            {% if data.blockQuotAuthor.id %}
+                <div class="block-quot__author">
+                    <img class="block-quot__author-image" src="/upload/small/{{ data.blockQuotAuthor.image }}"/>
+                    <div class="block-quot__author-name">{{ data.blockQuotAuthor.name }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

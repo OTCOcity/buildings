@@ -1,0 +1,60 @@
+{% set extraSchemas = subStandart.extraSchemas %}
+{% if extraSchemas | length %}
+<section class="all section--top-bordered" id="es{{ subStandart.id }}">
+    <div class="container">
+        <h1>
+            Чертежи и схемы
+        </h1>
+        <div class="all__wrapp">
+            <div class="all__list">
+                {% for eSchema in extraSchemas %}
+                    <div class="all__item {% if loop.index == 1 %}active{% endif %}">
+                        {{ eSchema.name }}
+                    </div>
+                {% endfor %}
+                <!-- /.all__list -->
+
+            </div>
+            <div class="all__content">
+
+                {% for eSchema in extraSchemas %}
+                <div class="all__dropp_dn {% if loop.index == 1 %}active{% endif %}">
+                    <div class="all__dropp_dn_header">
+                        <div class="all__dropp_dn_title">
+                            {{ eSchema.name }}
+                        </div>
+                        <div class="all__dropp_dn_arrow">
+                        </div>
+                        <!-- /.standarts__arrow -->
+                    </div>
+                    <div class="all__dropp_dn_content">
+                        {% if eSchema.image_schema or eSchema.image_photo or eSchema.video %}
+                            {{ this.render('/standart/blocks/__schema.twig', {
+                                index: loop.index,
+                                gallery: 'gallery-' ~ subStandart.id,
+                                name: eSchema.name,
+                                photo: eSchema.image_photo,
+                                schema: eSchema.image_schema,
+                                video: eSchema.video,
+                                showArrows: (extraSchemas | length) > 1,
+                            }) | raw }}
+                        {% endif %}
+                        
+                    </div>
+                    <!-- /.all__dropp_dn_content -->
+
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+            <!-- /.all__content -->
+        </div>
+        <!-- /.all__wrapp -->
+
+    </div>
+    <!-- /.container -->
+</section>
+{% endif %}
+<!-- /.all -->

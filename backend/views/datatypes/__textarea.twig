@@ -1,0 +1,6 @@
+{{ form.field(model, config.key).textArea({
+    'placeholder': config.placeholder ? config.placeholder : config.name,
+    'disabled': not config.lang and not language.isDefault,
+    'rows': config.rows ? config.rows : 4,
+    'data-transliterate-target': config.html_attrs['data-transliterate-target']
+}) | raw }}

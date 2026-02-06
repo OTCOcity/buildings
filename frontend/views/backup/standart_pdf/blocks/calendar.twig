@@ -1,0 +1,54 @@
+{% set calendarList = standart.calendars %}
+{% if calendarList | length %}
+    {% set monthList = calendarList[0].getMonthList(calendarList) %}
+    {#{{ dump(monthList) }}#}
+    <div class="desc__header">
+        <div class="container">
+            <h1 class="desc__title">
+                Календарь работ
+            </h1>
+        </div>
+    </div>
+    <div class="desc__content">
+        <div class="desc__content_wrapp">
+            <section class="calendar" id="calendar">
+                <div class="container">
+                    <div class="calendar__table">
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="calendar-title-td">
+                                    <p></p>
+                                </td>
+                                {% for m in monthList %}
+                                    <td>
+                                        <p>{{ m.name }}</p>
+                                    </td>
+                                {% endfor %}
+
+                            </tr>
+                            {% for calendar in calendarList %}
+                                <tr>
+                                    <td>
+                                        <p>{{ calendar.name }}</p>
+                                    </td>
+                                    {% for m in monthList %}
+                                        <td class="{% if calendar.isMonthActive(m) %}active{% endif %} {% if calendar.isMonthStart(m) %}start{% endif %} {% if calendar.isMonthEnd(m) %}end{% endif %}">
+                                            <span style="background-color: {{ calendar.color }}"></span>
+                                            {#{{ calendar.dateFrom }} <b style="color: red;">{{ calendar.dateFrom | date('d.m.Y H.i.s') }}</b>       /#}
+                                            {#{{ m.date }}#}
+                                            {#<b style="color: green;">{{ calendar.dateTo2 | date('d.m.Y H.i.s') }}</b>  /#}
+                                            {#<b style="color: red;">{{ m.date | date('d.m.Y H.i.s') }}    </b>#}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endif %}

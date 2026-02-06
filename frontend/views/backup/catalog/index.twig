@@ -1,0 +1,145 @@
+{{ use('/yii/widgets/LinkPager') }}
+
+<!-- Home -->
+{% if superObject %}
+    <div class="home home--main">
+
+        <!-- Home Slider -->
+        <div class="home_slider_container">
+            <div class="owl-carousel owl-theme home_slider">
+
+                <!-- Slide -->
+                <div class="owl-item">
+                    <div class="home_slider_background" style="background-image:url(/images/home_slider_1.jpg)"></div>
+                    <div class="slide_container">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="slide_content">
+                                        <div class="home_subtitle">Супер предложение</div>
+                                        <div class="home_title">{{ superObject.name }}</div>
+                                        <div class="home_details">
+                                            <ul class="home_details_list d-flex flex-row align-items-center justify-content-start">
+                                                <li>
+                                                    <div class="home_details_image"><img src="/images/icon_1.png"
+                                                                                         alt="">
+                                                    </div>
+                                                    <span>{{ superObject.sq }} м<sup>3</sup></span>
+                                                </li>
+                                                <li>
+                                                    <div class="home_details_image"><img src="/images/icon_2.png"
+                                                                                         alt="">
+                                                    </div>
+                                                    <span>Спален {{ superObject.badrooms }} </span>
+                                                </li>
+                                                <li>
+                                                    <div class="home_details_image"><img src="/images/icon_3.png"
+                                                                                         alt="">
+                                                    </div>
+                                                    <span>Ванных {{ superObject.baths }} </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="home_price">{{ MiscFunc.priceFormat(superObject.price) }} TL</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="home">
+        <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/images/properties.jpg"
+             data-speed="0.8"></div>
+        <div class="home_container">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="home_content d-flex flex-row align-items-end justify-content-start">
+                            <div class="home_title">{{ MiscFunc.t('app', 'Поиск') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+<!-- Header search -->
+{{ MiscBlocks.headerSearch() | raw }}
+
+
+<!-- Properties -->
+<div class="properties">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% if app.params['seo_filter'].name %}
+                    <h1 class="section_title">{{ MiscFunc.t('app', app.params['seo_filter'].name) }}</h1>
+                {% elseif not isSearch %}
+                    <h1 class="section_title">{{ MiscFunc.t('app', 'Вся недвижимость') }}</h1>
+                {% else %}
+                    <h1 class="section_title">{{ MiscFunc.t('app', 'Результаты поиска') }}</h1>
+                {% endif %}
+                <div class="section_subtitle">{{ MiscFunc.t('app', 'Найди дом своей мечты') }}</div>
+            </div>
+        </div>
+
+        {{ app.params['seo_filter'].text | raw }}
+
+        <div class="row properties_row">
+            <!-- Property -->
+            {% for object in objects %}
+                {{ this.render('/catalog/__property.twig', {object: object}) | raw }}
+            {% endfor %}
+
+        </div>
+        {% if pagination.pageCount > 1 %}
+            <div class="pagination">
+                {% for page in 1..pagination.pageCount %}
+
+                    {% if page > 1 %}
+                        {% set pageQuery = '?' in pagination.route ? '&p=' ~ page : '?p=' ~ page %}
+                    {% else %}
+                        {% set pageQuery = '' %}
+                    {% endif %}
+
+                    <a class="{% if page == pagination.page + 1 %}is-active{% endif %} pagination__link"
+                       href="{{ pagination.route ~ pageQuery }}">
+                        {{ page }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{
+<!-- Newsletter -->
+<div class="newsletter">
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/images/newsletter.jpg"
+         data-speed="0.8"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="newsletter_content d-flex flex-lg-row flex-column align-items-start justify-content-start">
+                    <div class="newsletter_title_container">
+                        <div class="newsletter_title">Are you buying or selling?</div>
+                        <div class="newsletter_subtitle">Search your dream home</div>
+                    </div>
+                    <div class="newsletter_form_container">
+                        <form action="#" class="newsletter_form">
+                            <input type="email" class="newsletter_input" placeholder="Your e-mail address"
+                                   required="required">
+                            <button class="newsletter_button">subscribe now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

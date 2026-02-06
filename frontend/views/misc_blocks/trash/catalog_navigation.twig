@@ -1,0 +1,173 @@
+{{ this.registerJsFile('/js/catalogFilter.js', {'depends' : ['yii\\web\\YiiAsset',]})}}
+
+<div class="orBlock bigTitle">
+    <div class="inLeft">
+        <div class="titleSection selCol">
+            <span class="active" id="catalBt">Каталог</span> <i>/</i>
+            <span class="filterBt">Фильтр</span>
+        </div>
+    </div>
+</div>
+<div class="catalogWrap">
+    <ul>
+        {% for thread in threads %}
+        <li class="parent">
+            <a data-href="{{ thread.url }}">
+                {% set icon = thread.model.icon.name %}
+                {% if icon %}
+                    <img src="/upload/orig/{{ icon }}" alt="">{{ thread.name }}
+                {% else %}
+                    <img src="/img/iconscat/cat1.png" alt="">{{ thread.name }}
+                {% endif %}
+            </a>
+            {% set ct = thread.childthreads %}
+            {% if ct | length %}
+            <ul>
+                {% for subGroup in ct %}
+                    <li><a href="{{ subGroup.url }}">{{ subGroup.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+<div class="filterWrap">
+    <div class="inLeft">
+        <div class="titleSection">Цена</div>
+        <div class="ot"><span>от</span><input id="value-span" value="0" class="cat-filter-input" data-cf-name="pricefrom"></div>
+        <div class="do"><span>до</span><input id="value-input" value="10000" class="cat-filter-input" data-cf-name="priceto"></div>
+        <div id="slider"></div>
+    </div>
+    <div class="orBlock">
+        <div class="inLeft">
+            <div class="titleSection">Параметры</div>
+            {% if brands | length > 0 %}
+            <div class="label">Производитель</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_brand"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for brand in brands %}
+                        <span data-id="{{ brand.id }}">{{ brand.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterType | length %}
+            <div class="label">Тип</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_type"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterType %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterWork | length %}
+            <div class="label">Вид работ</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_work"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterWork %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterSuface | length %}
+            <div class="label">Поверхность</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_suface"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterSuface %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterPurpose | length %}
+            <div class="label">Назначение</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_purpose"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterPurpose %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterCompos | length %}
+            <div class="label">Основа состава</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_compos"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterCompos %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if filterComponent | length %}
+            <div class="label">Компоненты</div>
+            <div class="select">
+                <span class="default cat-filter-text" data-cf-name="filter_component"></span>
+                <div class="sel">
+                    <span>Не выбрано</span>
+                    {% for filter in filterComponent %}
+                        <span data-id="{{ filter.id }}">{{ filter.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="inLeft">
+        <div class="titleSection">Другое</div>
+        <div class="checkbox">
+            <input id="checkbox1" type="checkbox" class="cat-filter-checkbox" data-cf-name="opt_fire" value=""/>
+            <label for="checkbox1"><i></i><span>Термостойкая</span></label>
+        </div>
+        <div class="checkbox">
+            <input id="checkbox2" type="checkbox" class="cat-filter-checkbox" data-cf-name="opt_iznos" value=""/>
+            <label for="checkbox2"><i></i><span>Износостойкая</span></label>
+        </div>
+        <div class="checkbox">
+            <input id="checkbox3" type="checkbox" class="cat-filter-checkbox" data-cf-name="opt_chem" value=""/>
+            <label for="checkbox3"><i></i><span>Химстойкая</span></label>
+        </div>
+        <div class="checkbox">
+            <input id="checkbox4" type="checkbox" class="cat-filter-checkbox" data-cf-name="opt_minus" value=""/>
+            <label for="checkbox4"><i></i><span>Морозостойкая(нанесение при минусовых температурах)</span></label>
+        </div>
+        <div class="checkbox">
+            <input id="checkbox5" type="checkbox" class="cat-filter-checkbox" data-cf-name="opt_inter"  value=""/>
+            <label for="checkbox5"><i></i><span>Интерьерная</span></label>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="orBlock" id="filter-color-cont">
+        <div class="inLeft">
+            <div class="titleSection">Цвет</div>
+            <div class="select colorSelect">
+                <span class="default"></span>
+                <div class="sel" id="cat-filter-colors">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="inLeft">
+        <label for="filter-submit">
+            <input type="submit" value="Применить" id="filter-submit" class="hidden">
+            <div class="orangeBt">Применить</div>
+        </label>
+    </div>
+    <br><br>
+</div>

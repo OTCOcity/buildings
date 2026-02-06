@@ -1,0 +1,246 @@
+{{ use('/yii/widgets/ActiveForm') }}
+{{ use('/yii/widgets/Pjax') }}
+
+{% set items = cart.items %}
+{% set itemsLength = items | length %}
+<main class="page page_product">
+
+    <div class="rout rout_product">
+
+        <a class="rout__link" href="/">Главная</a> <span class="lightgray">/</span> <a href="/cart" class="rout__link">Оформление заказа</a>
+
+    </div>
+
+    {% if itemsLength > 0 %}
+        <form id="zakaz" action="/cart" method="post" class="zakaz ajax-validate">
+
+            {{ Pjax_begin({'id' : 'cart-pjax' }) }}
+                <div class="basket__pop_up zakaz__baket">
+
+                <ul class="basket__pop_up_list">
+
+                    {% for item in items %}
+                        <li class="basket__pop_up_item">
+
+                            <ul class="basket__pop_up_row">
+
+                                <li class="basket__pop_up_col">
+                                    {{ loop.index }}. <span class="blue">{{ item.good.name }} {{ item.size ? '(' ~ item.size ~ ')' : '' }}</span>
+                                </li>
+
+                                <li class="basket__pop_up_col">
+                                    {{ item.good.price }} руб.
+                                </li>
+
+                                <li class="basket__pop_up_col">
+
+                                    <p class="basket__pop_up_num">
+                                        {{ item.count }} шт.
+                                    </p>
+
+                                    <div class="basket__pop_up_arrows">
+
+                                        <img src="/images/arrow_up.png" alt="arrow" class="basket__pop_up_arrow basket__pop_up_arrow_up to-cart" data-size="{{ item.size }}" data-count="{{ item.count + 1 }}" data-id="{{ item.good.id }}">
+
+                                        <img src="/images/arrow_up.png" alt="arrow" class="basket__pop_up_arrow basket__pop_up_arrow_dn to-cart" data-size="{{ item.size }}" data-count="{{ item.count - 1 < 1 ? 1 : item.count - 1 }}"
+                                             data-id="{{ item.good.id }}">
+
+                                    </div>
+
+                                </li>
+
+                                <li class="basket__pop_up_col">
+
+                                    <p class="basket__pop_up_sum">
+                                        {{ item.good.price * item.count }} руб.
+                                    </p>
+
+                                    <img src="/images/del.png" alt="del" class="basket__pop_up_del to-cart" data-count="0" data-size="{{ item.size }}" data-id="{{ item.good.id }}">
+
+                                </li>
+
+                            </ul>
+                            <!-- /.basket__pop_up_col -->
+
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <!-- /.basket__pop_up_list -->
+
+                <div class="basket__pop_up_header basket__pop_up_header_mt5">
+
+                    <h4 class="basket__pop_up_title">
+                        Всего на:
+                    </h4>
+
+                    <p class="basket__pop_up_desc">
+                        {{ cart.sum }} руб.
+                    </p>
+
+                </div>
+                <!-- /.basket__pop_up_header -->
+
+            </div>
+            {{ Pjax_end() }}
+
+            <h2 class="zakaz__title">
+                Контактные данные
+            </h2>
+
+            <ul class="zakaz__list">
+
+                <li class="zakaz__item">
+
+                    <h4 class="zakaz__item_name">
+                        Ваше имя*
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input zakaz__cartform-name" name="CartForm[name]">
+
+                </li>
+                <!-- /.zakaz__item -->
+
+                <li class="zakaz__item">
+
+                    <h4 class="zakaz__item_name">
+                        Телефон*
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input zakaz__cartform-phone" name="CartForm[phone]">
+
+                </li>
+                <!-- /.zakaz__item -->
+
+                <li class="zakaz__item">
+
+                    <h4 class="zakaz__item_name">
+                        E-mail
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input zakaz__cartform-email" name="CartForm[email]">
+
+                </li>
+                <!-- /.zakaz__item -->
+
+            </ul>
+            <!-- /.zakaz__list -->
+
+            <ul class="zakaz__adres">
+
+                <li class="zakaz__adres_item">
+                    г. Екатеринбург
+                </li>
+
+                <li class="zakaz__adres_item">
+
+                    <h4 class="zakaz__adres_item_name">
+                        Улица
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input" name="CartForm[street]">
+
+                </li>
+
+                <li class="zakaz__adres_item">
+
+                    <h4 class="zakaz__adres_item_name">
+                        Дом
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input" name="CartForm[house]">
+
+                </li>
+
+                <li class="zakaz__adres_item">
+
+                    <h4 class="zakaz__adres_item_name">
+                        Корпус
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input" name="CartForm[korp]">
+
+                </li>
+
+                <li class="zakaz__adres_item">
+
+                    <h4 class="zakaz__adres_item_name">
+                        Подъезд
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input" name="CartForm[pod]">
+
+                </li>
+
+                <li class="zakaz__adres_item">
+
+                    <h4 class="zakaz__adres_item_name">
+                        Этаж
+                    </h4>
+
+                    <input type="text" class="zakaz__item_input" name="CartForm[flor]">
+
+                </li>
+
+            </ul>
+            <!-- /.zakaz__adres -->
+
+            <h4 class="zakaz__oplata">
+                Способ оплаты:
+            </h4>
+            <input id="oplata" type="hidden" value="1"  name="CartForm[pay_type]">
+            <div class="zakaz__oplata_btn zakaz__oplata_btn_active" data-oplata="1">
+                Наличыми при получении
+            </div>
+
+            <div class="zakaz__oplata_btn" data-oplata="2">
+                На карту Сбербанка
+            </div>
+
+            <p class="zakaz__dost">
+                Способ доставки: <span class="zakaz__dost_spos">курьером по городу</span>
+            </p>
+
+            <p class="zakaz__dost_desk">
+                Доставка осуществляется курьером по городу.
+                С условиями доставки можно ознакомиться <a href="/oplata-i-dostavka" class="zakaz__dost_link">здесь</a>
+            </p>
+
+            <p class="zakaz__komment">
+                Комментарий
+            </p>
+
+            <textarea name="CartForm[comment]" class="zakaz__textarea" placeholder="Сообщение"></textarea>
+
+            <div class="zakaz__quest">
+
+                <p class="zakaz__tel">
+                    {{ MiscFunc.getThreadData('options', 'phone') }}
+                </p>
+
+                <p class="zakaz__quest_text">
+                    Остались вопросы? Звоните!
+                </p>
+
+            </div>
+            <!-- /.zakaz__quest -->
+
+            <div id="cart-form-errors" class="zakaz__error-list">
+
+            </div>
+
+            <button type="submit" class="zakaz__btn">
+                Оформить заказ
+            </button>
+
+        </form>
+
+    {% else %}
+        <div class="text-content zakaz">
+            <h2>Корзина пуста</h2>
+            <p>Перейдите в раздел каталога для добавления товаров в корзину.</p>
+        </div>
+    {% endif %}
+
+</main>
+
