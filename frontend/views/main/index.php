@@ -4,7 +4,6 @@
 /** @var array $buildings */
 
 $this->title = 'Карта объектов';
-$this->registerJsVar('buildingsData', $buildings);
 ?>
 
 <div class="map-page">
