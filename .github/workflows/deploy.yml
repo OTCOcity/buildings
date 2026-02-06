@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: deploy-master
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd ~/buildings.na4u.ru/buildings/
+            flock -n /tmp/deploy.lock bash -lc '
+              git fetch origin
+              git checkout master
+              git reset --hard origin/master
+              git clean -fd
+              php yii migrate --interactive=0
+              php yii build
+            '
