@@ -61,6 +61,11 @@ return [
                     'value' => time(),
                 ],
                 [
+                    'key' => 'position',
+                    'name' => 'Метка на карте',
+                    'type' => 'gmap',
+                ],
+                [
                     'key' => 'files',
                     'name' => 'Файлы',
                     'type' => 'file',
