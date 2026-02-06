@@ -91,5 +91,13 @@ return [
 //        ],
 
 
+        [
+            'name' => 'Блоки недвижимости',
+            'icon' => 'building-o',
+            'color' => 'blue',
+            'count_color' => 'primary',
+            'inner_blocks' => 'buildings',
+        ],
+
     ],
 ]; 
