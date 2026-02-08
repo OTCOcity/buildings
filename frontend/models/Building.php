@@ -80,4 +80,57 @@ class Building extends \yii\db\ActiveRecord
 
         return $this->_coords;
     }
+
+        /** Files rel */
+    public function getFileList() {
+        return $this->hasMany(File::className(), ['item_id' => 'id'])->where(['table' => $this->tableName(), 'key' => 'files'])->orderBy('sort, id desc');
+    }
+
+    public function getFileGroups() {
+        $filesByGroup = [];
+
+        foreach ($this->fileList as $file) {
+            $name = is_array($file) ? ($file['name'] ?? '') : ($file->name ?? '');
+            $url  = is_array($file) ? ($file['file'] ?? '')  : ($file->file ?? '');
+
+            $name = trim((string)$name);
+
+            $groupKey = '';
+            $displayName = $name;
+
+            $pos = mb_strpos($name, '_');
+
+            if ($pos !== false && $pos > 0) {
+                $possibleGroup = trim(mb_substr($name, 0, $pos));
+                $possibleName  = trim(mb_substr($name, $pos + 1));
+
+                if ($possibleGroup !== '' && $possibleName !== '') {
+                    $groupKey = $possibleGroup;
+                    $displayName = $possibleName;
+                }
+            }
+
+            $filesByGroup[$groupKey][] = [
+                'name' => $displayName,
+                'url'  => '/upload/orig/' . $url,
+            ];
+        }
+
+        // сортировка групп: пустую группу вниз
+        uksort($filesByGroup, function ($a, $b) {
+            if ($a === '') return 1;
+            if ($b === '') return -1;
+            return strnatcasecmp($a, $b);
+        });
+
+        // сортировка файлов внутри каждой группы
+        foreach ($filesByGroup as &$items) {
+            usort($items, function ($a, $b) {
+                return strnatcasecmp($a['name'], $b['name']);
+            });
+        }
+        unset($items);
+
+        return $filesByGroup;
+    }
 }

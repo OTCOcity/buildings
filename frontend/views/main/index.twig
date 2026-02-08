@@ -1,3 +1,135 @@
-<div class="main-page">
-<h1>Hello world!</h1
+{% for build in buildings %}
+<template id="build-baloon-{{ build.id }}" data-lat="{{ build.coords.lat }}" data-lng="{{ build.coords.lng }}" data-id="{{build.id}}">
+  <div class="b-building-bubble">
+    <div class="b-building-bubble__header">
+      <h3 class="b-building-bubble__title">{{ build.name }}</h3>
+    </div>
+
+    {% if build.description %}
+      <div class="b-building-bubble__desc b-richtext">
+        {{ build.description | raw }}
+      </div>
+    {% endif %}
+
+<div class="b-building-bubble__footer">
+  <button class="b-building-bubble__more" type="button" data-id="{{build.id}}">
+    Подробнее
+  </button>
+</div>
+  </div>
+</template>
+
+<template id="build-info-{{ build.id }}" data-id={{build.id}}>
+  <div class="b-building-drawer">
+    <button class="b-building-drawer__close js-close-drawer" type="button" aria-label="Закрыть">✕</button>
+
+    <div class="b-building-drawer__top">
+      <div class="b-building-drawer__title-wrap">
+        <h2 class="b-building-drawer__title">{{ build.name }}</h2>
+      </div>
+    </div>
+
+    {% if build.description %}
+      <section class="b-building-drawer__section">
+        <div class="b-building-drawer__section-head">
+          <h3 class="b-building-drawer__section-title">Описание</h3>
+        </div>
+        <div class="b-building-drawer__section-body b-richtext">
+          {{ build.description | raw }}
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="b-building-drawer__section">
+      <div class="b-building-drawer__section-head">
+        <h3 class="b-building-drawer__section-title">Финансы и даты</h3>
+      </div>
+
+      <div class="b-building-drawer__grid">
+        <div class="b-kv">
+          <div class="b-kv__label">Сумма ипотеки</div>
+          <div class="b-kv__value">{{ build.mortgage_size }}</div>
+        </div>
+
+        <div class="b-kv">
+          <div class="b-kv__label">Ежемесячный платёж</div>
+          <div class="b-kv__value">{{ build.payment_amount }}</div>
+        </div>
+
+        <div class="b-kv">
+          <div class="b-kv__label">Дата покупки</div>
+          <div class="b-kv__value">{{ build.purchase_date }}</div>
+        </div>
+
+        <div class="b-kv">
+          <div class="b-kv__label">Дата платежа</div>
+          <div class="b-kv__value">{{ build.payment_date }}</div>
+        </div>
+
+        <div class="b-kv b-kv--accent">
+          <div class="b-kv__label">Следующая страховка</div>
+          <div class="b-kv__value">{{ build.next_insurance_date }}</div>
+        </div>
+      </div>
+    </section>
+
+    {% if build.fileGroups is not empty %}
+        <section class="build-files">
+            <div class="b-building-drawer__section-head">
+                <h3 class="b-building-drawer__section-title">Файлы</h3>
+            </div>
+
+            {% for groupTitle, items in build.fileGroups %}
+            <div class="build-files__group">
+                <div
+                    class="build-files__group-title"
+                    data-count="{{ items|length }}"
+                    >
+                    {{ groupTitle ? groupTitle ~ ':' : 'Остальные файлы:' }}
+                </div>
+
+                <ul class="build-files__list">
+                {% for file in items %}
+                    <li class="build-files__item">
+                    <a
+                        class="build-files__link"
+                        href="{{ file.url }}"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        {{ file.name }}
+                    </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if build.history %}
+      <section class="b-building-drawer__section">
+        <div class="b-building-drawer__section-head">
+          <h3 class="b-building-drawer__section-title">История</h3>
+        </div>
+        <div class="b-building-drawer__section-body b-richtext">
+          {{ build.history | raw }}
+        </div>
+      </section>
+    {% endif %}
+  </div>
+</template>
+{% endfor %}
+
+<div class="app__map" id="map"></div>
+
+    <!-- Drawer -->
+    <aside class="app__drawer drawer drawer--hidden" id="drawer" aria-hidden="true">
+        <div class="drawer__content" id="drawerContent">
+            <!-- сюда подставляем HTML из <template id="build-info-{{id}}"> -->
+        </div>
+    </aside>
+
+    <!-- Backdrop -->
+    <div class="app__backdrop backdrop backdrop--hidden" id="backdrop"></div>
 </div>

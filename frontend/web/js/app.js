@@ -1,162 +1,186 @@
+/* global ymaps, $ */
+
 (function () {
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+  "use strict";
+
+  var state = {
+    map: null,
+    placemarks: [],
+    selectedId: null,
+  };
+
+  function setDrawerVisible(isVisible) {
+    $("#drawer")
+      .toggleClass("drawer--hidden", !isVisible)
+      .attr("aria-hidden", String(!isVisible));
+    $("#backdrop").toggleClass("backdrop--hidden", !isVisible);
+  }
+
+  function closeDrawer() {
+    setDrawerVisible(false);
+  }
+
+  function openDrawerById(id) {
+    var infoTpl = document.getElementById("build-info-" + id);
+    if (!infoTpl) return;
+
+    // Подставляем HTML из template как есть
+    $("#drawerContent").html(infoTpl.innerHTML);
+    state.selectedId = String(id);
+    setDrawerVisible(true);
+  }
+
+  function collectPointsFromTemplates() {
+    // Берём все template, у которых есть data-lat и data-lng
+    var nodes = document.querySelectorAll("template[data-lat][data-lng]");
+    var result = [];
+
+    for (var i = 0; i < nodes.length; i++) {
+      var tpl = nodes[i];
+      var lat = parseFloat(tpl.getAttribute("data-lat"));
+      var lng = parseFloat(tpl.getAttribute("data-lng"));
+
+      if (!isFinite(lat) || !isFinite(lng)) continue;
+
+      // id берём из id="build-baloon-XXX"
+      var id = String(tpl.id || "");
+      var match = id.match(/^build-baloon-(.+)$/);
+      if (!match) continue;
+
+      result.push({
+        id: match[1],
+        coords: [lat, lng],
+        balloonHtml: tpl.innerHTML,
+      });
     }
 
-    function parsePosition(position) {
-        if (!position) {
-            return null;
-        }
+    return result;
+  }
 
-        const [lat, lng, zoom] = String(position).split(';');
-        const parsedLat = parseFloat(lat);
-        const parsedLng = parseFloat(lng);
-        const parsedZoom = parseFloat(zoom);
+  function computeBounds(points) {
+    if (!points.length) return null;
 
-        if (Number.isNaN(parsedLat) || Number.isNaN(parsedLng)) {
-            return null;
-        }
+    var minLat = points[0].coords[0];
+    var maxLat = points[0].coords[0];
+    var minLng = points[0].coords[1];
+    var maxLng = points[0].coords[1];
 
-        return {
-            lat: parsedLat,
-            lng: parsedLng,
-            zoom: Number.isNaN(parsedZoom) ? null : parsedZoom,
-        };
+    for (var i = 1; i < points.length; i++) {
+      var lat = points[i].coords[0];
+      var lng = points[i].coords[1];
+
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+      if (lng < minLng) minLng = lng;
+      if (lng > maxLng) maxLng = lng;
     }
 
-    function formatValue(key, value) {
-        if (value === null || value === undefined || value === '') {
-            return '—';
-        }
+    return [
+      [minLat, minLng],
+      [maxLat, maxLng],
+    ];
+  }
 
-        if (key.includes('date')) {
-            const timestamp = Number(value);
-            if (!Number.isNaN(timestamp) && timestamp > 0) {
-                return new Date(timestamp * 1000).toLocaleDateString('ru-RU');
+  function initMap(points) {
+    ymaps.ready(function () {
+      state.map = new ymaps.Map(
+        "map",
+        {
+          center: [55.751244, 37.618423],
+          zoom: 12,
+          controls: ["zoomControl"],
+        },
+        {
+          suppressMapOpenBlock: true,
+        }
+      );
+
+      // Создаём метки
+      for (var i = 0; i < points.length; i++) {
+        (function (p) {
+          var placemark = new ymaps.Placemark(
+            p.coords,
+            {}, // контент не храним тут
+            {
+              cursor: "pointer",
+              hideIconOnBalloonOpen: false,
             }
-        }
+          );
 
-        return String(value);
-    }
+          placemark.events.add("click", function () {
+            // на всякий случай закрываем текущий, чтобы повторный клик по тому же маркеру всегда работал
+            state.map.balloon.close();
 
-    function createInfoRows(building, excludedKeys) {
-        return Object.entries(building)
-            .filter(([key]) => !excludedKeys.includes(key))
-            .map(([key, value]) => `
-                <div class="building-row">
-                    <span class="building-row__label">${escapeHtml(key)}</span>
-                    <span class="building-row__value">${escapeHtml(formatValue(key, value))}</span>
-                </div>
-            `)
-            .join('');
-    }
-
-    function initMap() {
-        if (typeof ymaps === 'undefined' || typeof buildingsData === 'undefined') {
-            return;
-        }
-
-        const buildings = Array.isArray(buildingsData) ? buildingsData : [];
-        const buildingsWithCoords = buildings
-            .map((building) => ({ ...building, _coords: parsePosition(building.position) }))
-            .filter((building) => building._coords);
-
-        const firstBuilding = buildingsWithCoords[0];
-        const center = firstBuilding ? [firstBuilding._coords.lat, firstBuilding._coords.lng] : [55.751244, 37.618423];
-        const zoom = firstBuilding && firstBuilding._coords.zoom ? firstBuilding._coords.zoom : 11;
-
-        const map = new ymaps.Map('buildings-map', {
-            center,
-            zoom,
-            controls: ['zoomControl', 'fullscreenControl'],
-        });
-
-        const drawer = document.getElementById('building-drawer');
-        const drawerContent = document.getElementById('drawer-content');
-        const closeButton = document.getElementById('drawer-close');
-
-        function closeDrawer() {
-            drawer.classList.remove('building-drawer--open');
-            drawer.setAttribute('aria-hidden', 'true');
-        }
-
-        function openDrawer(building) {
-            drawerContent.innerHTML = `
-                <div class="building-drawer__header">
-                    <h2>${escapeHtml(building.name || 'Объект')}</h2>
-                </div>
-                <div class="building-drawer__section">
-                    ${createInfoRows(building, [])}
-                </div>
-            `;
-
-            drawer.classList.add('building-drawer--open');
-            drawer.setAttribute('aria-hidden', 'false');
-        }
-
-        closeButton.addEventListener('click', closeDrawer);
-
-        drawer.addEventListener('click', function (event) {
-            if (event.target === drawer) {
-                closeDrawer();
-            }
-        });
-
-        buildingsWithCoords.forEach((building) => {
-            const balloonContent = `
-                <div class="building-balloon">
-                    <div class="building-balloon__title">${escapeHtml(building.name || 'Объект')}</div>
-                    ${createInfoRows(building, ['history', 'files'])}
-                    <button class="building-balloon__action" type="button" data-building-id="${escapeHtml(building.id)}" title="Открыть детали">
-                        <span>Подробнее</span>
-                        <span class="building-balloon__icon">➜</span>
-                    </button>
-                </div>
-            `;
-
-            const placemark = new ymaps.Placemark(
-                [building._coords.lat, building._coords.lng],
-                {
-                    balloonContent,
-                    hintContent: escapeHtml(building.name || 'Объект'),
-                },
-                {
-                    preset: 'islands#blueCircleDotIcon',
-                    balloonPanelMaxMapArea: 0,
-                },
-            );
-
-            map.geoObjects.add(placemark);
-
-            placemark.events.add('balloonopen', function () {
-                setTimeout(function () {
-                    const button = document.querySelector(`.building-balloon__action[data-building-id="${building.id}"]`);
-                    if (!button) {
-                        return;
-                    }
-
-                    button.addEventListener('click', function () {
-                        openDrawer(building);
-                    });
-                }, 0);
+            state.map.balloon.open(p.coords, p.balloonHtml, {
+              closeButton: true,
+              autoPan: true,
+              maxWidth: 320,
             });
-        });
-    }
+          });
 
-    if (document.getElementById('buildings-map')) {
-        if (typeof ymaps !== 'undefined') {
-            ymaps.ready(initMap);
-        } else {
-            window.addEventListener('load', function () {
-                if (typeof ymaps !== 'undefined') {
-                    ymaps.ready(initMap);
-                }
-            });
+          state.map.geoObjects.add(placemark);
+          state.placemarks.push(placemark);
+        })(points[i]);
+      }
+
+      // Центр/зум, чтобы все точки были на экране
+      if (points.length === 1) {
+        state.map.setCenter(points[0].coords, 16, { duration: 0 });
+      } else if (points.length > 1) {
+        var bounds = computeBounds(points);
+        if (bounds) {
+          state.map.setBounds(bounds, {
+            checkZoomRange: true,
+            zoomMargin: 48,
+          });
         }
-    }
+      }
+
+      // Клик по карте закрывает drawer (если хочешь — убери)
+      state.map.events.add("click", function () {
+        closeDrawer();
+      });
+    });
+  }
+
+  function bindUi() {
+    $(document).on("click", ".js-close-drawer", function () {
+      closeDrawer();
+    });
+
+    $("#backdrop").on("click", function () {
+      closeDrawer();
+    });
+
+    $(document).on("keydown", function (e) {
+      if (e.keyCode === 27) closeDrawer();
+    });
+
+    // ВАЖНО: кнопка "Подробнее" уже есть в твоём balloon-template и имеет data-id="{{ build.id }}"
+    // Balloon — это DOM, который создаёт Яндекс.Карта, поэтому делаем делегирование.
+    $(document).on("click", "[data-id]", function (e) {
+      // Чтобы не перехватывать все элементы на странице с data-id,
+      // ограничим: реагируем только если клик внутри балуна.
+      // У балуна Я.Карт есть контейнеры с классами ymaps-2-1-79-*
+      var $t = $(e.target);
+      var $idEl = $t.closest("[data-id]");
+      if (!$idEl.length) return;
+
+      var insideBalloon = $t.closest("[class*='ymaps-2-1-']").length > 0;
+      if (!insideBalloon) return;
+
+      var id = $idEl.attr("data-id");
+      if (!id) return;
+
+      if (state.map && state.map.balloon) state.map.balloon.close();
+      openDrawerById(id);
+    });
+  }
+
+  $(function () {
+    bindUi();
+
+    var points = collectPointsFromTemplates();
+    initMap(points);
+  });
 })();

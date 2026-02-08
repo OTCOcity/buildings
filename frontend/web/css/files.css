@@ -1,0 +1,138 @@
+/* ===== Files block ===== */
+
+.build-files {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.build-files__title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* ===== Groups ===== */
+
+.build-files__group + .build-files__group {
+  margin-top: 10px;
+}
+
+.build-files__group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* counter badge */
+.build-files__group-title::after {
+  content: attr(data-count);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.06);
+  opacity: 0.9;
+}
+
+/* ===== List ===== */
+
+.build-files__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.build-files__item + .build-files__item {
+  margin-top: 2px;
+}
+
+/* ===== File row ===== */
+
+.build-files__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 4px 2px;
+  border-radius: 8px;
+
+  text-decoration: none;
+  color: inherit;
+
+  font-size: 12px;
+  line-height: 1.25;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition: background 120ms ease;
+}
+
+.build-files__link:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ===== File type icons (CSS only) ===== */
+
+.build-files__link::before {
+  content: "📄";
+  flex: 0 0 auto;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* PDF */
+.build-files__link[href$=".pdf" i]::before {
+  content: "📕";
+}
+
+/* Word */
+.build-files__link[href$=".doc" i]::before,
+.build-files__link[href$=".docx" i]::before {
+  content: "📘";
+}
+
+/* Images */
+.build-files__link[href$=".jpg" i]::before,
+.build-files__link[href$=".jpeg" i]::before,
+.build-files__link[href$=".png" i]::before,
+.build-files__link[href$=".webp" i]::before {
+  content: "🖼️";
+}
+
+/* Excel */
+.build-files__link[href$=".xls" i]::before,
+.build-files__link[href$=".xlsx" i]::before {
+  content: "📗";
+}
+
+/* Archives */
+.build-files__link[href$=".zip" i]::before,
+.build-files__link[href$=".rar" i]::before,
+.build-files__link[href$=".7z" i]::before {
+  content: "🗜️";
+}
+
+/* Links without extension */
+.build-files__link:not([href*="."])::before {
+  content: "🔗";
+}
+
+/* ===== Ungrouped ===== */
+
+.build-files__group--ungrouped .build-files__group-title {
+  opacity: 0.65;
+}

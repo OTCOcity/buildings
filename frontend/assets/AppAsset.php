@@ -11,6 +11,8 @@ class AppAsset extends AssetBundle
     public $css = [
         '/css/normilize.css?build_1',
         '/css/app.css?build_1',
+        '/css/building.css?build_2',
+        '/css/files.css?build_2',
     ];
     public $js = [
         '/js/form.js?build_3fa959e1b73debdfdc692d78c874a612',
