@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
         'js/jquery.cookie.js',
         'js/cropper-master/cropper.min.js',
         'js/datatypes/gmap.js',
+        'js/datatypes/ymap.js',
         'js/admin.js',
         'js/ace/ace.js',
         'js/ace/dataTables/jquery.dataTables.js',

@@ -1,0 +1,7 @@
+{{ this.registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU') }}
+
+{{ form.field(model, config.key).hiddenInput({
+    'placeholder': config.name,
+}) | raw }}
+
+<div class="admin-ymap" style="height: 350px;"></div>
