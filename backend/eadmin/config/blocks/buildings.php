@@ -89,7 +89,7 @@ return [
                 [
                     'key' => 'position',
                     'name' => 'Метка на карте',
-                    'type' => 'gmap',
+                    'type' => 'ymap',
                 ],
                 [
                     'key' => 'files',
