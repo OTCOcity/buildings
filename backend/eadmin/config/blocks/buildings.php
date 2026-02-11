@@ -45,6 +45,24 @@ return [
                     'in_list' => true,
                 ],
                 [
+                    'key' => 'floor',
+                    'name' => 'Этаж',
+                    'type' => 'input',
+                    'in_list' => true,
+                ],
+                [
+                    'key' => 'area',
+                    'name' => 'Площадь',
+                    'type' => 'input',
+                    'in_list' => true,
+                ],
+                [
+                    'key' => 'cadastral_number',
+                    'name' => 'Кадастровый номер',
+                    'type' => 'input',
+                    'in_list' => true,
+                ],
+                [
                     'key' => 'purchase_date',
                     'name' => 'Дата покупки',
                     'type' => 'datepicker',
