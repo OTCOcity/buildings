@@ -32,18 +32,18 @@
     {% for build in buildings %}
       <article class="card">
         <div class="card__head">
-          <div class="card__title">{{ build.name }}</div>
+          <div class="card__title">{{ build.name|replace({'Академика': 'Ак.'}) }}</div>
           <div class="badge {{ build.badgeClass }}">{{ build.netBadge }}</div>
         </div>
 
         <div class="meta">
           <div class="meta__item">
             <div class="meta__label">Этаж</div>
-            <div class="meta__value">{{ build.floor }}</div>
+            <div class="meta__value">{{ build.floor ?? '-' }}</div>
           </div>
           <div class="meta__item">
             <div class="meta__label">Площадь</div>
-            <div class="meta__value">{{ build.area }}</div>
+            <div class="meta__value">{{ (build.area ? build.area ~ ' м<sup>2</sup>' : '-') | raw }}</div>
           </div>
         </div>
 
@@ -63,7 +63,14 @@
           </div>
         </div>
 
-        <div class="note">{{ build.mortgage_size }}</div>
+        <div class="note">
+        Стоимость ипотеки: 
+        {% if build.mortgage_size and build.mortgage_size > 0 %}
+            {{ MiscFunc.priceFormat(build.mortgage_size) }} ₽
+        {% else %}
+            <не указана>
+        {% endif %}
+        </div>
       </article>
     {% endfor %}
   </section>
