@@ -1,16 +1,16 @@
 <?php
-
 namespace frontend\controllers;
 
-use frontend\models\Building;
-use Yii;
+use common\models\Thread;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 
-class MainController extends Controller
+/**
+ * About controller
+ */
+class BalanceController extends Controller
 {
-    public $layout = 'main.twig';
 
     public function behaviors()
     {
@@ -30,19 +30,10 @@ class MainController extends Controller
         ];
     }
 
-    public function actionIndex($id = null)
+    public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->render('forbidden.twig');
-        }
-
-        $buildings = Building::find()
-            ->where(['visible' => 1])
-            ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
-            ->all();
-
         return $this->render('index.twig', [
-            'buildings' => $buildings,
         ]);
     }
+
 }

@@ -59,12 +59,9 @@ class StaticsController extends Controller
 
     public function actionError()
     {
-
-        // Breadcrumbs add
-        Yii::$app->params['breadcrumbs'][] = ['label' => "Страница не найдена"];
-
-
+        
         return $this->render('error.twig', [
+            'code' => Yii::$app->errorHandler->exception->statusCode,
         ]);
     }
 

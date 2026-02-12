@@ -1,0 +1,308 @@
+{{ this.registerCssFile('/css/balance.css') }}
+{{ this.registerJsFile('/js/balance.js', {'depends': ['yii\\web\\JqueryAsset']}) }}
+
+<header class="header">
+      <div class="container">
+        <div class="header__row">
+          <div>
+            <div class="header__title">Доходность по квартирам</div>
+            <div class="header__subtitle">Аренда vs ипотека — помесячно</div>
+          </div>
+
+          <div class="kpis" aria-label="Итоги">
+            <div class="kpi">
+              <div class="kpi__label">Доход</div>
+              <div class="kpi__value" id="kpiIncome">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi__label">Расход</div>
+              <div class="kpi__value" id="kpiExpense">—</div>
+            </div>
+            <div class="kpi kpi--net">
+              <div class="kpi__label">Итог</div>
+              <div class="kpi__value" id="kpiNet">—</div>
+              <div class="kpi__hint" id="kpiHint">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="grid" aria-label="Список квартир">
+        <!-- 1 -->
+        <article class="card" data-rent="65000" data-mortgage="52000">
+          <div class="card__head">
+            <div class="card__title">
+              Москва, Хамовники — ул. Льва Толстого, 12
+            </div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">7 / 10</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">Пара, долгосрочно</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽65 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽52 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Платёж до 5 числа, коммуналка отдельно</div>
+        </article>
+
+        <!-- 2 -->
+        <article class="card" data-rent="42000" data-mortgage="47000">
+          <div class="card__head">
+            <div class="card__title">
+              Санкт-Петербург, Петроградка — Каменноостровский пр., 41
+            </div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">3 / 7</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">1 человек, контракт 12 мес</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽42 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽47 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Индексация аренды раз в год</div>
+        </article>
+
+        <!-- 3 -->
+        <article class="card" data-rent="58000" data-mortgage="39000">
+          <div class="card__head">
+            <div class="card__title">Казань, Центр — ул. Баумана, 9</div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">9 / 16</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">Семья (2+1)</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽58 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽39 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Оплата на карту, стабильно</div>
+        </article>
+
+        <!-- 4 -->
+        <article class="card" data-rent="36000" data-mortgage="31000">
+          <div class="card__head">
+            <div class="card__title">Екатеринбург, ВИЗ — ул. Татищева, 49</div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">2 / 14</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">Пара, без детей</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽36 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽31 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Плановый мелкий ремонт в мае</div>
+        </article>
+
+        <!-- 5 -->
+        <article class="card" data-rent="75000" data-mortgage="68000">
+          <div class="card__head">
+            <div class="card__title">
+              Новосибирск, Центр — ул. Советская, 25
+            </div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">12 / 18</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">2 соседа, совместная аренда</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽75 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽68 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Риск простоя: низкий</div>
+        </article>
+
+        <!-- 6 -->
+        <article class="card" data-rent="29000" data-mortgage="34000">
+          <div class="card__head">
+            <div class="card__title">
+              Краснодар, Фестивальный — ул. Тургенева, 191
+            </div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">5 / 9</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">Семья, 3 человека</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽29 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽34 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Коммуналка по счётчикам, летом выше</div>
+        </article>
+
+        <!-- 7 -->
+        <article class="card" data-rent="51000" data-mortgage="41000">
+          <div class="card__head">
+            <div class="card__title">
+              Нижний Новгород, Верхние Печёры — ул. Родионова, 193
+            </div>
+            <div class="badge" data-badge>—</div>
+          </div>
+
+          <div class="meta">
+            <div class="meta__item">
+              <div class="meta__label">Этаж</div>
+              <div class="meta__value">8 / 17</div>
+            </div>
+            <div class="meta__item">
+              <div class="meta__label">Кто живёт</div>
+              <div class="meta__value">Пара, удалёнщики</div>
+            </div>
+          </div>
+
+          <div class="money">
+            <div class="money__row">
+              <div class="money__label">Аренда</div>
+              <div class="money__value">₽51 000</div>
+            </div>
+            <div class="money__row">
+              <div class="money__label">Ипотека</div>
+              <div class="money__value">₽41 000</div>
+            </div>
+            <div class="divider"></div>
+            <div class="money__row money__row--net">
+              <div class="money__label">Итог</div>
+              <div class="money__net" data-net>—</div>
+            </div>
+          </div>
+
+          <div class="note">Оплата до 1 числа, безнал</div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div class="footer__note">
+          Всего в наличии <code>5</code> квартир, общая прибыль <code>₽25000</code>.
+        </div>
+      </footer>
+    </main>
