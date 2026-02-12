@@ -45,6 +45,12 @@ return [
                     'in_list' => true,
                 ],
                 [
+                    'key' => 'rent_cost',
+                    'name' => 'Стоимость аренды',
+                    'type' => 'input',
+                    'in_list' => true,
+                ],
+                [
                     'key' => 'floor',
                     'name' => 'Этаж',
                     'type' => 'input',
