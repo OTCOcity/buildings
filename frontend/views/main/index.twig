@@ -123,6 +123,17 @@
 
 <div class="app__map" id="map"></div>
 
+<div class="app-menu" id="appMenu">
+  <button class="app-menu__toggle" id="appMenuToggle" type="button" aria-label="Открыть меню" aria-expanded="false">
+    <span class="app-menu__burger" aria-hidden="true"></span>
+  </button>
+
+  <nav class="app-menu__panel" id="appMenuPanel" aria-hidden="true">
+    <a class="app-menu__item" href="/balance">Баланс</a>
+    <a class="app-menu__item" href="/admin">Админка</a>
+  </nav>
+</div>
+
     <!-- Drawer -->
     <aside class="app__drawer drawer drawer--hidden" id="drawer" aria-hidden="true">
         <div class="drawer__content" id="drawerContent">
