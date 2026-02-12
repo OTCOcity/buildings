@@ -17,6 +17,9 @@ namespace frontend\models;
  * @property string $link
  * @property string $mortgage_size
  * @property string $payment_amount
+ * @property string $floor
+ * @property string $area
+ * @property string $rent_cost
  * @property int $purchase_date
  * @property int $payment_date
  * @property int $next_insurance_date
@@ -29,6 +32,13 @@ class Building extends \yii\db\ActiveRecord
 {
     public $_coords = [];
 
+    public $rentCostValue = 0;
+    public $paymentAmountValue = 0;
+    public $netValue = 0;
+    public $netBadge = '';
+    public $netClass = '';
+    public $badgeClass = '';
+
     public static function tableName()
     {
         return 'b_buildings';
@@ -39,7 +49,7 @@ class Building extends \yii\db\ActiveRecord
         return [
             [['source_id', 'thread_id', 'block_id', 'sort', 'visible', 'purchase_date', 'payment_date', 'next_insurance_date'], 'integer'],
             [['files', 'description', 'history'], 'string'],
-            [['block_key', 'name', 'link', 'mortgage_size', 'payment_amount', 'position'], 'string', 'max' => 255],
+            [['block_key', 'name', 'link', 'mortgage_size', 'payment_amount', 'position', 'floor', 'area', 'rent_cost'], 'string', 'max' => 255],
             [['lang'], 'string', 'max' => 6],
         ];
     }
@@ -59,6 +69,9 @@ class Building extends \yii\db\ActiveRecord
             'link' => 'Link',
             'mortgage_size' => 'Mortgage Size',
             'payment_amount' => 'Payment Amount',
+            'floor' => 'Floor',
+            'area' => 'Area',
+            'rent_cost' => 'Rent Cost',
             'purchase_date' => 'Purchase Date',
             'payment_date' => 'Payment Date',
             'next_insurance_date' => 'Next Insurance Date',
