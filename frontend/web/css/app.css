@@ -17,6 +17,104 @@ body,
   inset: 0;
 }
 
+.app-menu {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.app-menu__toggle {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.app-menu__burger,
+.app-menu__burger::before,
+.app-menu__burger::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.8);
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.app-menu__burger {
+  position: relative;
+}
+
+.app-menu__burger::before {
+  position: absolute;
+  top: -6px;
+  left: 0;
+}
+
+.app-menu__burger::after {
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+
+.app-menu--open .app-menu__burger {
+  transform: rotate(45deg);
+}
+
+.app-menu--open .app-menu__burger::before {
+  transform: translateY(6px) rotate(90deg);
+}
+
+.app-menu--open .app-menu__burger::after {
+  opacity: 0;
+}
+
+.app-menu__panel {
+  min-width: 150px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.app-menu--open .app-menu__panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.app-menu__item {
+  display: block;
+  color: rgba(0, 0, 0, 0.86);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.app-menu__item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
 /* ===== Drawer ===== */
 .app__drawer {
   position: fixed;

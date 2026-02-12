@@ -144,6 +144,27 @@
   }
 
   function bindUi() {
+    var $appMenu = $("#appMenu");
+    var $appMenuToggle = $("#appMenuToggle");
+    var $appMenuPanel = $("#appMenuPanel");
+
+    function setMenuOpen(isOpen) {
+      $appMenu.toggleClass("app-menu--open", isOpen);
+      $appMenuToggle.attr("aria-expanded", String(isOpen));
+      $appMenuPanel.attr("aria-hidden", String(!isOpen));
+    }
+
+    $appMenuToggle.on("click", function (e) {
+      e.stopPropagation();
+      setMenuOpen(!$appMenu.hasClass("app-menu--open"));
+    });
+
+    $(document).on("click", function (e) {
+      if (!$(e.target).closest("#appMenu").length) {
+        setMenuOpen(false);
+      }
+    });
+
     $(document).on("click", ".js-close-drawer", function () {
       closeDrawer();
     });
@@ -153,7 +174,10 @@
     });
 
     $(document).on("keydown", function (e) {
-      if (e.keyCode === 27) closeDrawer();
+      if (e.keyCode === 27) {
+        closeDrawer();
+        setMenuOpen(false);
+      }
     });
 
     // ВАЖНО: кнопка "Подробнее" уже есть в твоём balloon-template и имеет data-id="{{ build.id }}"
