@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
         '/css/app.css?build_1',
         '/css/building.css?build_2',
         '/css/files.css?build_2',
+        '/css/balance.css?build_f4c016a80f666a5af1f4ada4b016f13b',
     ];
     public $js = [
         '/js/form.js?build_3fa959e1b73debdfdc692d78c874a612',
